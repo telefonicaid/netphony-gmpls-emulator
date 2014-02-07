@@ -52,6 +52,9 @@ public class NodeInformation {
     private Logger log;
     
     private boolean isStatefull = false;
+    
+    private boolean isSRCapable = false;
+    private int MSD = 0;
 
 	public void readNodeConfiguration(){
     	
