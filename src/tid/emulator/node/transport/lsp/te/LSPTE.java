@@ -8,8 +8,8 @@ import java.net.Inet4Address;
 
 import tid.emulator.node.transport.RequestedLSPinformation;
 import tid.emulator.node.transport.lsp.LSP;
-import tid.emulator.node.transport.lsp.PathState;
 import tid.pce.pcep.constructs.Response;
+import tid.pce.pcep.objects.SRERO;
 import tid.rsvp.objects.ERO;
 
 /**
@@ -45,6 +45,7 @@ public class LSPTE extends LSP{
     private Response pcepResponse;
     private int technologyType;
     private ERO ero;
+    private SRERO srero;
     private boolean interDomain = false;
     
     private boolean delegated;
@@ -173,7 +174,15 @@ public class LSPTE extends LSP{
 	public void setEro(ERO ero) {
 		this.ero = ero;
 	}
+	
+	public void setSRERO(SRERO srero){
+		this.srero = srero;
+	}
 
+	public SRERO getSRERO() {
+		return srero;
+	}
+	
 	public long getAutomatic_tunnelId() {
 		return automatic_tunnelId;
 	}

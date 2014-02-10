@@ -26,12 +26,16 @@ public class PathComputationClient {
 		log = Logger.getLogger("ROADM");
 	}
 	
-	 public void addPCE(boolean manually, Inet4Address pceAddress, int pcepPort, boolean setStateful, boolean setActive, LSPManager lspManager){
+	 public void addPCE(boolean manually, Inet4Address pceAddress, int pcepPort, boolean setStateful, boolean setActive, LSPManager lspManager,boolean setSRCapable,int MSD){
 			log.info("Adding PCE");
 			int pcepport = Integer.valueOf(pcepPort).intValue();
 			PCEPSessionsInformation pcepSessionsInformation = new PCEPSessionsInformation();
 			pcepSessionsInformation.setStateful(setStateful);
 			pcepSessionsInformation.setStateful(setActive);
+			pcepSessionsInformation.setSRCapable(setSRCapable);
+			pcepSessionsInformation.setMSD(MSD);
+			
+			
 			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
 			this.setPceSession(PCEsession);
 			this.setCrm(PCEsession.crm);

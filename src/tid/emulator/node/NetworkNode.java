@@ -130,7 +130,9 @@ public class NetworkNode {
      private boolean isStateful = true;
      
      private boolean isActive = true;
-
+     
+     private boolean isSRCapable = true;
+     private int MSD = 47;
      
     /**
      *
@@ -255,7 +257,7 @@ public class NetworkNode {
     
     public void startNode() {
     	//Añadimos el PCE y creamos la sesión PCEP
-    	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP);
+    	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
 		//Start the RSVP Manager
 		if (nodeInformation.isRsvpMode()== true)
 			rsvpManager.startRSVPManager();
