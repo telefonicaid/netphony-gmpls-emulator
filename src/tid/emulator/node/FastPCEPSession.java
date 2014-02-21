@@ -235,7 +235,7 @@ public class FastPCEPSession extends Thread{
 				LSPTE lsp=lspManager.getLSP(lsp_id, idRoadm);	
 				
 				
-				//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
+				//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLoca lIP());
 					
 				
 				//UpdateRequest ur =p_init.getUpdateRequestList().getFirst();		
