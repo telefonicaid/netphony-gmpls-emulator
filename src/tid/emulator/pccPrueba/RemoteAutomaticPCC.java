@@ -4,32 +4,25 @@
  */
 package tid.emulator.pccPrueba;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.*;
-import java.util.Properties;
-import java.util.Vector;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.pce.client.tester.Activity;
 import tid.pce.client.tester.AutomaticClientTask;
 import tid.pce.client.tester.DummyActivity;
-import tid.pce.client.tester.NetworkEmulatorActivity;
-import tid.pce.client.tester.VNTMActivity;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.Request;
-import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.objects.Bandwidth;
@@ -37,41 +30,8 @@ import tid.pce.pcep.objects.EndPointsIPv4;
 import tid.pce.pcep.objects.ObjectiveFunction;
 import tid.pce.pcep.objects.RequestParameters;
 import tid.pce.pcepsession.PCEPSessionsInformation;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
-import tid.rsvp.RSVPProtocolViolationException;
-import tid.rsvp.constructs.SenderDescriptor;
-import tid.rsvp.messages.*;
-import tid.rsvp.objects.*;
-import tid.vntm.LigthPathManagement;
-import tid.emulator.node.management.NodeManagementSever;
-import tid.emulator.node.resources.ResourceManager;
-import tid.emulator.node.resources.mpls.MPLSResourceManager;
-import tid.emulator.node.resources.sson.SSONResourceManager;
-import tid.emulator.node.resources.wson.WSONResourceManager;
-import tid.emulator.node.tedb.SimpleLocalTEDB;
-import tid.emulator.node.transport.LSPCreationException;
-import tid.emulator.node.transport.PathComputationClient;
-import tid.emulator.node.transport.defineLocalTEDB;
-import tid.emulator.node.transport.ospf.OSPFController;
-import tid.emulator.node.transport.rsvp.*;
-import tid.emulator.node.transport.lsp.*;
-import tid.emulator.node.transport.lsp.te.TechnologyParameters;
-
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.omg.CORBA.PolicyErrorCodeHelper;
-import org.savarese.vserv.tcpip.*;
-
 import cern.jet.random.Exponential;
 import cern.jet.random.engine.MersenneTwister;
-
-import com.savarese.rocksaw.net.RawSocket;
-
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
-import static com.savarese.rocksaw.net.RawSocket.PF_INET6;
-import static com.savarese.rocksaw.net.RawSocket.getProtocolByName;
-import static org.savarese.vserv.tcpip.ICMPPacket.OFFSET_ICMP_CHECKSUM;
 
 
 public class RemoteAutomaticPCC {
