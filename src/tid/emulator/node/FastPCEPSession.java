@@ -12,14 +12,16 @@ import tid.emulator.node.transport.LSPCreationException;
 import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.emulator.node.transport.lsp.te.PathStateParameters;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.pce.pcep.PCEPProtocolViolationException;
+import tid.pce.pcep.constructs.Path;
+import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.constructs.UpdateRequest;
 import tid.pce.pcep.messages.PCEPError;
 import tid.pce.pcep.messages.PCEPInitiate;
 import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPMessageTypes;
+import tid.pce.pcep.messages.PCEPReport;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPUpdate;
@@ -28,6 +30,9 @@ import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.LSP;
 import tid.pce.pcep.objects.PCEPErrorObject;
 import tid.pce.pcep.objects.RequestParameters;
+import tid.pce.pcep.objects.SRERO;
+import tid.pce.pcep.objects.SRP;
+import tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import tid.rsvp.objects.ERO;
    
 /**
@@ -211,6 +216,68 @@ public class FastPCEPSession extends Thread{
 			try {
 				PCEPInitiate p_init = new PCEPInitiate(msg);
 				lspManager.setStateful(true);
+
+				long lsp_id = 1234568;
+				p_init=new PCEPInitiate(msg);
+				lspManager.setStateful(true);
+
+				//LSPTE lsp = new LSPTE(lsp_id, lspManager.getLocalIP(), ((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP(), false, 1001, 10000, PathStateParameters.creatingLPS);
+				PathSetupTLV pstlv = p_init.getPcepIntiatedLSPList().get(0).getRsp().getPathSetupTLV();
+				if (pstlv != null && pstlv.isSR())
+				{
+					log.info("Found initiate message with segment routing..sending report");
+					SRERO srero = p_init.getPcepIntiatedLSPList().get(0).getSrero();					
+					SRP rsp = p_init.getPcepIntiatedLSPList().get(0).getRsp();
+					LSP lsp = p_init.getPcepIntiatedLSPList().get(0).getLsp();
+					PCEPReport pcrep = new PCEPReport();
+					StateReport srep = new StateReport();
+
+					Path path = new Path();
+					path.setSRERO(srero);
+					
+					srep.setRSP(rsp);
+					srep.setLSP(lsp);
+					srep.setPath(path);
+					
+					pcrep.addStateReport(srep);
+					log.info("Sending message to pce...");
+					sendPCEPMessage(pcrep);
+					log.info("Message sent!");
+					
+				}
+				else
+				{
+					ExplicitRouteObject ero = p_init.getPcepIntiatedLSPList().get(0).getEro();
+
+					ERO eroOther = new ERO();
+
+					eroOther.setEroSubobjects(ero.getEROSubobjectList());
+
+					//lspManager.startLSP(lsp, eroOther);
+
+
+					Inet4Address destinationId=((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP();
+					lspManager.setFastSession(this);
+					lsp_id = lspManager.addnewLSP(destinationId, 1000, false, 1002,eroOther);
+					long time1= System.nanoTime();
+					lspManager.waitForLSPaddition(lsp_id, 10000);
+					LSPTE lsp=lspManager.getLSP(lsp_id, idRoadm);	
+
+
+					//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
+
+
+					//UpdateRequest ur =p_init.getUpdateRequestList().getFirst();		
+					//log.info(p_req.toString());
+
+				}				
+				
+				
+				/*
+				 * ANTIGUO
+				 * 
+				PCEPInitiate p_init = new PCEPInitiate(msg);
+				lspManager.setStateful(true);
 				
 				long lsp_id = 1234568;
 				p_init=new PCEPInitiate(msg);
@@ -240,6 +307,8 @@ public class FastPCEPSession extends Thread{
 				
 				//UpdateRequest ur =p_init.getUpdateRequestList().getFirst();		
 				//log.info(p_req.toString());
+				*/
+				
 			} catch (Exception e) {
 				log.severe("PROBLEMON");
 				e.printStackTrace();
