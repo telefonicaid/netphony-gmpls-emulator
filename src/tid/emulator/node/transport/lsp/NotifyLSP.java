@@ -1,11 +1,14 @@
 package tid.emulator.node.transport.lsp;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.StateReport;
+import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPReport;
 import tid.pce.pcep.objects.Bandwidth;
 import tid.pce.pcep.objects.ExplicitRouteObject;
@@ -40,7 +43,7 @@ public class NotifyLSP
 		log = lspManager.getLog();
 	}
 	
-	public void notify(LSPTE lspte, boolean operational, boolean dFlag, boolean rFlag, boolean rSync) 
+	public void notify(LSPTE lspte, boolean operational, boolean dFlag, boolean rFlag, boolean rSync, DataOutputStream out) 
 	{
 		
 		if (lspte == null)
@@ -130,8 +133,34 @@ public class NotifyLSP
 		
 		m_report.addStateReport(state_report);	
 		log.info("Sending PCEPReport message");
+		
+		
+		
+		
 		//lspManager.getPCESession().sendPCEPMessage(m_report);
-		lspManager.getFastSession().sendPCEPMessage(m_report);
+		sendPCEPMessage(m_report, out);
 	
+	}
+	
+	public void sendPCEPMessage(PCEPMessage message, DataOutputStream out) 
+	{
+		try 
+		{
+			message.encode();
+		} 
+		catch (Exception e11) 
+		{
+			log.severe("ERROR ENCODING ERROR OBJECT, BUG DETECTED, INFORM!!! "+e11.getMessage());
+			log.severe("Ending Session");
+		}
+		try 
+		{			
+			out.write(message.getBytes());
+			out.flush();
+		} 
+		catch (IOException e) 
+		{
+			log.severe("Problem writing message, finishing session "+e.getMessage());
+		}
 	}
 }
