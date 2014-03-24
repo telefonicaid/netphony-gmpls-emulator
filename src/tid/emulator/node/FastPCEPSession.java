@@ -13,6 +13,7 @@ import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.StateReport;
@@ -146,7 +147,7 @@ public class FastPCEPSession extends Thread{
 						stats.analyzeblockProbabilityWithoutStolenLambda(0);
 					}
 					log.info("LSP CORRECTO: ENVIO RESPONSE");
-					PCEPResponse resp=new  PCEPResponse();
+					PCEPResponse resp = new  PCEPResponse();
 					resp.addResponse(lsp.getPcepResponse());
 					if (resp.ResponseList.getFirst().getNoPath()!=null){
 						log.info("No PATH");
@@ -264,7 +265,7 @@ public class FastPCEPSession extends Thread{
 					LSPTE lsp=lspManager.getLSP(lsp_id, idRoadm);	
 
 
-					//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
+					lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
 
 
 					//UpdateRequest ur =p_init.getUpdateRequestList().getFirst();		

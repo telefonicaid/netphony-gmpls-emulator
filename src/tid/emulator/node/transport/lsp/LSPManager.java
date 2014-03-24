@@ -26,6 +26,7 @@ import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.emulator.node.transport.lsp.te.PathStateParameters;
 import tid.emulator.node.transport.rsvp.RSVPManager;
 import tid.pce.client.PCCPCEPSession;
+import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.Response;
 import tid.pce.pcep.messages.PCEPRequest;
@@ -302,7 +303,7 @@ public class LSPManager {
 		//if PCC is stateful the new LSP must be notified to the PCE
 		if (isStateful)
 		{
-			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false);
+			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false, getPCESession().getOut());
 		}
 
 		Lock lock;
@@ -355,7 +356,7 @@ public class LSPManager {
 		if (isStateful)
 		{
 			dataBaseVersion.incrementAndGet();
-			notiLSP.notify(LSPList.get(lspId), false, false, false, false);
+			notiLSP.notify(LSPList.get(lspId), false, false, false, false, getPCESession().getOut());
 		}
 	}
 
@@ -712,7 +713,7 @@ public class LSPManager {
 					log.info("Removing LSP due to PCEPUpdate received message");
 					dataBaseVersion.incrementAndGet();
 					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
-					notiLSP.notify(previous, false, false, true, false);
+					notiLSP.notify(previous, false, false, true, false, getPCESession().getOut());
 				}
 				else
 				{
@@ -763,7 +764,7 @@ public class LSPManager {
 					};
 
 					new ThreadAux().start();
-					notiLSP.notify(lsp, true, true, false, false);
+					notiLSP.notify(lsp, true, true, false, false, getPCESession().getOut());
 				}
 			}
 		}
