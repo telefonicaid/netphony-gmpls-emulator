@@ -43,6 +43,35 @@ public class PathComputationClient {
 			PCEsession.start();
 	}
 
+	 public void addPCE(boolean manually, Inet4Address pceAddress, int pcepPort, 
+			 			boolean setStateful, boolean setActive, boolean statefulDFlag, boolean statefulTFlag, boolean statefulSFlag, LSPManager lspManager,
+			 			boolean setSRCapable,int MSD){
+		 
+			log.info("Adding PCE");
+			int pcepport = Integer.valueOf(pcepPort).intValue();
+			PCEPSessionsInformation pcepSessionsInformation = new PCEPSessionsInformation();
+			pcepSessionsInformation.setStateful(setStateful);
+			pcepSessionsInformation.setActive(setActive);
+			pcepSessionsInformation.setStatefulDFlag(statefulDFlag);
+			pcepSessionsInformation.setStatefulTFlag(statefulTFlag);
+			pcepSessionsInformation.setStatefulSFlag(statefulSFlag);
+			
+			
+			pcepSessionsInformation.setSRCapable(setSRCapable);
+			pcepSessionsInformation.setMSD(MSD);
+			
+			
+			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
+			this.setPceSession(PCEsession);
+			this.setCrm(PCEsession.crm);
+			lspManager.setPCESession(PCEsession);
+			PCEsession.start();
+	}	 
+	 
+	 
+	 
+	 
+	 
 	public PCEPClient getClientPCE() {
 		return clientPCE;
 	}

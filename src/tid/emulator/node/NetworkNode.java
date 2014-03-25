@@ -128,6 +128,10 @@ public class NetworkNode {
      private RemoteLSPInitPCEPSessionServer rlsserver;
      
      private boolean isStateful = true;
+ 	private boolean statefulDFlag =false;
+ 	private boolean statefulTFlag = false;
+ 	private boolean statefulSFlag = false;     
+     
      
      private boolean isActive = true;
      
@@ -257,7 +261,10 @@ public class NetworkNode {
     
     public void startNode() {
     	//Añadimos el PCE y creamos la sesión PCEP
-    	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
+    	//PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
+    	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), 
+    			isStateful, isActive, statefulDFlag, statefulTFlag, statefulSFlag, managerLSP,
+    			isSRCapable,MSD);
 		//Start the RSVP Manager
 		if (nodeInformation.isRsvpMode()== true)
 			rsvpManager.startRSVPManager();
@@ -318,4 +325,32 @@ public class NetworkNode {
 	public void setPCC(PathComputationClient pCC) {
 		PCC = pCC;
 	}
+	
+	
+	public boolean isStatefulDFlag() {
+		return statefulDFlag;
+	}
+
+	public void setStatefulDFlag(boolean statefulDFlag) {
+		this.statefulDFlag = statefulDFlag;
+	}
+
+	public boolean isStatefulTFlag() {
+		return statefulTFlag;
+	}
+
+	public void setStatefulTFlag(boolean statefulTFlag) {
+		this.statefulTFlag = statefulTFlag;
+	}
+
+	public boolean isStatefulSFlag() {
+		return statefulSFlag;
+	}
+
+	public void setStatefulSFlag(boolean statefulSFlag) {
+		this.statefulSFlag = statefulSFlag;
+	}	
+	
+	
+	
 }
