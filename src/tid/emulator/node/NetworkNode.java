@@ -128,9 +128,9 @@ public class NetworkNode {
      private RemoteLSPInitPCEPSessionServer rlsserver;
      
      private boolean isStateful = true;
- 	private boolean statefulDFlag =false;
- 	private boolean statefulTFlag = false;
- 	private boolean statefulSFlag = false;     
+ 	private boolean statefulDFlag =true;
+ 	private boolean statefulTFlag = true;
+ 	private boolean statefulSFlag = true;     
      
      
      private boolean isActive = true;

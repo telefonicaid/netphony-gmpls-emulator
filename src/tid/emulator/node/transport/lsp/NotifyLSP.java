@@ -103,15 +103,17 @@ public class NotifyLSP
 		symbPathName.setSymbolicPathNameID(ByteBuffer.allocate(8).putLong(lsp.getLspId()).array());
 		lsp.setSymbolicPathNameTLV_tlv(symbPathName);
 		 
-		 
+
 
 		LSPDatabaseVersionTLV lspdDTLV = new LSPDatabaseVersionTLV();
 		/* A change has been made so the database version is aumented */
-		lspdDTLV.setLSPStateDBVersion(lspManager.getDataBaseVersion());
+		//lspdDTLV.setLSPStateDBVersion(lspManager.getDataBaseVersion());
+		lspdDTLV.setLSPStateDBVersion(lspManager.getNextdataBaseVersion());
 		
+		log.info("actual db version: "+ lspManager.getDataBaseVersion());
+		lsp.setLspDBVersion_tlv(lspdDTLV);
 		state_report.setLSP(lsp);
-		state_report.setRSP(rsp);
-		 
+		state_report.setRSP(rsp); 
 		/* Set the path */
 		Path path = new Path();
 		
