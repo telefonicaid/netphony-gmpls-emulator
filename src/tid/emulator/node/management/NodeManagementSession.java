@@ -162,19 +162,19 @@ public class NodeManagementSession extends Thread {
 					case NODE_MANAGEMENT_STATE:
 						out.print("\nNode Management Main Menu:\n\n");
 						out.print("Available commands:\r\n\n");
-						out.print("show LSPs\r\n");
-						out.print("set LSP\r\n");
-						out.print("teardown LSP\r\n");
-						out.print("help\r\n");
-						out.print("set traces on\r\n");
-						out.print("set traces off\r\n");
-						out.print("back\r\n\n");
-						out.print("print eros\r\n\n");
-						out.print("quit\r\n\n");
+						out.print("1)show LSPs\r\n");
+						out.print("2)set LSP\r\n");
+						out.print("3)teardown LSP\r\n");
+						out.print("4)help\r\n");
+						out.print("5)set traces on\r\n");
+						out.print("6)set traces off\r\n");
+						out.print("7)back\r\n\n");
+						out.print("8)print eros\r\n\n");
+						out.print("9)quit\r\n\n");
 						out.print("NODE:>");
 						command = getCommand();
 						
-						if (command.equals("quit")) {
+						if (command.equals("quit") || command.equals("9")) {
 							log.info("Ending Management Session");
 							out.println("bye!");
 							try {
@@ -188,17 +188,17 @@ public class NodeManagementSession extends Thread {
 								e.printStackTrace();
 							}					
 							return;
-						}else if (command.equals("back")) {
+						}else if (command.equals("back")|| command.equals("7")) {
 										
 							state = INITIAL_STATE;
-						}else if (command.equals("show LSPs")){
+						}else if (command.equals("show LSPs")|| command.equals("1")){
 							node.getManagerLSP().showLSPList(out);
-						}else if (command.equals("set LSP")){
+						}else if (command.equals("set LSP")|| command.equals("2")){
 							addLSP();
-						}else if (command.equals("teardown LSP")){
+						}else if (command.equals("teardown LSP")|| command.equals("3")){
 							killLSP();
 						}
-						else if (command.equals("help")){
+						else if (command.equals("help")|| command.equals("4")){
 							out.print("\nNode Management Main Menu:");
 							out.print("Available commands:\r\n");
 							out.print("show LSPs\r\n");
@@ -208,7 +208,7 @@ public class NodeManagementSession extends Thread {
 							out.print("back to main menu\r\n");
 							out.print("quit\r\n");						
 						}
-						else if (command.equals("set traces on")) {
+						else if (command.equals("set traces on")|| command.equals("5")) {
 							log.setLevel(Level.ALL);		
 							Logger log2=Logger.getLogger("PCEPParser");
 							log2.setLevel(Level.ALL);
@@ -216,14 +216,14 @@ public class NodeManagementSession extends Thread {
 							log3.setLevel(Level.ALL);
 							out.print("traces on!\r\n");
 						} 
-						else if (command.equals("set traces off")) {
+						else if (command.equals("set traces off")|| command.equals("6")) {
 							log.setLevel(Level.SEVERE);		
 							Logger log2=Logger.getLogger("PCEPParser");
 							log2.setLevel(Level.SEVERE);
 							Logger log3= Logger.getLogger("OSPFParser");
 							log3.setLevel(Level.SEVERE);
 							out.print("traces off!\r\n");
-						}else if (command.equals("print eros")){
+						}else if (command.equals("print eros")|| command.equals("8")){
 							out.print("\nInsert the name of the file: ");
 							String fileName = getCommand();
 							FileWriter fichero = null;

@@ -68,12 +68,12 @@ public class LSPManager {
 	/**
 	 * List of LSPs 
 	 */
-	
+
 	private LinkedList<SRERO> SREROList;
 	/**
 	 * List of LSP with SIDs
 	 */
-	
+
 	private Hashtable<LSPKey, LSPTE> LSPList;
 	/**
 	 * PCEP Session with the PCE
@@ -303,6 +303,7 @@ public class LSPManager {
 		//if PCC is stateful the new LSP must be notified to the PCE
 		if (isStateful)
 		{
+			this.getNextdataBaseVersion();
 			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false, getPCESession().getOut());
 		}
 
@@ -444,30 +445,30 @@ public class LSPManager {
 				srero.setSREROSubobjectList(clone);
 				lsp.setSRERO(srero);
 				log.info("SID encontrado: "+srero.toString());
-				
-//				boolean check = resourceManager.checkResources(lsp);
-//				if (check==false){
-//					// No Resources Available --> Remove LSP from List
-//					LSPList.remove(new LSPKey(localIP, lsp.getIdLSP()));
-//
-//					//FIXME: Crear el pathErr para enviar
-//					//Creamos Path Error Message
-//					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
-//					log.warning("There are no resources available");
-//					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
-//				}else{
-//					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
-//					// de momento la información de lambda asociada la tenemos en el RSVP Manager
-//					//lsp.setLambda(resourceManager.getLambda());
-//					Inet4Address prox = null;
-//					RSVPTEPathMessage path = resourceManager.getRSVPTEPathMessageFromPCEPResponse(lsp);
-//					//prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey((resourceManager.getProxHopIPv4List()).keys().nextElement().getSourceAddress(), (resourceManager.getProxHopIPv4List()).keys().nextElement().getLspId()));
-//					prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey(lsp.getIdSource(), lsp.getIdLSP()));
-//					timeEnd_Node=System.nanoTime();
-//					log.info("LSP Time to Process RSVP Path Mssg in Node (ms): "+((timeEnd_Node-timeIni_Node)/1000000) + " --> Sending RSVP path Message to "+prox.toString()+" !");
-//					sendRSVPMessage(path,prox);
-//				}				
-				
+
+				//				boolean check = resourceManager.checkResources(lsp);
+				//				if (check==false){
+				//					// No Resources Available --> Remove LSP from List
+				//					LSPList.remove(new LSPKey(localIP, lsp.getIdLSP()));
+				//
+				//					//FIXME: Crear el pathErr para enviar
+				//					//Creamos Path Error Message
+				//					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
+				//					log.warning("There are no resources available");
+				//					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
+				//				}else{
+				//					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
+				//					// de momento la información de lambda asociada la tenemos en el RSVP Manager
+				//					//lsp.setLambda(resourceManager.getLambda());
+				//					Inet4Address prox = null;
+				//					RSVPTEPathMessage path = resourceManager.getRSVPTEPathMessageFromPCEPResponse(lsp);
+				//					//prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey((resourceManager.getProxHopIPv4List()).keys().nextElement().getSourceAddress(), (resourceManager.getProxHopIPv4List()).keys().nextElement().getLspId()));
+				//					prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey(lsp.getIdSource(), lsp.getIdLSP()));
+				//					timeEnd_Node=System.nanoTime();
+				//					log.info("LSP Time to Process RSVP Path Mssg in Node (ms): "+((timeEnd_Node-timeIni_Node)/1000000) + " --> Sending RSVP path Message to "+prox.toString()+" !");
+				//					sendRSVPMessage(path,prox);
+				//				}				
+
 			}
 		}
 	}
@@ -534,7 +535,7 @@ public class LSPManager {
 		}
 		return sb.toString();
 	}
-	
+
 	public String printSRSREROList(){
 		StringBuffer sb=new StringBuffer(2000);
 
@@ -544,7 +545,7 @@ public class LSPManager {
 			sb.append(srerosublist.get(0).getSID());
 			for(int j=1;j<srerosublist.size();j++){
 				sb.append(" --> "+srerosublist.get(j).getSID());
-					
+
 			}
 			sb.append("}\n");
 		}

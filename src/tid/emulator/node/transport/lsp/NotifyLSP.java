@@ -107,8 +107,8 @@ public class NotifyLSP
 
 		LSPDatabaseVersionTLV lspdDTLV = new LSPDatabaseVersionTLV();
 		/* A change has been made so the database version is aumented */
-		//lspdDTLV.setLSPStateDBVersion(lspManager.getDataBaseVersion());
-		lspdDTLV.setLSPStateDBVersion(lspManager.getNextdataBaseVersion());
+		lspdDTLV.setLSPStateDBVersion(lspManager.getDataBaseVersion());
+		//lspdDTLV.setLSPStateDBVersion(lspManager.getNextdataBaseVersion());
 		
 		log.info("actual db version: "+ lspManager.getDataBaseVersion());
 		lsp.setLspDBVersion_tlv(lspdDTLV);
