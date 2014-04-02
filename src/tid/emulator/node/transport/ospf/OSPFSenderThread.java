@@ -54,6 +54,7 @@ public class OSPFSenderThread extends Thread{
 			System.exit(-1);
 		}
 		while (true){
+			log.info("Socket is open??:" + socket.isOpen());
 			try {
 				
 				OSPF_msg=sendingQueue.take();

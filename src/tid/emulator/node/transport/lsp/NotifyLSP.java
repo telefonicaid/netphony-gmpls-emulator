@@ -92,8 +92,7 @@ public class NotifyLSP
 		lspIdTLV.setTunnelSenderIPAddress(lspte.getIdSource());   	 
 		lspIdTLV.setExtendedTunnelID(0);
 		
-		log.info("Address: "+ lspIdTLV.getTunnelSenderIPAddress());
-		log.info("lspID: "+ lsp.getLspId());
+		log.info("Address: "+ lspIdTLV.getTunnelSenderIPAddress()+"lspID: "+ lsp.getLspId()+"sync flag: "+rSync+"actual db version: "+ lspManager.getDataBaseVersion());
 		 
 		lsp.setLspIdentifiers_tlv(lspIdTLV);
 		 
@@ -110,7 +109,6 @@ public class NotifyLSP
 		lspdDTLV.setLSPStateDBVersion(lspManager.getDataBaseVersion());
 		//lspdDTLV.setLSPStateDBVersion(lspManager.getNextdataBaseVersion());
 		
-		log.info("actual db version: "+ lspManager.getDataBaseVersion());
 		lsp.setLspDBVersion_tlv(lspdDTLV);
 		state_report.setLSP(lsp);
 		state_report.setRSP(rsp); 
