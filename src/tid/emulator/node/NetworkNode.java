@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import tid.pce.client.*;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.pce.pcepsession.PCEPSessionsInformation;
+import tid.pce.server.lspdb.ReportDB_Redis;
 import tid.pce.tedb.DomainTEDB;
 import tid.pce.tedb.InterDomainEdge;
 import tid.pce.tedb.IntraDomainEdge;
@@ -42,6 +44,7 @@ import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.omg.CORBA.PolicyErrorCodeHelper;
 import org.savarese.vserv.tcpip.*;
+
 import com.savarese.rocksaw.net.RawSocket;
 
 import static com.savarese.rocksaw.net.RawSocket.PF_INET;
@@ -216,7 +219,8 @@ public class NetworkNode {
 			// Initialice
 			((MDTEDB)MDted).initializeFromFileInterDomainLinks(nodeInformation.getTopologyName());
 
-		
+
+			
 		//TEDB CREADA --> recorrer grafo y podar
 		SimpleDirectedWeightedGraph<Object, IntraDomainEdge> LocalGraph = defineLocalTEDB.podateGraph(((SimpleTEDB)ted).getNetworkGraph(), nodeInformation.getId());
 		((SimpleLocalTEDB)ted).setNetworkGraph(LocalGraph);
@@ -260,6 +264,13 @@ public class NetworkNode {
     }
     
     public void startNode() {
+		log.info("Checking database...");
+		ReportDB_Redis rptdb = new ReportDB_Redis(nodeInformation.getId().toString(),"10.95.161.138");
+		rptdb.fillFromDB();
+		managerLSP.setDataBaseVersion(rptdb.getVersion());
+		managerLSP.setRptdb(rptdb);
+		log.info("added new rptdb to this node");
+    	
     	//Añadimos el PCE y creamos la sesión PCEP
     	//PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
     	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), 

@@ -112,10 +112,38 @@ public class NodeManagementSession extends Thread {
 			log.warning("Management session cancelled: "+e.getMessage());
 			return;
 		}
-		out.print("***********************************************");
-		out.print("******** ROADM CONSOLE USER INTERFACE *********");
-		out.print("***********************************************\n");
-		
+//		out.print("***********************************************");
+//		out.print("******** ROADM CONSOLE USER INTERFACE *********");
+//		out.print("***********************************************\n");
+			out.print("\n");
+			out.print("   R               ,\r\n");
+			out.print("   O               |'.             ,\r\n");
+			out.print("   A               |  '-._        / )\r\n");
+			out.print("   D             .'  .._  ',     /_'-,\r\n");
+			out.print("   M            '   /  _'.'_\\   /._)')\r\n");
+			out.print("               :   /  '_' '_'  /  _.'\r\n");
+			out.print("   C           |E |   |Q| |Q| /   /\r\n");
+			out.print("   O          .'  _\\  '-' '-'    /\r\n");
+			out.print("   N        .'--.(S     ,__` )  /\r\n");
+			out.print("   T              '-.     _.'  /\r\n");
+			out.print("   R            __.--'----(   /\r\n");
+			out.print("   O        _.-'     :   __\\ /\r\n");
+			out.print("   L       (      __.' :'  :Y\r\n");
+			out.print("   L        '.   '._,  :   :|\r\n");
+			out.print("   E          '.     ) :.__:|\r\n");
+			out.print("   R            \\    \\______/\r\n");
+			out.print("                 '._L/_H____]\r\n");
+			out.print("                  /_        /\r\n");
+			out.print("                 /  '-.__.-')\r\n");
+			out.print("                :      /   /\r\n");
+			out.print("                :     /   /\r\n");
+			out.print("              ,/_____/----;\r\n");
+			out.print("              '._____)----'\r\n");
+			out.print("              /     /   /\r\n");
+			out.print("             /     /   /\r\n");
+			out.print("           .'     /    \\\r\n");
+			out.print("          (______(-.____)\r\n");
+			out.print("***********************************************\n");			
 		try {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while (running) {
@@ -129,6 +157,7 @@ public class NodeManagementSession extends Thread {
 						out.print("\t3) Turn off the ROADM\n");
 						out.print("\t4) LSPs Management NODE\n");
 						out.print("\t5) Show Topology NODE\n");
+						out.print("\n\tENTER) quit\r\n");							
 						out.print("\nPlease, choose an option\n");
 						out.print("ROADM:>");
 						
@@ -153,7 +182,22 @@ public class NodeManagementSession extends Thread {
 												
 						}else if(command.equals("5")){
 							state = NODE_SHOW_TOPOLOGY;							
-						}else{
+						}
+						else if (command.equals("quit") || command.equals("")) {
+							log.info("Ending Management Session");
+							out.println("bye!");
+							try {
+								out.close();						
+							} catch (Exception e){
+								e.printStackTrace();
+							}
+							try {
+								br.close();						
+							} catch (Exception e){
+								e.printStackTrace();
+							}					
+							return;
+						}	else{
 							out.print("ERROR: Your command was incorrect\n");
 							state = INITIAL_STATE;
 						}
@@ -168,8 +212,8 @@ public class NodeManagementSession extends Thread {
 						out.print("4)help\r\n");
 						out.print("5)set traces on\r\n");
 						out.print("6)set traces off\r\n");
-						out.print("7)back\r\n\n");
-						out.print("8)print eros\r\n\n");
+						out.print("7)back\r\n");
+						out.print("8)print eros\r\n");
 						out.print("9)quit\r\n\n");
 						out.print("NODE:>");
 						command = getCommand();

@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -26,7 +27,6 @@ import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.emulator.node.transport.lsp.te.PathStateParameters;
 import tid.emulator.node.transport.rsvp.RSVPManager;
 import tid.pce.client.PCCPCEPSession;
-import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.Response;
 import tid.pce.pcep.messages.PCEPRequest;
@@ -35,6 +35,7 @@ import tid.pce.pcep.messages.PCEPUpdate;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.SRERO;
 import tid.pce.pcep.objects.subobjects.SREROSubobject;
+import tid.pce.server.lspdb.ReportDB;
 import tid.rsvp.messages.RSVPMessage;
 import tid.rsvp.messages.RSVPPathErrMessage;
 import tid.rsvp.messages.RSVPPathTearMessage;
@@ -124,13 +125,15 @@ public class LSPManager {
 
 	private DataOutputStream out=null;
 
-	private AtomicLong dataBaseVersion;
+	private AtomicInteger dataBaseVersion;
 	private AtomicLong symbolicPathIdentifier;
 
 	private PCCPCEPSession PCESession;
 
 	private FastPCEPSession fastSession;
 
+	private ReportDB rptdb;
+	
 	public LSPManager(boolean isStateful){
 		log = Logger.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
@@ -140,14 +143,14 @@ public class LSPManager {
 		if (isStateful)
 		{
 			notiLSP = new NotifyLSP(this);
-			dataBaseVersion = new AtomicLong();
+			dataBaseVersion = new AtomicInteger();
 			symbolicPathIdentifier = new AtomicLong();
 			symbolicPathIdentifier.incrementAndGet();
 		}
 	}
 
 	public LSPManager(){
-		dataBaseVersion = new AtomicLong();
+		dataBaseVersion = new AtomicInteger();
 		log = Logger.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
 		conditionList=new Hashtable<Long,Condition>();
@@ -205,6 +208,8 @@ public class LSPManager {
 		//meter campo con el estado del LSP e ir cambiandolo
 		LSPTE lsp = new LSPTE(this.getIdNewLSP(), localIP, destinationId, bidirectional, OFcode, bw, PathStateParameters.creatingLPS);
 		LSPList.put(new LSPKey(localIP, lsp.getIdLSP()), lsp);
+		log.info("LSPList:: "+LSPList.size()+" "+(new LSPKey(localIP, lsp.getIdLSP()).toString()));
+		log.info(LSPList.toString());
 		ReentrantLock lock= new ReentrantLock();
 		Condition lspEstablished =lock.newCondition();
 		//log.info("Metemos en Lock list con ID: "+lsp.getIdLSP());
@@ -303,6 +308,7 @@ public class LSPManager {
 		//if PCC is stateful the new LSP must be notified to the PCE
 		if (isStateful)
 		{
+			log.info("LSPList: "+LSPList.size()+" "+(new LSPKey(src, lspId)).toString());
 			this.getNextdataBaseVersion();
 			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false, getPCESession().getOut());
 		}
@@ -865,12 +871,16 @@ public class LSPManager {
 		this.out = out;
 	}
 
-	public long getDataBaseVersion(){
+	public int getDataBaseVersion(){
 		return dataBaseVersion.get();
 	}
 
-	public long getNextdataBaseVersion(){
+	public int getNextdataBaseVersion(){
 		return dataBaseVersion.incrementAndGet() ;
+	}
+	
+	public void setDataBaseVersion(int dbv){
+		dataBaseVersion.set(dbv);
 	}
 
 	public long getSymbolicPatheIdentifier(){
@@ -911,6 +921,14 @@ public class LSPManager {
 
 	public void setFastSession(FastPCEPSession fastSession) {
 		this.fastSession = fastSession;
+	}
+
+	public ReportDB getRptdb() {
+		return rptdb;
+	}
+
+	public void setRptdb(ReportDB lspdb) {
+		this.rptdb = lspdb;
 	}
 
 }

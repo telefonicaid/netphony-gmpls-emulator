@@ -8,6 +8,7 @@ import tid.pce.client.ClientRequestManager;
 import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.PCEPClient;
 import tid.pce.pcepsession.PCEPSessionsInformation;
+import tid.pce.server.lspdb.ReportDB_Redis;
 
 public class PathComputationClient {
     private PCEPClient clientPCE;
@@ -59,8 +60,7 @@ public class PathComputationClient {
 			
 			pcepSessionsInformation.setSRCapable(setSRCapable);
 			pcepSessionsInformation.setMSD(MSD);
-			
-			
+					
 			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
 			this.setPceSession(PCEsession);
 			this.setCrm(PCEsession.crm);
