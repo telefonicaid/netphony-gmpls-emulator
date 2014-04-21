@@ -51,12 +51,12 @@ public class OSPFSendAllTopology extends Thread {
 				}	
 			} catch (InterruptedException e) {
 				if (running==false){
-					log.warning("Ending SendAllTopology - Thread");
+					log.info("Ending SendAllTopology - Thread");
 					return;
 				}
 				else {
 					//Keep-alive Timer is reseted
-					log.warning("Reseting SendAllTopology timer");
+					log.info("Reseting SendAllTopology timer");
 				}
 			}
 		}
