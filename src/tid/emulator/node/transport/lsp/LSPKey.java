@@ -61,7 +61,10 @@ public class LSPKey {
 		return true;
 	}
 	
-	
+	public String toString()
+	{
+		return "<KEY Address: "+sourceAddress.toString()+ " lspId: "+lspId+" >";
+	}
 	
 	
 /*	public synchronized long getIdNewLSP(Inet4Address src) {
