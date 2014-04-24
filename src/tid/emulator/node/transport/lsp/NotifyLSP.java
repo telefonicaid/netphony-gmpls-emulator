@@ -127,7 +127,7 @@ public class NotifyLSP
 		
 		path.setBandwidth(bw);
 		
-		/* For the time being no metrics are added to the path object*/
+		/* For the time being, no metrics are added to the path object*/
 		
 		state_report.setPath(path);
 		

@@ -193,6 +193,7 @@ public class LSPManager {
 			conditionList.remove(lsp.getIdLSP());
 			lockList.remove(lsp.getIdLSP());
 			LSPList.remove(lsp.getIdLSP());
+			log.info(UtilsFunctions.exceptionToString(e));
 			throw e;
 		}    	
 		return lsp.getIdLSP();
@@ -378,6 +379,7 @@ public class LSPManager {
 		try{
 			pr = pcc.getCrm().newRequest(req);
 		}catch (Exception e){
+			log.info(UtilsFunctions.exceptionToString(e));
 			throw new LSPCreationException(LSPCreationErrorTypes.ERROR_REQUEST);
 		}
 		// No Response from PCE
