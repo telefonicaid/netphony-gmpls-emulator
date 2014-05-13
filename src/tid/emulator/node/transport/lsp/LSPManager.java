@@ -630,6 +630,14 @@ public class LSPManager {
 	public void forwardRSVPpath(LSPTE lsp,RSVPTEPathMessage path) throws LSPCreationException{
 		log.info("Forwarding and Processing RSVP Path Message");
 		int nodeType = LSPParameters.LSP_NODE_TYPE_TRANSIT;
+		
+		
+		if (lsp==null)
+			log.info("Cosa Mala...");
+		if (lsp.getIdDestination()==null)
+			log.info("IPDest is null");
+		if (localIP==null)
+			log.info("IPLocal is null");
 		log.info("Comparando: "+lsp.getIdDestination().getHostAddress()+" y "+localIP.getHostAddress());
 		if((lsp.getIdDestination().getHostAddress()).equals(localIP.getHostAddress())){
 			nodeType = LSPParameters.LSP_NODE_TYPE_DESTINATION;
