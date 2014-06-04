@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -34,6 +35,7 @@ import tid.pce.pcep.messages.PCEPUpdate;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.SRERO;
 import tid.pce.pcep.objects.subobjects.SREROSubobject;
+import tid.pce.server.lspdb.ReportDB;
 import tid.rsvp.messages.RSVPMessage;
 import tid.rsvp.messages.RSVPPathErrMessage;
 import tid.rsvp.messages.RSVPPathTearMessage;
@@ -67,12 +69,12 @@ public class LSPManager {
 	/**
 	 * List of LSPs 
 	 */
-	
+
 	private LinkedList<SRERO> SREROList;
 	/**
 	 * List of LSP with SIDs
 	 */
-	
+
 	private Hashtable<LSPKey, LSPTE> LSPList;
 	/**
 	 * PCEP Session with the PCE
@@ -123,13 +125,15 @@ public class LSPManager {
 
 	private DataOutputStream out=null;
 
-	private AtomicLong dataBaseVersion;
+	private AtomicInteger dataBaseVersion;
 	private AtomicLong symbolicPathIdentifier;
 
 	private PCCPCEPSession PCESession;
 
 	private FastPCEPSession fastSession;
 
+	private ReportDB rptdb;
+	
 	public LSPManager(boolean isStateful){
 		log = Logger.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
@@ -139,14 +143,14 @@ public class LSPManager {
 		if (isStateful)
 		{
 			notiLSP = new NotifyLSP(this);
-			dataBaseVersion = new AtomicLong();
+			dataBaseVersion = new AtomicInteger();
 			symbolicPathIdentifier = new AtomicLong();
 			symbolicPathIdentifier.incrementAndGet();
 		}
 	}
 
 	public LSPManager(){
-		dataBaseVersion = new AtomicLong();
+		dataBaseVersion = new AtomicInteger();
 		log = Logger.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
 		conditionList=new Hashtable<Long,Condition>();
@@ -192,6 +196,7 @@ public class LSPManager {
 			conditionList.remove(lsp.getIdLSP());
 			lockList.remove(lsp.getIdLSP());
 			LSPList.remove(lsp.getIdLSP());
+			log.info(UtilsFunctions.exceptionToString(e));
 			throw e;
 		}    	
 		return lsp.getIdLSP();
@@ -204,6 +209,8 @@ public class LSPManager {
 		//meter campo con el estado del LSP e ir cambiandolo
 		LSPTE lsp = new LSPTE(this.getIdNewLSP(), localIP, destinationId, bidirectional, OFcode, bw, PathStateParameters.creatingLPS);
 		LSPList.put(new LSPKey(localIP, lsp.getIdLSP()), lsp);
+		log.info("LSPList:: "+LSPList.size()+" "+(new LSPKey(localIP, lsp.getIdLSP()).toString()));
+		log.info(LSPList.toString());
 		ReentrantLock lock= new ReentrantLock();
 		Condition lspEstablished =lock.newCondition();
 		//log.info("Metemos en Lock list con ID: "+lsp.getIdLSP());
@@ -302,7 +309,9 @@ public class LSPManager {
 		//if PCC is stateful the new LSP must be notified to the PCE
 		if (isStateful)
 		{
-			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false);
+			log.info("LSPList: "+LSPList.size()+" "+(new LSPKey(src, lspId)).toString());
+			this.getNextdataBaseVersion();
+			notiLSP.notify(LSPList.get(new LSPKey(src, lspId)), true, true, false, false, getPCESession().getOut());
 		}
 
 		Lock lock;
@@ -355,7 +364,7 @@ public class LSPManager {
 		if (isStateful)
 		{
 			dataBaseVersion.incrementAndGet();
-			notiLSP.notify(LSPList.get(lspId), false, false, false, false);
+			notiLSP.notify(LSPList.get(lspId), false, false, false, false, getPCESession().getOut());
 		}
 	}
 
@@ -377,6 +386,7 @@ public class LSPManager {
 		try{
 			pr = pcc.getCrm().newRequest(req);
 		}catch (Exception e){
+			log.info(UtilsFunctions.exceptionToString(e));
 			throw new LSPCreationException(LSPCreationErrorTypes.ERROR_REQUEST);
 		}
 		// No Response from PCE
@@ -443,30 +453,30 @@ public class LSPManager {
 				srero.setSREROSubobjectList(clone);
 				lsp.setSRERO(srero);
 				log.info("SID encontrado: "+srero.toString());
-				
-//				boolean check = resourceManager.checkResources(lsp);
-//				if (check==false){
-//					// No Resources Available --> Remove LSP from List
-//					LSPList.remove(new LSPKey(localIP, lsp.getIdLSP()));
-//
-//					//FIXME: Crear el pathErr para enviar
-//					//Creamos Path Error Message
-//					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
-//					log.warning("There are no resources available");
-//					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
-//				}else{
-//					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
-//					// de momento la información de lambda asociada la tenemos en el RSVP Manager
-//					//lsp.setLambda(resourceManager.getLambda());
-//					Inet4Address prox = null;
-//					RSVPTEPathMessage path = resourceManager.getRSVPTEPathMessageFromPCEPResponse(lsp);
-//					//prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey((resourceManager.getProxHopIPv4List()).keys().nextElement().getSourceAddress(), (resourceManager.getProxHopIPv4List()).keys().nextElement().getLspId()));
-//					prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey(lsp.getIdSource(), lsp.getIdLSP()));
-//					timeEnd_Node=System.nanoTime();
-//					log.info("LSP Time to Process RSVP Path Mssg in Node (ms): "+((timeEnd_Node-timeIni_Node)/1000000) + " --> Sending RSVP path Message to "+prox.toString()+" !");
-//					sendRSVPMessage(path,prox);
-//				}				
-				
+
+				//				boolean check = resourceManager.checkResources(lsp);
+				//				if (check==false){
+				//					// No Resources Available --> Remove LSP from List
+				//					LSPList.remove(new LSPKey(localIP, lsp.getIdLSP()));
+				//
+				//					//FIXME: Crear el pathErr para enviar
+				//					//Creamos Path Error Message
+				//					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
+				//					log.warning("There are no resources available");
+				//					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
+				//				}else{
+				//					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
+				//					// de momento la información de lambda asociada la tenemos en el RSVP Manager
+				//					//lsp.setLambda(resourceManager.getLambda());
+				//					Inet4Address prox = null;
+				//					RSVPTEPathMessage path = resourceManager.getRSVPTEPathMessageFromPCEPResponse(lsp);
+				//					//prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey((resourceManager.getProxHopIPv4List()).keys().nextElement().getSourceAddress(), (resourceManager.getProxHopIPv4List()).keys().nextElement().getLspId()));
+				//					prox = (resourceManager.getProxHopIPv4List()).get(new LSPKey(lsp.getIdSource(), lsp.getIdLSP()));
+				//					timeEnd_Node=System.nanoTime();
+				//					log.info("LSP Time to Process RSVP Path Mssg in Node (ms): "+((timeEnd_Node-timeIni_Node)/1000000) + " --> Sending RSVP path Message to "+prox.toString()+" !");
+				//					sendRSVPMessage(path,prox);
+				//				}				
+
 			}
 		}
 	}
@@ -533,7 +543,7 @@ public class LSPManager {
 		}
 		return sb.toString();
 	}
-	
+
 	public String printSRSREROList(){
 		StringBuffer sb=new StringBuffer(2000);
 
@@ -543,7 +553,7 @@ public class LSPManager {
 			sb.append(srerosublist.get(0).getSID());
 			for(int j=1;j<srerosublist.size();j++){
 				sb.append(" --> "+srerosublist.get(j).getSID());
-					
+
 			}
 			sb.append("}\n");
 		}
@@ -620,6 +630,14 @@ public class LSPManager {
 	public void forwardRSVPpath(LSPTE lsp,RSVPTEPathMessage path) throws LSPCreationException{
 		log.info("Forwarding and Processing RSVP Path Message");
 		int nodeType = LSPParameters.LSP_NODE_TYPE_TRANSIT;
+		
+		
+		if (lsp==null)
+			log.info("Cosa Mala...");
+		if (lsp.getIdDestination()==null)
+			log.info("IPDest is null");
+		if (localIP==null)
+			log.info("IPLocal is null");
 		log.info("Comparando: "+lsp.getIdDestination().getHostAddress()+" y "+localIP.getHostAddress());
 		if((lsp.getIdDestination().getHostAddress()).equals(localIP.getHostAddress())){
 			nodeType = LSPParameters.LSP_NODE_TYPE_DESTINATION;
@@ -712,7 +730,7 @@ public class LSPManager {
 					log.info("Removing LSP due to PCEPUpdate received message");
 					dataBaseVersion.incrementAndGet();
 					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
-					notiLSP.notify(previous, false, false, true, false);
+					notiLSP.notify(previous, false, false, true, false, getPCESession().getOut());
 				}
 				else
 				{
@@ -763,7 +781,7 @@ public class LSPManager {
 					};
 
 					new ThreadAux().start();
-					notiLSP.notify(lsp, true, true, false, false);
+					notiLSP.notify(lsp, true, true, false, false, getPCESession().getOut());
 				}
 			}
 		}
@@ -863,12 +881,16 @@ public class LSPManager {
 		this.out = out;
 	}
 
-	public long getDataBaseVersion(){
+	public int getDataBaseVersion(){
 		return dataBaseVersion.get();
 	}
 
-	public long getNextdataBaseVersion(){
+	public int getNextdataBaseVersion(){
 		return dataBaseVersion.incrementAndGet() ;
+	}
+	
+	public void setDataBaseVersion(int dbv){
+		dataBaseVersion.set(dbv);
 	}
 
 	public long getSymbolicPatheIdentifier(){
@@ -909,6 +931,14 @@ public class LSPManager {
 
 	public void setFastSession(FastPCEPSession fastSession) {
 		this.fastSession = fastSession;
+	}
+
+	public ReportDB getRptdb() {
+		return rptdb;
+	}
+
+	public void setRptdb(ReportDB lspdb) {
+		this.rptdb = lspdb;
 	}
 
 }

@@ -13,6 +13,7 @@ import tid.emulator.node.transport.LSPCreationException;
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.computingEngine.RequestDispatcher;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.constructs.UpdateRequest;
@@ -23,7 +24,6 @@ import tid.pce.pcep.messages.PCEPMessageTypes;
 import tid.pce.pcep.messages.PCEPMonReq;
 import tid.pce.pcep.messages.PCEPNotification;
 import tid.pce.pcep.messages.PCEPRequest;
-import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPTELinkConfirmation;
 import tid.pce.pcep.messages.PCEPUpdate;
 import tid.pce.pcep.objects.EndPointsIPv4;
@@ -173,7 +173,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 				case PCEPMessageTypes.MESSAGE_PCREP:
 					log.info("Received PCE RESPONSE message");
 					long timeIni=System.nanoTime();
-					PCEPResponse pcres=new PCEPResponse();
+					ComputingResponse pcres=new ComputingResponse();
 					try {
 						pcres.decode(msg);
 						

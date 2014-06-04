@@ -3,22 +3,18 @@ package tid.emulator.node;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Timer;
 import java.util.logging.Logger;
 
 import tid.emulator.node.transport.LSPCreationException;
 import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
-import tid.emulator.node.transport.lsp.LSPKey;
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.Response;
-import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.constructs.UpdateRequest;
 import tid.pce.pcep.messages.PCEPClose;
 import tid.pce.pcep.messages.PCEPError;
@@ -26,7 +22,6 @@ import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPMessageTypes;
 import tid.pce.pcep.messages.PCEPMonReq;
 import tid.pce.pcep.messages.PCEPNotification;
-import tid.pce.pcep.messages.PCEPReport;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPUpdate;
@@ -35,15 +30,12 @@ import tid.pce.pcep.objects.LSP;
 import tid.pce.pcep.objects.NoPath;
 import tid.pce.pcep.objects.PCEPErrorObject;
 import tid.pce.pcep.objects.RequestParameters;
-import tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
-import tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import tid.pce.pcepsession.DeadTimerThread;
 import tid.pce.pcepsession.GenericPCEPSession;
 import tid.pce.pcepsession.KeepAliveThread;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.pce.pcepsession.PCEPValues;
 import tid.pce.server.NotificationDispatcher;
-import tid.pce.server.PCEServerParameters;
 import tid.pce.server.communicationpce.CollaborationPCESessionManager;
 import tid.pce.server.communicationpce.RollSessionType;
 
@@ -203,7 +195,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 								log.info("ERROR: No PATH!");
 								
 								RequestParameters requestParameters = p_req.getRequestList().get(0).getRequestParameters();
-								PCEPResponse resp=new  PCEPResponse();
+								PCEPResponse resp = new  PCEPResponse();
 								Response r = new Response();
 								r.setRequestParameters(requestParameters);
 								NoPath noPath = new NoPath();
@@ -255,7 +247,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 							RequestParameters requestParameters = lsp.getPcepResponse().getRequestParameters();
 							requestParameters.setRequestID(automatic_request_id);
 							lsp.getPcepResponse().setRequestParameters(requestParameters);
-							PCEPResponse resp=new  PCEPResponse();
+							PCEPResponse resp = new  PCEPResponse();
 							resp.addResponse(lsp.getPcepResponse());
 							
 							log.info("LSP Created, sending message");

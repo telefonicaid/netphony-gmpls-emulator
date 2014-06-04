@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import tid.pce.client.*;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.pce.pcepsession.PCEPSessionsInformation;
+import tid.pce.server.lspdb.ReportDB_Redis;
 import tid.pce.tedb.DomainTEDB;
 import tid.pce.tedb.InterDomainEdge;
 import tid.pce.tedb.IntraDomainEdge;
@@ -42,6 +44,7 @@ import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.omg.CORBA.PolicyErrorCodeHelper;
 import org.savarese.vserv.tcpip.*;
+
 import com.savarese.rocksaw.net.RawSocket;
 
 import static com.savarese.rocksaw.net.RawSocket.PF_INET;
@@ -81,73 +84,77 @@ public class NetworkNode {
 	 * Class with the spcecific information of the Node
 	 */
 	private NodeInformation nodeInformation;
-    
-    //Components of the node (TEDB, RSVPManager, LSPManager, PathComputationClient, OSPFController, ResourceManager)
-    
-    /**
-     * Domain TEDB: specific for each technology
-     */
-    private DomainTEDB ted;
-    /**
-     * Multi Domain TEDB: specific for each technology in case we have interDomain Links
-     */
-    private TEDB MDted;
-    /**
-     * Generic RSVP Manager
-     */
-    private RSVPManager rsvpManager;
-    /**
-     * Generic LSP Manager
-     */
-    private LSPManager managerLSP;
-    /**
-     * Module encharged of the PCEP Session 
-     */
-    private PathComputationClient PCC;
-    /**
-     * Controller for the OSPF Session messages with the PCE
-     */
-    private OSPFController ospfController;
-    /**
-     * Specific resourceManager for each technology
-     */
-    private ResourceManager resourceManager;
-    /**
-     * Management Module for the manual node configuration
-     */
-    private NodeManagementSever nodeManagement;
-    
-    public static Logger log;
-    
-     /**
-      * Launches a fast PCEP Session Server to initiate 
-      * and tear down LSPs remotely.
-      */
-     private FastPCEPSessionServer fastPCEPSessionServer;
-    
-     private RemoteLSPInitPCEPSessionServer rlsserver;
-     
-     private boolean isStateful = true;
-     
-     private boolean isActive = true;
-     
-     private boolean isSRCapable = true;
-     private int MSD = 47;
-     
-    /**
-     *
-     * Default constructor. Initializes all attributes
-     *
-     */
-     
-    public NetworkNode(){
-    	
-    	// Create information of te Node
-    	nodeInformation = new NodeInformation();
-    	nodeInformation.readNodeConfiguration();
-    	
-    	// Create the Logs
-    	log = Logger.getLogger("ROADM");
+
+	//Components of the node (TEDB, RSVPManager, LSPManager, PathComputationClient, OSPFController, ResourceManager)
+
+	/**
+	 * Domain TEDB: specific for each technology
+	 */
+	private DomainTEDB ted;
+	/**
+	 * Multi Domain TEDB: specific for each technology in case we have interDomain Links
+	 */
+	private TEDB MDted;
+	/**
+	 * Generic RSVP Manager
+	 */
+	private RSVPManager rsvpManager;
+	/**
+	 * Generic LSP Manager
+	 */
+	private LSPManager managerLSP;
+	/**
+	 * Module encharged of the PCEP Session 
+	 */
+	private PathComputationClient PCC;
+	/**
+	 * Controller for the OSPF Session messages with the PCE
+	 */
+	private OSPFController ospfController;
+	/**
+	 * Specific resourceManager for each technology
+	 */
+	private ResourceManager resourceManager;
+	/**
+	 * Management Module for the manual node configuration
+	 */
+	private NodeManagementSever nodeManagement;
+
+	public static Logger log;
+
+	/**
+	 * Launches a fast PCEP Session Server to initiate 
+	 * and tear down LSPs remotely.
+	 */
+	private FastPCEPSessionServer fastPCEPSessionServer;
+
+	private RemoteLSPInitPCEPSessionServer rlsserver;
+
+	private boolean isStateful = true;
+	private boolean statefulDFlag =true;
+	private boolean statefulTFlag = true;
+	private boolean statefulSFlag = true;     
+	private boolean dbTest = false;
+
+	private boolean isActive = true;
+
+	private boolean isSRCapable = true;
+	private int MSD = 47;
+
+	/**
+	 *
+	 * Default constructor. Initializes all attributes
+	 *
+	 */
+
+	public NetworkNode(){
+
+		// Create information of te Node
+		nodeInformation = new NodeInformation();
+		nodeInformation.readNodeConfiguration();
+
+		// Create the Logs
+		log = Logger.getLogger("ROADM");
 		log.setLevel(Level.ALL);
 		Logger log2 = Logger.getLogger("PCCClient");
 		log2.setLevel(Level.ALL);
@@ -155,7 +162,7 @@ public class NetworkNode {
 		log3.setLevel(Level.ALL);
 		Logger log4 = Logger.getLogger("PCEPParser");
 		log4.setLevel(Level.SEVERE);
-		
+
 		try{
 			FileHandler fh = new FileHandler("Roadm.log", false);
 			log.addHandler(fh);
@@ -165,11 +172,11 @@ public class NetworkNode {
 			log3.addHandler(fh3);
 			FileHandler fh4 = new FileHandler("PCEPParser.log", false);
 			log4.addHandler(fh4);
-			
+
 			log.setLevel(Level.ALL);
 			log2.setLevel(Level.ALL);
 			log3.setLevel(Level.ALL);
-			
+
 			if (nodeInformation.isSetTraces() == false){
 				log.info("Traces Out!");
 				log.setLevel(Level.SEVERE);
@@ -186,100 +193,114 @@ public class NetworkNode {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
+
 		log.severe("ROADM Created");
 		log.info("ROADM created con info");
-    	if (nodeInformation.isRsvpMode()== true){
-	        // Create the RSVP Manager
-	        rsvpManager = new RSVPManager();
-    	}
-    	log3.info("Log de OSPF Creado!");
-        // Creamos el LSP Manager
-    	managerLSP = new LSPManager(isStateful);
-		
-        //Create the PathComputationClient
-        PCC = new PathComputationClient();
-        
-        //The Traffic Engineering Database
+		if (nodeInformation.isRsvpMode()== true){
+			// Create the RSVP Manager
+			rsvpManager = new RSVPManager();
+		}
+		log3.info("Log de OSPF Creado!");
+		// Creamos el LSP Manager
+		managerLSP = new LSPManager(isStateful);
+
+		//Create the PathComputationClient
+		PCC = new PathComputationClient();
+
+		//The Traffic Engineering Database
 		ted=new SimpleLocalTEDB();
 		if (nodeInformation.getNodeTechnology()==TechnologyParameters.SSON){
 			((SimpleLocalTEDB)ted).initializeFromFile(nodeInformation.getTopologyName(), null, false, 0, Integer.MAX_VALUE, true , false);
 		}else
 			((SimpleLocalTEDB)ted).initializeFromFile(nodeInformation.getTopologyName(), null, false, 0, Integer.MAX_VALUE, false , false);
-	
-			// Create the Multi Domain TEDB
-			MDted = new MDTEDB();
-			// Initialice
-			((MDTEDB)MDted).initializeFromFileInterDomainLinks(nodeInformation.getTopologyName());
 
-		
+		// Create the Multi Domain TEDB
+		MDted = new MDTEDB();
+		// Initialice
+		((MDTEDB)MDted).initializeFromFileInterDomainLinks(nodeInformation.getTopologyName());
+
+
+
 		//TEDB CREADA --> recorrer grafo y podar
 		SimpleDirectedWeightedGraph<Object, IntraDomainEdge> LocalGraph = defineLocalTEDB.podateGraph(((SimpleTEDB)ted).getNetworkGraph(), nodeInformation.getId());
 		((SimpleLocalTEDB)ted).setNetworkGraph(LocalGraph);
-		
-		
 
-			log.info("Is Multi-Domain, create the MDTEDB!");
-			//MDTEDB CREADA --> recorrer grafo y podar
-			DirectedWeightedMultigraph<Object, InterDomainEdge> MDLocalGraph = defineLocalTEDB.podateMDGraph(((MDTEDB)MDted).getNetworkDomainGraph(), nodeInformation.getId());
-			((MDTEDB)MDted).setNetworkDomainGraph(MDLocalGraph);
-		
+
+
+		log.info("Is Multi-Domain, create the MDTEDB!");
+		//MDTEDB CREADA --> recorrer grafo y podar
+		DirectedWeightedMultigraph<Object, InterDomainEdge> MDLocalGraph = defineLocalTEDB.podateMDGraph(((MDTEDB)MDted).getNetworkDomainGraph(), nodeInformation.getId());
+		((MDTEDB)MDted).setNetworkDomainGraph(MDLocalGraph);
+
 		//Creamos el Resource Manager (con MDted Siempre)
-			if (nodeInformation.getNodeTechnology() == TechnologyParameters.MPLS){
-	    		resourceManager = new MPLSResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
-	        }else if (nodeInformation.getNodeTechnology() == TechnologyParameters.WSON){
-	        	resourceManager = new WSONResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
-	        }else if (nodeInformation.getNodeTechnology() == TechnologyParameters.SSON){
-	        	resourceManager = new SSONResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
-	        }else if (nodeInformation.getNodeTechnology() == TechnologyParameters.UNKNOWN){
-	        	log.severe("Technology not valid!");
-	        	System.exit(-1);
-	        }
-    	
-    	//OSPF
+		if (nodeInformation.getNodeTechnology() == TechnologyParameters.MPLS){
+			resourceManager = new MPLSResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
+		}else if (nodeInformation.getNodeTechnology() == TechnologyParameters.WSON){
+			resourceManager = new WSONResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
+		}else if (nodeInformation.getNodeTechnology() == TechnologyParameters.SSON){
+			resourceManager = new SSONResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
+		}else if (nodeInformation.getNodeTechnology() == TechnologyParameters.UNKNOWN){
+			log.severe("Technology not valid!");
+			System.exit(-1);
+		}
+
+		//OSPF
 		ospfController = new OSPFController();
-				    	
-    	// Configure all the Modules
-    	if (nodeInformation.isRsvpMode()== true){
-    		rsvpManager.configureRSVPManager(nodeInformation.getId(), resourceManager, managerLSP);
-    		managerLSP.configureLSPManager(rsvpManager, nodeInformation.getId(), PCC, resourceManager, nodeInformation.isRsvpMode());
-    	}else{
-    		managerLSP.configureLSPManager(null, nodeInformation.getId(), PCC, resourceManager, nodeInformation.isRsvpMode());
-    	}
-    	ospfController.configureOSPFController(nodeInformation.getId(), ted);
-    	//Fast PCEP Session for remote invokation
+
+		// Configure all the Modules
+		if (nodeInformation.isRsvpMode()== true){
+			rsvpManager.configureRSVPManager(nodeInformation.getId(), resourceManager, managerLSP);
+			managerLSP.configureLSPManager(rsvpManager, nodeInformation.getId(), PCC, resourceManager, nodeInformation.isRsvpMode());
+		}else{
+			managerLSP.configureLSPManager(null, nodeInformation.getId(), PCC, resourceManager, nodeInformation.isRsvpMode());
+		}
+		ospfController.configureOSPFController(nodeInformation.getId(), ted);
+		//Fast PCEP Session for remote invokation
 		fastPCEPSessionServer = new FastPCEPSessionServer(this.getManagerLSP(), nodeInformation.getId(), nodeInformation.getNodeTechnology());
-		
+
 		//Automatic PCCNode Session
 		nodeInformation.setStatefull(false);
 		rlsserver = new RemoteLSPInitPCEPSessionServer(managerLSP, nodeInformation.getId(), nodeInformation.getNodeTechnology(), nodeInformation.isStatefull());
-    }
-    
-    public void startNode() {
-    	//Añadimos el PCE y creamos la sesión PCEP
-    	PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
+	}
+
+	public void startNode() {
+		if (dbTest)
+		{
+			log.info("Checking database...");
+
+			ReportDB_Redis rptdb = new ReportDB_Redis(nodeInformation.getId().toString(),"10.95.161.138");
+			rptdb.fillFromDB();
+			managerLSP.setDataBaseVersion(rptdb.getVersion());
+			managerLSP.setRptdb(rptdb);
+			log.info("added new rptdb to this node");
+		}
+		//Añadimos el PCE y creamos la sesión PCEP
+		//PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), isStateful, isActive, managerLSP,isSRCapable,MSD);
+		PCC.addPCE(false,nodeInformation.getPceID(),nodeInformation.getPcePort(), 
+				isStateful, isActive, statefulDFlag, statefulTFlag, statefulSFlag, managerLSP,
+				isSRCapable,MSD);
 		//Start the RSVP Manager
 		if (nodeInformation.isRsvpMode()== true)
 			rsvpManager.startRSVPManager();
-    	
-    	//Start node Management
-    	nodeManagement = new NodeManagementSever(this);		
+
+		//Start node Management
+		nodeManagement = new NodeManagementSever(this);		
 		nodeManagement.start();
-		
+
 		//Start OSPF Controller
 		ospfController.initialize();
-		
+
 		//Start the Fast PCEP Session for remote invocation
 		AutomaticTesterStatistics stats = new AutomaticTesterStatistics(0);
 		fastPCEPSessionServer.setStats(stats);
 		fastPCEPSessionServer.start();
-		
+
 		//Start the Automatic PCCNode Session
 		Thread sessionServer = new Thread(rlsserver);
 		sessionServer.start();
 	}
- 
-    public LSPManager getManagerLSP() {
+
+	public LSPManager getManagerLSP() {
 		return managerLSP;
 	}
 
@@ -294,7 +315,7 @@ public class NetworkNode {
 	public void setTed(DomainTEDB ted) {
 		this.ted = ted;
 	}
-	
+
 	public TEDB getMDted() {
 		return MDted;
 	}
@@ -318,4 +339,32 @@ public class NetworkNode {
 	public void setPCC(PathComputationClient pCC) {
 		PCC = pCC;
 	}
+
+
+	public boolean isStatefulDFlag() {
+		return statefulDFlag;
+	}
+
+	public void setStatefulDFlag(boolean statefulDFlag) {
+		this.statefulDFlag = statefulDFlag;
+	}
+
+	public boolean isStatefulTFlag() {
+		return statefulTFlag;
+	}
+
+	public void setStatefulTFlag(boolean statefulTFlag) {
+		this.statefulTFlag = statefulTFlag;
+	}
+
+	public boolean isStatefulSFlag() {
+		return statefulSFlag;
+	}
+
+	public void setStatefulSFlag(boolean statefulSFlag) {
+		this.statefulSFlag = statefulSFlag;
+	}	
+
+
+
 }

@@ -6,16 +6,17 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Hashtable;
 import java.util.logging.Logger;
+
+import tid.pce.computingEngine.ComputingResponse;
 import tid.pce.pcep.PCEPProtocolViolationException;
 import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPMonReq;
 import tid.pce.pcep.messages.PCEPRequest;
-import tid.pce.pcep.messages.PCEPResponse;
 
 public class ClientRequestManagerPrueba {
 	//private PCCPCEPSession session;
 	public Hashtable<Long,Object> locks;
-	private Hashtable<Long,PCEPResponse> responses;
+	private Hashtable<Long,ComputingResponse> responses;
 	private Logger log;
 	private DataOutputStream out=null; //Use this to send messages to PCC
 	private long lastTime;
@@ -24,10 +25,10 @@ public class ClientRequestManagerPrueba {
 	public ClientRequestManagerPrueba(){
 		//this.out=out;
 		locks = new Hashtable<Long, Object>();
-		responses=new Hashtable<Long, PCEPResponse>();
+		responses=new Hashtable<Long, ComputingResponse>();
 		log=Logger.getLogger("PCCClient");
 	}
-	public void notifyResponse(PCEPResponse pcres, long timeIni){
+	public void notifyResponse(ComputingResponse pcres, long timeIni){
 		lastTime=timeIni;
 		long idRequest=pcres.getResponse(0).getRequestParameters().getRequestID();
 		log.finer("Entrando en Notify Response");
@@ -41,11 +42,11 @@ public class ClientRequestManagerPrueba {
 	public void setDataOutputStream(DataOutputStream out){
 		this.out=out;
 	}
-	public PCEPResponse newRequest( PCEPRequest pcreq){
+	public ComputingResponse newRequest( PCEPRequest pcreq){
 		return newRequest(pcreq,30000);
 	}
 	
-	public PCEPResponse newRequest( PCEPRequest pcreq, long maxTimeMs){
+	public ComputingResponse newRequest( PCEPRequest pcreq, long maxTimeMs){
 		log.info("New Request. Request:"+pcreq.toString());
 		Object object_lock=new Object();		
 		long idRequest=pcreq.getRequest(0).getRequestParameters().getRequestID();
@@ -68,7 +69,7 @@ public class ClientRequestManagerPrueba {
 		double reqTime_ms=(timeIni2-timeIni)/1000000;
 		log.fine("Request or timeout");
 		
-		PCEPResponse resp=responses.remove(new Long(idRequest));
+		ComputingResponse resp=responses.remove(new Long(idRequest));
 		if (resp==null){
 			log.warning("NO RESPONSE!!!!! me deshago del lock... con idReqLong "+idRequest);
 			locks.remove(idReqLong);
@@ -98,7 +99,7 @@ public class ClientRequestManagerPrueba {
 		}
 	}
 	
-	public PCEPResponse newRequest(PCEPMonReq pcreq){
+	public ComputingResponse newRequest(PCEPMonReq pcreq){
 		log.fine("New Request");
 		Object object_lock=new Object();
 		//RequestLock rl=new RequestLock();
@@ -118,7 +119,7 @@ public class ClientRequestManagerPrueba {
 		}
 		log.fine("Request or timeout");
 		
-		PCEPResponse resp=responses.get(new Long(idMonitoring));
+		ComputingResponse resp=responses.get(new Long(idMonitoring));
 		if (resp==null){
 			log.warning("NO RESPONSE!!!!!");
 		}

@@ -182,8 +182,9 @@ public class RSVPProcessor extends Thread{
 						SenderTemplateLSPTunnelIPv4 st_ipv4 = (SenderTemplateLSPTunnelIPv4) sd.getSenderTemplate();
 						log.info("idLSP : "+tunnelIPv4.getTunnelId());
 						log.info(" tunnelIPv4.getEgressNodeAddress() : "+ tunnelIPv4.getEgressNodeAddress());
+						//FIXME: This code was taking a null LSP (exists, but null...)
 						// LSP Exists?
-						if(managerLSP.existLSP(tunnelIPv4.getTunnelId(), st_ipv4.getSenderNodeAddress())){
+						/*if(managerLSP.existLSP(tunnelIPv4.getTunnelId(), st_ipv4.getSenderNodeAddress())){
 							//LSP exist
 							log.info("Existent LSP Refreshing Session!");
 					    	LSPTE lsp = managerLSP.getLSP(new Long(tunnelIPv4.getTunnelId()), tunnelIPv4.getEgressNodeAddress());
@@ -203,7 +204,7 @@ public class RSVPProcessor extends Thread{
 								}
 								}
 							}
-					    }else{
+					    }else{*/
 							//Create a New LSP in the Node
 							log.info("New LSP!");
 							//FIXME: Mirar esto
@@ -225,7 +226,7 @@ public class RSVPProcessor extends Thread{
 								}
 								}
 							}
-						}
+						//}
 					}else{
 						log.info("Is not an IPv4 tunnel!");
 					}
