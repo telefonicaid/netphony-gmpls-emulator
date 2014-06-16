@@ -171,28 +171,29 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_PCREP:
-					log.info("Received PCE RESPONSE message");
+					log.info("Received PCE RESPONSE message, FIX THE CODE");
 					long timeIni=System.nanoTime();
 					ComputingResponse pcres=new ComputingResponse();
-					try {
-						pcres.decode(msg);
-						
-						log.info("IdResponse: "+pcres.getResponse(0).getRequestParameters().getRequestID());
-						Object lock=crm.locks.get(new Long(pcres.getResponse(0).getRequestParameters().getRequestID()));
-						if (lock!=null){
-							synchronized (lock) {
-								crm.notifyResponse(pcres, timeIni);
-							}							
-						}
-						else{
-							log.warning("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
-						}
-						
-					} catch (PCEPProtocolViolationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						break;
-					}					
+//FIXME: THIS BLOCK DOESNT WORK, CHANGE IN THE FUTURE
+//					try {
+//						pcres.decode(msg);
+//						
+//						log.info("IdResponse: "+pcres.getResponse(0).getRequestParameters().getRequestID());
+//						Object lock=crm.locks.get(new Long(pcres.getResponse(0).getRequestParameters().getRequestID()));
+//						if (lock!=null){
+//							synchronized (lock) {
+//								crm.notifyResponse(pcres, timeIni);
+//							}							
+//						}
+//						else{
+//							log.warning("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
+//						}
+//						
+//					} catch (PCEPProtocolViolationException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//						break;
+//					}					
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_PCREQ:
