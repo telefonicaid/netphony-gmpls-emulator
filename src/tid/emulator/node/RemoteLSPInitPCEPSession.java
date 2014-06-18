@@ -68,7 +68,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 	}
 	
 	public void run() {
-		initializePCEPSession(false,2,30000,false,false,null,null,null);
+		initializePCEPSession(false,2,30000,false,false,null,null,0);
 		//Session is UP now, start timers
 			
 		//Poner qu� tipo de session es?? como lo se??
