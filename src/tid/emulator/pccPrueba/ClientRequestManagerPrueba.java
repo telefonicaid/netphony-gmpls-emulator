@@ -2,7 +2,6 @@ package tid.emulator.pccPrueba;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Hashtable;
 import java.util.logging.Logger;

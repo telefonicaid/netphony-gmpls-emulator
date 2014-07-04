@@ -1,9 +1,6 @@
 package tid.emulator.node.transport.lsp;
 
 import java.net.Inet4Address;
-import java.util.Hashtable;
-
-import tid.emulator.node.transport.lsp.te.LSPTE;
 
 public class LSPKey {
 	

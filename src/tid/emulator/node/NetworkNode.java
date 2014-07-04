@@ -4,29 +4,14 @@
  */
 package tid.emulator.node;
 
-import java.util.logging.*;
-import java.util.Properties;
-import java.util.Vector;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import tid.pce.client.*;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.pcepsession.PCEPSessionsInformation;
-import tid.pce.server.lspdb.ReportDB_Redis;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.InterDomainEdge;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.MDTEDB;
-import tid.pce.tedb.SimpleTEDB;
-import tid.pce.tedb.TEDB;
-import tid.rsvp.RSVPProtocolViolationException;
-import tid.rsvp.constructs.SenderDescriptor;
-import tid.rsvp.messages.*;
-import tid.rsvp.objects.*;
+import org.jgrapht.graph.DirectedWeightedMultigraph;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+
 import tid.emulator.node.management.NodeManagementSever;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.resources.mpls.MPLSResourceManager;
@@ -35,22 +20,18 @@ import tid.emulator.node.resources.wson.WSONResourceManager;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.PathComputationClient;
 import tid.emulator.node.transport.defineLocalTEDB;
-import tid.emulator.node.transport.ospf.OSPFController;
-import tid.emulator.node.transport.rsvp.*;
-import tid.emulator.node.transport.lsp.*;
+import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.TechnologyParameters;
-
-import org.jgrapht.graph.DirectedWeightedMultigraph;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-import org.omg.CORBA.PolicyErrorCodeHelper;
-import org.savarese.vserv.tcpip.*;
-
-import com.savarese.rocksaw.net.RawSocket;
-
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
-import static com.savarese.rocksaw.net.RawSocket.PF_INET6;
-import static com.savarese.rocksaw.net.RawSocket.getProtocolByName;
-import static org.savarese.vserv.tcpip.ICMPPacket.OFFSET_ICMP_CHECKSUM;
+import tid.emulator.node.transport.ospf.OSPFController;
+import tid.emulator.node.transport.rsvp.RSVPManager;
+import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.server.lspdb.ReportDB_Redis;
+import tid.pce.tedb.DomainTEDB;
+import tid.pce.tedb.InterDomainEdge;
+import tid.pce.tedb.IntraDomainEdge;
+import tid.pce.tedb.MDTEDB;
+import tid.pce.tedb.SimpleTEDB;
+import tid.pce.tedb.TEDB;
 
 /**
  * This class represent a Reconfigurable Optical Add Drop Multiplexer Node. A ROADM is composed

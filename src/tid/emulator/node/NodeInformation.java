@@ -4,20 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-
-import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.lsp.te.TechnologyParameters;
-import tid.emulator.node.transport.ospf.OSPFController;
-import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCEPClient;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
 
 public class NodeInformation {
 	/**

@@ -4,23 +4,20 @@
  */
 package tid.emulator.node.transport.rsvp;
 
-import java.util.Vector;
-import java.io.*;
-import java.net.*;
+import static com.savarese.rocksaw.net.RawSocket.PF_INET;
 
-import java.util.concurrent.*;
-import java.util.logging.Level;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.util.Vector;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
+import tid.emulator.node.resources.ResourceManager;
+import tid.emulator.node.transport.lsp.LSPManager;
 import tid.rsvp.messages.RSVPMessage;
 import tid.rsvp.messages.RSVPMessageTypes;
-import com.savarese.rocksaw.net.RawSocket;
 
-import tid.emulator.node.NetworkNode;
-import tid.emulator.node.resources.ResourceManager;
-import tid.emulator.node.transport.LSPReservationException;
-import tid.emulator.node.transport.lsp.LSPManager;
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
+import com.savarese.rocksaw.net.RawSocket;
 
 /**
  * RSVP Manager 

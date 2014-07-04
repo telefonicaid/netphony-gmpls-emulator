@@ -1,11 +1,9 @@
 package tid.emulator.node.transport.ospf;
 
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import tid.emulator.node.NetworkNode;
 import tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import tid.pce.tedb.DomainTEDB;
 

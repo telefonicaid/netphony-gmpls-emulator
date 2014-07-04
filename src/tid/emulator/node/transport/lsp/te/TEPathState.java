@@ -1,5 +1,6 @@
 package tid.emulator.node.transport.lsp.te;
 
+import tid.emulator.node.transport.lsp.PathState;
 import tid.rsvp.constructs.SenderDescriptor;
 import tid.rsvp.objects.ERO;
 import tid.rsvp.objects.LabelRequest;
@@ -8,7 +9,6 @@ import tid.rsvp.objects.RSVPHop;
 import tid.rsvp.objects.Session;
 import tid.rsvp.objects.SessionAttribute;
 import tid.rsvp.objects.TimeValues;
-import tid.emulator.node.transport.lsp.PathState;
 
 /**
  * TE Path State class implements the complete path state of an RSVP-TE path.

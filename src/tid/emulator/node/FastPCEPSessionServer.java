@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.parentPCE.management.ParentPCEManagementSession;
 
 public class FastPCEPSessionServer extends Thread {
 	
