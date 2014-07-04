@@ -4,12 +4,11 @@
  */
 
 package tid.emulator.node.transport.rsvp;
-import tid.emulator.node.NetworkNode;
-import tid.emulator.node.transport.*;
-import java.io.*;
-import java.util.concurrent.*;
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
+import tid.emulator.node.NetworkNode;
 import tid.rsvp.RSVPProtocolViolationException;
 import tid.rsvp.messages.RSVPMessage;
 import tid.rsvp.messages.RSVPMessageTypes;

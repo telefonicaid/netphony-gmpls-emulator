@@ -7,9 +7,9 @@ import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import com.savarese.rocksaw.net.RawSocket;
-
 import tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
+
+import com.savarese.rocksaw.net.RawSocket;
 
 public class OSPFSenderThread extends Thread{
 	

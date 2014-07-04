@@ -3,7 +3,6 @@ package tid.emulator.node.topology;
 import java.io.File;
 import java.net.Inet4Address;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

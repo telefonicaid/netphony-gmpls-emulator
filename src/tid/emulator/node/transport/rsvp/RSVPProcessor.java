@@ -3,9 +3,9 @@ package tid.emulator.node.transport.rsvp;
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
+
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.transport.LSPCreationException;
-import tid.emulator.node.transport.LSPReservationException;
 import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
 import tid.emulator.node.transport.lsp.LSPKey;
 import tid.emulator.node.transport.lsp.LSPManager;
