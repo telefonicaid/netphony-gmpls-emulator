@@ -24,6 +24,8 @@ import tid.pce.pcep.messages.PCEPNotification;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPUpdate;
+import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.EndPointsIPv4;
 import tid.pce.pcep.objects.LSP;
 import tid.pce.pcep.objects.NoPath;
@@ -175,7 +177,13 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						
 						boolean bidirectional = false;
 						boolean error=false;
-						float bw=p_req.getRequestList().get(0).getBandwidth().getBw();
+						float bw=0;
+						Bandwidth bww=p_req.getRequestList().get(0).getBandwidth();
+						if (bww!=null){
+							if (bww instanceof BandwidthRequested) {
+								bw=((BandwidthRequested)bww).getBw();
+							}
+						}
 							//(float)10000000L;
 						Inet4Address destinationId=((EndPointsIPv4)p_req.getRequest(0).getEndPoints()).getDestIP();
 						long lsp_id = 0;

@@ -11,7 +11,7 @@ import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.PCCPCEPSession;
 import tid.pce.pcep.constructs.Request;
 import tid.pce.pcep.messages.PCEPRequest;
-import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.EndPointsIPv4;
 import tid.pce.pcep.objects.ObjectiveFunction;
 import tid.pce.pcep.objects.RequestParameters;
@@ -234,7 +234,7 @@ public class SSONResourceManager implements ResourceManager{
 		   			
 		req.setObjectiveFunction(objectiveFunction);
 		
-		Bandwidth bandwidth = new Bandwidth();
+		BandwidthRequested bandwidth = new BandwidthRequested();
 		bandwidth.setBw(lspInfo.getBw());
 		req.setBandwidth(bandwidth);
 		
