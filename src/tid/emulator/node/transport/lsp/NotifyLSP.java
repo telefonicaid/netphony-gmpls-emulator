@@ -10,7 +10,7 @@ import tid.pce.pcep.constructs.Path;
 import tid.pce.pcep.constructs.StateReport;
 import tid.pce.pcep.messages.PCEPMessage;
 import tid.pce.pcep.messages.PCEPReport;
-import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.LSP;
 import tid.pce.pcep.objects.ObjectParameters;
@@ -121,10 +121,9 @@ public class NotifyLSP
 
 		path.seteRO(auxERO);
 
-		Bandwidth bw = new Bandwidth();
+		BandwidthRequested bw = new BandwidthRequested();
 
 		bw.setBw(lspte.getBw());
-		bw.setReoptimization(false);
 
 		path.setBandwidth(bw);
 

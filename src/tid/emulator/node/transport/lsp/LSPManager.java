@@ -32,6 +32,8 @@ import tid.pce.pcep.constructs.Response;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPUpdate;
+import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.SRERO;
 import tid.pce.pcep.objects.subobjects.SREROSubobject;
@@ -738,9 +740,15 @@ public class LSPManager {
 					final Path path = pupdt.getUpdateRequestList().get(i).getPath();
 
 					log.info("previous.getIdDestination()"+previous.getIdDestination());
-
+					float bw=0;
+					Bandwidth bww=path.getBandwidth();
+					if (bww!=null){
+						if (bww instanceof BandwidthRequested) {
+							bw=((BandwidthRequested)bww).getBw();
+						}
+					}
 					final LSPTE lsp = new LSPTE(previous.getTunnelId(), previous.getIdSource(), previous.getIdDestination(), 
-							previous.isBidirectional(), previous.getOFcode(),path.getBandwidth().getBw(), previous.getPathState());
+							previous.isBidirectional(), previous.getOFcode(),bw, previous.getPathState());
 
 					ERO ero = new ERO();
 					ero.setEroSubobjects(path.geteRO().getEROSubobjectList());
@@ -748,7 +756,7 @@ public class LSPManager {
 					dataBaseVersion.incrementAndGet();
 					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
 					log.info("previous.getIdDestination()" + previous.getIdDestination());
-					log.info(" path.getBandwidth().getBw()" +  path.getBandwidth().getBw());
+					log.info(" path.getBandwidth().getBw()" +  bw);
 
 					class ThreadAux extends Thread
 					{
@@ -758,7 +766,14 @@ public class LSPManager {
 							try 
 							{
 								sleep(2000);
-								addnewLSP(previous.getIdDestination(), path.getBandwidth().getBw(), 
+								float bw=0;
+								Bandwidth bww=path.getBandwidth();
+								if (bww!=null){
+									if (bww instanceof BandwidthRequested) {
+										bw=((BandwidthRequested)bww).getBw();
+									}
+								}
+								addnewLSP(previous.getIdDestination(), bw, 
 										previous.isBidirectional(), previous.getOFcode(),lsp.getIdLSP().intValue());
 
 								waitForLSPaddition(lsp.getIdLSP().intValue(), 10000);

@@ -25,6 +25,8 @@ import tid.pce.pcep.messages.PCEPReport;
 import tid.pce.pcep.messages.PCEPRequest;
 import tid.pce.pcep.messages.PCEPResponse;
 import tid.pce.pcep.messages.PCEPUpdate;
+import tid.pce.pcep.objects.Bandwidth;
+import tid.pce.pcep.objects.BandwidthRequested;
 import tid.pce.pcep.objects.EndPointsIPv4;
 import tid.pce.pcep.objects.ExplicitRouteObject;
 import tid.pce.pcep.objects.LSP;
@@ -109,8 +111,13 @@ public class FastPCEPSession extends Thread{
 			}
 			int OFcode=p_req.getRequestList().get(0).getObjectiveFunction().getOFcode();
 			boolean bidirectional = false;
-			
-			float bw=p_req.getRequestList().get(0).getBandwidth().getBw();
+			float bw=0;
+			Bandwidth bww=p_req.getRequestList().get(0).getBandwidth();
+			if (bww!=null){
+				if (bww instanceof BandwidthRequested) {
+					bw=((BandwidthRequested)bww).getBw();
+				}
+			}
 			Inet4Address destinationId=((EndPointsIPv4)p_req.getRequest(0).getEndPoints()).getDestIP();
 			long lsp_id = 0;
 			try {
@@ -210,7 +217,7 @@ public class FastPCEPSession extends Thread{
 			}
 			
 		}
-		else if(messageType==PCEPMessageTypes.MESSAGE_INTIATE){
+		else if(messageType==PCEPMessageTypes.MESSAGE_INITIATE){
 			log.info("MESSAGE_INTIATE Received!!");
 			
 			try {
