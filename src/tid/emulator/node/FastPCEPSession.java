@@ -8,34 +8,34 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.constructs.Path;
+import es.tid.pce.pcep.constructs.StateReport;
+import es.tid.pce.pcep.constructs.UpdateRequest;
+import es.tid.pce.pcep.messages.PCEPError;
+import es.tid.pce.pcep.messages.PCEPInitiate;
+import es.tid.pce.pcep.messages.PCEPMessage;
+import es.tid.pce.pcep.messages.PCEPMessageTypes;
+import es.tid.pce.pcep.messages.PCEPReport;
+import es.tid.pce.pcep.messages.PCEPRequest;
+import es.tid.pce.pcep.messages.PCEPResponse;
+import es.tid.pce.pcep.messages.PCEPUpdate;
+import es.tid.pce.pcep.objects.Bandwidth;
+import es.tid.pce.pcep.objects.BandwidthRequested;
+import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.ExplicitRouteObject;
+import es.tid.pce.pcep.objects.LSP;
+import es.tid.pce.pcep.objects.PCEPErrorObject;
+import es.tid.pce.pcep.objects.RequestParameters;
+import es.tid.pce.pcep.objects.SRERO;
+import es.tid.pce.pcep.objects.SRP;
+import es.tid.pce.pcep.objects.tlvs.PathSetupTLV;
+import es.tid.rsvp.objects.ERO;
 import tid.emulator.node.transport.LSPCreationException;
 import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
 import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.Path;
-import tid.pce.pcep.constructs.StateReport;
-import tid.pce.pcep.constructs.UpdateRequest;
-import tid.pce.pcep.messages.PCEPError;
-import tid.pce.pcep.messages.PCEPInitiate;
-import tid.pce.pcep.messages.PCEPMessage;
-import tid.pce.pcep.messages.PCEPMessageTypes;
-import tid.pce.pcep.messages.PCEPReport;
-import tid.pce.pcep.messages.PCEPRequest;
-import tid.pce.pcep.messages.PCEPResponse;
-import tid.pce.pcep.messages.PCEPUpdate;
-import tid.pce.pcep.objects.Bandwidth;
-import tid.pce.pcep.objects.BandwidthRequested;
-import tid.pce.pcep.objects.EndPointsIPv4;
-import tid.pce.pcep.objects.ExplicitRouteObject;
-import tid.pce.pcep.objects.LSP;
-import tid.pce.pcep.objects.PCEPErrorObject;
-import tid.pce.pcep.objects.RequestParameters;
-import tid.pce.pcep.objects.SRERO;
-import tid.pce.pcep.objects.SRP;
-import tid.pce.pcep.objects.tlvs.PathSetupTLV;
-import tid.rsvp.objects.ERO;
    
 /**
  * 
@@ -242,7 +242,7 @@ public class FastPCEPSession extends Thread{
 					Path path = new Path();
 					path.setSRERO(srero);
 					
-					srep.setRSP(rsp);
+					srep.setSRP(rsp);
 					srep.setLSP(lsp);
 					srep.setPath(path);
 					

@@ -14,10 +14,11 @@ import java.util.logging.Logger;
 
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.transport.lsp.LSPManager;
-import tid.rsvp.messages.RSVPMessage;
-import tid.rsvp.messages.RSVPMessageTypes;
 
 import com.savarese.rocksaw.net.RawSocket;
+
+import es.tid.rsvp.messages.RSVPMessage;
+import es.tid.rsvp.messages.RSVPMessageTypes;
 
 /**
  * RSVP Manager 

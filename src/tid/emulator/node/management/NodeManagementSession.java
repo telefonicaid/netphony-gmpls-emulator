@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
+import es.tid.pce.pcep.objects.ObjectParameters;
 import tid.emulator.node.NetworkNode;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.LSPCreationException;
@@ -28,7 +29,6 @@ import tid.pce.client.ClientRequestManager;
 import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.PCEPClient;
 import tid.pce.computingEngine.RequestDispatcher;
-import tid.pce.pcep.objects.ObjectParameters;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.pce.tedb.DomainTEDB;
 import tid.pce.tedb.IntraDomainEdge;
