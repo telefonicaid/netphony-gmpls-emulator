@@ -4,6 +4,20 @@ import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
+import es.tid.rsvp.RSVPProtocolViolationException;
+import es.tid.rsvp.constructs.te.FFFlowDescriptorTE;
+import es.tid.rsvp.constructs.te.SenderDescriptorTE;
+import es.tid.rsvp.messages.RSVPMessage;
+import es.tid.rsvp.messages.RSVPMessageTypes;
+import es.tid.rsvp.messages.RSVPPathTearMessage;
+import es.tid.rsvp.messages.te.RSVPTEPathMessage;
+import es.tid.rsvp.messages.te.RSVPTEResvMessage;
+import es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4;
+import es.tid.rsvp.objects.FlowSpec;
+import es.tid.rsvp.objects.RSVPHopIPv4;
+import es.tid.rsvp.objects.RSVPObject;
+import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
+import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.transport.LSPCreationException;
 import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
@@ -12,20 +26,6 @@ import tid.emulator.node.transport.lsp.LSPManager;
 import tid.emulator.node.transport.lsp.LSPParameters;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.emulator.node.transport.lsp.te.PathStateParameters;
-import tid.rsvp.RSVPProtocolViolationException;
-import tid.rsvp.constructs.te.FFFlowDescriptorTE;
-import tid.rsvp.constructs.te.SenderDescriptorTE;
-import tid.rsvp.messages.RSVPMessage;
-import tid.rsvp.messages.RSVPMessageTypes;
-import tid.rsvp.messages.RSVPPathTearMessage;
-import tid.rsvp.messages.te.RSVPTEPathMessage;
-import tid.rsvp.messages.te.RSVPTEResvMessage;
-import tid.rsvp.objects.FilterSpecLSPTunnelIPv4;
-import tid.rsvp.objects.FlowSpec;
-import tid.rsvp.objects.RSVPHopIPv4;
-import tid.rsvp.objects.RSVPObject;
-import tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
-import tid.rsvp.objects.SessionLSPTunnelIPv4;
 
 public class RSVPProcessor extends Thread{
 

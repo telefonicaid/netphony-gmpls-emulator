@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
+import es.tid.pce.pcep.constructs.Path;
+import es.tid.pce.pcep.constructs.StateReport;
+import es.tid.pce.pcep.messages.PCEPMessage;
+import es.tid.pce.pcep.messages.PCEPReport;
+import es.tid.pce.pcep.objects.BandwidthRequested;
+import es.tid.pce.pcep.objects.ExplicitRouteObject;
+import es.tid.pce.pcep.objects.LSP;
+import es.tid.pce.pcep.objects.ObjectParameters;
+import es.tid.pce.pcep.objects.SRP;
+import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
+import es.tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
+import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.pce.pcep.constructs.Path;
-import tid.pce.pcep.constructs.StateReport;
-import tid.pce.pcep.messages.PCEPMessage;
-import tid.pce.pcep.messages.PCEPReport;
-import tid.pce.pcep.objects.BandwidthRequested;
-import tid.pce.pcep.objects.ExplicitRouteObject;
-import tid.pce.pcep.objects.LSP;
-import tid.pce.pcep.objects.ObjectParameters;
-import tid.pce.pcep.objects.SRP;
-import tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
-import tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
-import tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import tid.pce.server.lspdb.ReportDB;
 
 
@@ -112,7 +112,7 @@ public class NotifyLSP
 
 		lsp.setLspDBVersion_tlv(lspdDTLV);
 		state_report.setLSP(lsp);
-		state_report.setRSP(rsp); 
+		state_report.setSRP(rsp); 
 		/* Set the path */
 		Path path = new Path();
 

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-import tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumReservableBandwidth;
+import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumReservableBandwidth;
 import tid.pce.tedb.IntraDomainEdge;
 import tid.pce.tedb.SimpleTEDB;
 /**

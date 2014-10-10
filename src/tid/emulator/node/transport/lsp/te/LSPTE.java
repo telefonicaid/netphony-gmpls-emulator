@@ -6,11 +6,11 @@ package tid.emulator.node.transport.lsp.te;
 
 import java.net.Inet4Address;
 
+import es.tid.pce.pcep.constructs.Response;
+import es.tid.pce.pcep.objects.SRERO;
+import es.tid.rsvp.objects.ERO;
 import tid.emulator.node.transport.RequestedLSPinformation;
 import tid.emulator.node.transport.lsp.LSP;
-import tid.pce.pcep.constructs.Response;
-import tid.pce.pcep.objects.SRERO;
-import tid.rsvp.objects.ERO;
 
 /**
  * This class represents all the needed LSP information to completely characterize it.

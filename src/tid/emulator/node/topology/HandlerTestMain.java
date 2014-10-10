@@ -2,8 +2,8 @@ package tid.emulator.node.topology;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import tid.netManager.TCPOSPFSender;
-import tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 
 
 public class HandlerTestMain {
