@@ -164,9 +164,11 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						log.info("PCREQ message received");
 						long time1= System.nanoTime();
 						lspManager.setTimeIni_Node(System.nanoTime());
-						PCEPRequest p_req=new PCEPRequest();
+						PCEPRequest p_req;
+						
 						try {
-							p_req.decode(msg);
+							p_req=new PCEPRequest(msg);
+							p_req.decode();
 							log.info(p_req.toString());
 						} catch (PCEPProtocolViolationException e) {
 							e.printStackTrace();
