@@ -101,9 +101,11 @@ public class FastPCEPSession extends Thread{
 		
 		if (messageType==PCEPMessageTypes.MESSAGE_PCREQ){
 			log.info("LSP Creation Request received");
-			PCEPRequest p_req=new PCEPRequest();
+			PCEPRequest p_req;
+			
 			try {
-				p_req.decode(msg);
+				p_req=new PCEPRequest(msg);
+				p_req.decode();
 				log.info(p_req.toString());
 			} catch (PCEPProtocolViolationException e) {
 				e.printStackTrace();
