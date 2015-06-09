@@ -168,7 +168,6 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						
 						try {
 							p_req=new PCEPRequest(msg);
-							p_req.decode();
 							log.info(p_req.toString());
 						} catch (PCEPProtocolViolationException e) {
 							e.printStackTrace();

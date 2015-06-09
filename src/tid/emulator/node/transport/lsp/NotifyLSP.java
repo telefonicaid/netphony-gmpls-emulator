@@ -15,7 +15,7 @@ import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.tlvs.LSPDatabaseVersionTLV;
-import es.tid.pce.pcep.objects.tlvs.LSPIdentifiersTLV;
+import es.tid.pce.pcep.objects.tlvs.IPv4LSPIdentifiersTLV;
 import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.server.lspdb.ReportDB;
@@ -87,7 +87,7 @@ public class NotifyLSP
 
 		lsp.setLspId(lspte.getIdLSP().intValue());
 
-		LSPIdentifiersTLV lspIdTLV = new LSPIdentifiersTLV();
+		IPv4LSPIdentifiersTLV lspIdTLV = new IPv4LSPIdentifiersTLV();
 
 		lspIdTLV.setTunnelID((int)lspte.getTunnelId());
 		lspIdTLV.setTunnelSenderIPAddress(lspte.getIdSource());   	 
