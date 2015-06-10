@@ -20,12 +20,12 @@ import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
 import es.tid.rsvp.objects.SessionLSPTunnelIPv4;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.transport.LSPCreationException;
-import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
-import tid.emulator.node.transport.lsp.LSPKey;
-import tid.emulator.node.transport.lsp.LSPManager;
-import tid.emulator.node.transport.lsp.LSPParameters;
-import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.emulator.node.transport.lsp.te.PathStateParameters;
+import tid.pce.client.lsp.LSPCreationErrorTypes;
+import tid.pce.client.lsp.LSPKey;
+import tid.pce.client.lsp.LSPManager;
+import tid.pce.client.lsp.LSPParameters;
+import tid.pce.client.lsp.te.LSPTE;
+import tid.pce.client.lsp.te.PathStateParameters;
 
 public class RSVPProcessor extends Thread{
 

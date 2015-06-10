@@ -32,10 +32,10 @@ import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import es.tid.rsvp.objects.ERO;
 import tid.emulator.node.transport.LSPCreationException;
-import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
-import tid.emulator.node.transport.lsp.LSPManager;
-import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.client.lsp.LSPCreationErrorTypes;
+import tid.pce.client.lsp.LSPManager;
+import tid.pce.client.lsp.te.LSPTE;
    
 /**
  * 
