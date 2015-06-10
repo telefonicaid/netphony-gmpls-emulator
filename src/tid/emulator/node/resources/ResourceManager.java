@@ -7,8 +7,8 @@ import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.rsvp.messages.RSVPPathTearMessage;
 import es.tid.rsvp.messages.te.RSVPTEPathMessage;
 import es.tid.rsvp.messages.te.RSVPTEResvMessage;
-import tid.emulator.node.transport.lsp.LSPKey;
-import tid.emulator.node.transport.lsp.te.LSPTE;
+import tid.pce.client.lsp.LSPKey;
+import tid.pce.client.lsp.te.LSPTE;
 
 
 public interface ResourceManager {

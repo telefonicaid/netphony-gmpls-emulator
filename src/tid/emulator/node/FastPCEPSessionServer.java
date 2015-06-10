@@ -4,8 +4,8 @@ import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.util.logging.Logger;
 
-import tid.emulator.node.transport.lsp.LSPManager;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
+import tid.pce.client.lsp.LSPManager;
 
 public class FastPCEPSessionServer extends Thread {
 	
