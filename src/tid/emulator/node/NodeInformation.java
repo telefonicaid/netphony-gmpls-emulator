@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import tid.pce.client.lsp.te.TechnologyParameters;
+import tid.emulator.node.transport.lsp.te.TechnologyParameters;
 
 public class NodeInformation {
 	/**

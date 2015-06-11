@@ -21,13 +21,13 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import tid.emulator.node.NetworkNode;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.LSPCreationException;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.emulator.node.transport.defineLocalTEDB;
+import tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
+import tid.emulator.node.transport.lsp.te.TechnologyParameters;
 import tid.emulator.node.transport.ospf.OSPFController;
 import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.PCEPClient;
-import tid.pce.client.lsp.LSPCreationErrorTypes;
-import tid.pce.client.lsp.te.TechnologyParameters;
 import tid.pce.computingEngine.RequestDispatcher;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.pce.tedb.DomainTEDB;
@@ -506,13 +506,13 @@ public class NodeManagementSession extends Thread {
 			out.print("\nInsert the port where the PCE is listening");
 			
 			int port = Integer.valueOf(getCommand()).intValue();
-			PCCPCEPSession PCEsession = new PCCPCEPSession(ip, port,false, new PCEPSessionsInformation());
+			EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(ip, port,false, new PCEPSessionsInformation());
 			node.getPCC().setPceSession(PCEsession);
 			node.getPCC().setCrm(PCEsession.crm);
 			PCEsession.start();
 		}else{
 			int pcepport = Integer.valueOf(pcepPort).intValue();
-			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress, pcepport,false, new PCEPSessionsInformation());
+			EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(pceAddress, pcepport,false, new PCEPSessionsInformation());
 			node.getPCC().setPceSession(PCEsession);
 			node.getPCC().setCrm(PCEsession.crm);
 			PCEsession.start();

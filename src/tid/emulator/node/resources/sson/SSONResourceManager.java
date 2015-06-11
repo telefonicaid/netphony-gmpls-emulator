@@ -36,9 +36,9 @@ import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.lsp.LSPKey;
-import tid.pce.client.lsp.te.LSPTE;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import tid.emulator.node.transport.lsp.LSPKey;
+import tid.emulator.node.transport.lsp.te.LSPTE;
 import tid.pce.tedb.MDTEDB;
 
 /**
@@ -219,7 +219,7 @@ public class SSONResourceManager implements ResourceManager{
 		
 		RequestParameters rp= new RequestParameters();
 		req.setRequestParameters(rp);
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());
 		
 		rp.setPrio(1);
 		rp.setBidirect(lspInfo.isBidirectional());

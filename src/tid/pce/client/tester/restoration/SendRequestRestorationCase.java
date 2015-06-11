@@ -12,12 +12,12 @@ import es.tid.pce.pcep.messages.PCEPResponse;
 import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.ExplicitRouteObject;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 
 public class SendRequestRestorationCase  extends TimerTask {
 	private PCEPRequest request;
-	private PCCPCEPSession PCEsession;
+	private EmulatedPCCPCEPSession PCEsession;
 	private long initialTime;
 	private int numberRetries=0;
 	RestorationCaseStatistics restorationCaseStatistics;	
@@ -122,7 +122,7 @@ public class SendRequestRestorationCase  extends TimerTask {
 	}
 	
 	private void changeIdRequest(PCEPRequest request){		
-		request.getRequestList().get(0).getRequestParameters().setRequestID(PCCPCEPSession.getNewReqIDCounter());
+		request.getRequestList().get(0).getRequestParameters().setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());
 	}
 	public PCEPRequest getRequest() {
 		return request;
@@ -130,10 +130,10 @@ public class SendRequestRestorationCase  extends TimerTask {
 	public void setRequest(PCEPRequest request) {
 		this.request = request;
 	}
-	public PCCPCEPSession getPCEsession() {
+	public EmulatedPCCPCEPSession getPCEsession() {
 		return PCEsession;
 	}
-	public void setPCEsession(PCCPCEPSession pCEsession) {
+	public void setPCEsession(EmulatedPCCPCEPSession pCEsession) {
 		PCEsession = pCEsession;
 	}
 	public long getInitialTime() {

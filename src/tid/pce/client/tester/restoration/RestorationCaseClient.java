@@ -24,6 +24,7 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
 import tid.netManager.NetworkLSPManagerParameters;
 import tid.netManager.OSPFSender;
@@ -32,7 +33,6 @@ import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
 import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.pce.tedb.IntraDomainEdge;
 import tid.pce.tedb.SimpleTEDB;
@@ -41,7 +41,7 @@ import tid.pce.tedb.SimpleTEDB;
 public class RestorationCaseClient {
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	private static  RestorationCaseParameters testerParams;
-	private static PCCPCEPSession PCEsession;
+	private static EmulatedPCCPCEPSession PCEsession;
 	/**
 	 * Restoration case
 	 */
@@ -98,7 +98,7 @@ public class RestorationCaseClient {
 		}
 		
 		PCEPSessionsInformation pcepSessionManager = new PCEPSessionsInformation();
-		PCEsession = new PCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(0), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(0), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
+		PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(0), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(0), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
 		PCEsession.start();
 		//AutomaticTesterStatistics stats = new AutomaticTesterStatistics(testerParams.getLoadIni());;
 		networkLSPManager = createNetworkLSPManager();

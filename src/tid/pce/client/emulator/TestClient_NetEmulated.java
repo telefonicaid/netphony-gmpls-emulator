@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
 import tid.netManager.NetworkLSPManagerParameters;
 import tid.netManager.OSPFSender;
@@ -14,7 +15,6 @@ import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
 import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.UserInterface;
 import tid.pce.client.tester.InformationRequest;
 import tid.pce.pcepsession.PCEPSessionsInformation;
@@ -26,9 +26,9 @@ import tid.pce.pcepsession.PCEPSessionsInformation;
 public class TestClient_NetEmulated {
 
 		private static InformationRequest testerParams;
-		private static Hashtable<Integer,PCCPCEPSession> PCEsessionList;
+		private static Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
 		private static UserInterface ui;
-		private static PCCPCEPSession PCEsession;
+		private static EmulatedPCCPCEPSession PCEsession;
 		public static final Logger Log =Logger.getLogger("PCCClient");
 		private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 
@@ -64,12 +64,12 @@ public class TestClient_NetEmulated {
 			String ip;
 			int port;
 
-			PCEsessionList= new Hashtable<Integer,PCCPCEPSession>();
+			PCEsessionList= new Hashtable<Integer,EmulatedPCCPCEPSession>();
 			ip = args[0];
 			port = Integer.valueOf(args[1]).intValue();
 			
 			for (int i =0;i<testerParams.getPCCPCEPsessionParams().getNumSessions();i++){
-				PCCPCEPSession PCEsession = new PCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(),PcepsessionManager );
+				EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(),PcepsessionManager );
 				PCEsessionList.put(i, PCEsession);
 				PCEsession.start();
 			}

@@ -29,8 +29,8 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.tedb.IntraDomainEdge;
 import tid.pce.tedb.SimpleTEDB;
 
@@ -88,7 +88,7 @@ public class DisconnectingLinkTask extends TimerTask {
 	/**
 	 * Session with PCE
 	 */
-	PCCPCEPSession PCEsession;
+	EmulatedPCCPCEPSession PCEsession;
 	/**
 	 * Constructor
 	 * @param restorationCaseTable
@@ -99,7 +99,7 @@ public class DisconnectingLinkTask extends TimerTask {
 	 * @param logAttemps
 	 * @param logTimes
 	 */
-	public DisconnectingLinkTask (LinkedList<RestorationCaseTable> restorationCaseTable,NetworkLSPManager networkLSPManager,RestorationCaseParameters testerParams,PCCPCEPSession PCEsession, Logger logStats, Logger logAttemps,Logger logTimes){
+	public DisconnectingLinkTask (LinkedList<RestorationCaseTable> restorationCaseTable,NetworkLSPManager networkLSPManager,RestorationCaseParameters testerParams,EmulatedPCCPCEPSession PCEsession, Logger logStats, Logger logAttemps,Logger logTimes){
 		log = Logger.getLogger("PCCClient");
 		this.logStats=logStats;
 		this.logAttemps=logAttemps;
@@ -270,7 +270,7 @@ public class DisconnectingLinkTask extends TimerTask {
 		//RequestParameters
 		RequestParameters rp= new RequestParameters();
 		rp.setPbit(true);				
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());		
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());		
 		rp.setPrio(testerParams.getRequestToSendList().get(0).getRequestParameters().getPriority());		
 		rp.setReopt(testerParams.getRequestToSendList().get(0).getRequestParameters().isReoptimization());	
 		rp.setBidirect(testerParams.getRequestToSendList().get(0).getRequestParameters().isBidirectional());

@@ -9,8 +9,8 @@ import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.RequestParameters;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 
 public class PCEClient {
@@ -28,7 +28,7 @@ public class PCEClient {
 		Inet4Address ipOpticDest=(Inet4Address) Inet4Address.getByName(ipOpticDestString);
 
 		PCEPSessionsInformation pcepSessionManagerPCE=new PCEPSessionsInformation();
-		PCCPCEPSession PCEsession = new PCCPCEPSession("localhost", 4189 ,false,pcepSessionManagerPCE);
+		EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession("localhost", 4189 ,false,pcepSessionManagerPCE);
 		PCEsession.start();	
 		Thread.currentThread().sleep(1000);
 		ClientRequestManager crm = PCEsession.crm;
@@ -44,7 +44,7 @@ public class PCEClient {
 		RequestParameters rp= new RequestParameters();
 		rp.setPbit(true);
 		req.setRequestParameters(rp);
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());
 		//EndPointsIPv4 ep=new EndPointsIPv4();
 		EndPointsIPv4 ep= new EndPointsIPv4();
 		req.setEndPoints(ep);

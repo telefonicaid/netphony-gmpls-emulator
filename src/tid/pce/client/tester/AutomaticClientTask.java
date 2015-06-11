@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import tid.pce.client.PCCPCEPSession;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.vntm.VNTMSession;
 import cern.jet.random.Exponential;
@@ -46,7 +46,7 @@ public class AutomaticClientTask  extends TimerTask {
 	 * Sesi�nes con los PCE. 
 	 * Balanceo de carga
 	 */
-	private Hashtable<Integer,PCCPCEPSession> PCEsessionList;
+	private Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
 	private int currentNumberPCESession;
 	
 	private Logger log;
@@ -85,7 +85,7 @@ public class AutomaticClientTask  extends TimerTask {
 	 * @param stats
 	 * @param positionRequestList identifica el par origen destino en la lista requestToSendList
 	 */
-	public AutomaticClientTask(Exponential expSendRequest,ScheduledThreadPoolExecutor requestExecutor,Hashtable<Integer,PCCPCEPSession> PCEsessionList,InformationRequest informationRequest,AutomaticTesterStatistics stats,int positionRequestList,int currentNumberPCESession/*,long timeNanoCreated, long timeExpected*/
+	public AutomaticClientTask(Exponential expSendRequest,ScheduledThreadPoolExecutor requestExecutor,Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList,InformationRequest informationRequest,AutomaticTesterStatistics stats,int positionRequestList,int currentNumberPCESession/*,long timeNanoCreated, long timeExpected*/
 			, float [] cadenaBW){
 		this.stats= stats;
 		log=Logger.getLogger("PCCClient");		
@@ -151,7 +151,7 @@ public class AutomaticClientTask  extends TimerTask {
 		this.thingsToDo = thingsToDo;
 	}
 
-	public void inicializeNumberReqProccesingList(Hashtable<Integer,PCCPCEPSession> PCEsessionList){
+	public void inicializeNumberReqProccesingList(Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList){
 	}
 //	private synchronized long getIdRequest(){
 //		requestID++;
@@ -307,7 +307,7 @@ public class AutomaticClientTask  extends TimerTask {
 		//RequestParameters
 		RequestParameters rp= new RequestParameters();
 		rp.setPbit(true);				
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());		
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());		
 		rp.setPrio(testerParams.getRequestToSendList().get(i).getRequestParameters().getPriority());		
 		rp.setReopt(testerParams.getRequestToSendList().get(i).getRequestParameters().isReoptimization());	
 		rp.setBidirect(testerParams.getRequestToSendList().get(i).getRequestParameters().isBidirectional());
@@ -371,7 +371,7 @@ public class AutomaticClientTask  extends TimerTask {
 			//RequestParameters
 
 			rp.setPbit(true);				
-			rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());		
+			rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());		
 			rp.setPrio(testerParams.getRequestToSendList().get(i).getRequestParameters().getPriority());		
 			rp.setReopt(testerParams.getRequestToSendList().get(i).getRequestParameters().isReoptimization());	
 			rp.setBidirect(testerParams.getRequestToSendList().get(i).getRequestParameters().isBidirectional());	

@@ -9,8 +9,8 @@ import es.tid.pce.pcep.messages.PCEPMessage;
 import es.tid.pce.pcep.messages.PCEPMonReq;
 import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.pce.pcep.messages.PCEPResponse;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCCPCEPSession;
 
 
 public class AutomaticTesterNetworkTask  extends TimerTask {
@@ -23,7 +23,7 @@ public class AutomaticTesterNetworkTask  extends TimerTask {
 	/*Variable used for counter how many requests there are*/
 
 	PCEPMessage request;
-	AutomaticTesterNetworkTask(PCEPMessage request,PCCPCEPSession ps,boolean PCMonReqBool){
+	AutomaticTesterNetworkTask(PCEPMessage request,EmulatedPCCPCEPSession ps,boolean PCMonReqBool){
 		this.request = request;
 		log=Logger.getLogger("PCCClient");
 		this.crm=ps.crm;

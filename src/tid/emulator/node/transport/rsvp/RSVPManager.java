@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 import tid.emulator.node.resources.ResourceManager;
-import tid.pce.client.lsp.LSPManager;
+import tid.emulator.node.transport.lsp.LSPManager;
 
 import com.savarese.rocksaw.net.RawSocket;
 

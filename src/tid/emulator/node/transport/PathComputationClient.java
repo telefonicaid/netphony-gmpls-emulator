@@ -3,20 +3,19 @@ package tid.emulator.node.transport;
 import java.net.Inet4Address;
 import java.util.logging.Logger;
 
+import tid.emulator.node.transport.lsp.LSPManager;
 import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.PCEPClient;
-import tid.pce.client.lsp.LSPManager;
 import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.pce.server.lspdb.ReportDB_Redis;
 
 public class PathComputationClient {
     private PCEPClient clientPCE;
-    private PCCPCEPSession PCEsession;
+    private EmulatedPCCPCEPSession PCEsession;
     private int OF;
 
     // Auxiliar para pruebas, crear un pce client
-    private PCCPCEPSession pceSession;
+    private EmulatedPCCPCEPSession pceSession;
     private ClientRequestManager crm;
     
     private Logger log;
@@ -37,7 +36,7 @@ public class PathComputationClient {
 			pcepSessionsInformation.setMSD(MSD);
 			
 			
-			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
+			EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
 			this.setPceSession(PCEsession);
 			this.setCrm(PCEsession.crm);
 			lspManager.setPCESession(PCEsession);
@@ -61,7 +60,7 @@ public class PathComputationClient {
 			pcepSessionsInformation.setSRCapable(setSRCapable);
 			pcepSessionsInformation.setMSD(MSD);
 					
-			PCCPCEPSession PCEsession = new PCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
+			EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(pceAddress.getCanonicalHostName(), pcepport,false,pcepSessionsInformation,lspManager);
 			this.setPceSession(PCEsession);
 			this.setCrm(PCEsession.crm);
 			lspManager.setPCESession(PCEsession);
@@ -80,11 +79,11 @@ public class PathComputationClient {
 		this.clientPCE = clientPCE;
 	}
 
-	public PCCPCEPSession getPCEsession() {
+	public EmulatedPCCPCEPSession getPCEsession() {
 		return PCEsession;
 	}
 
-	public void setPCEsession(PCCPCEPSession pCEsession) {
+	public void setPCEsession(EmulatedPCCPCEPSession pCEsession) {
 		PCEsession = pCEsession;
 	}
 
@@ -96,11 +95,11 @@ public class PathComputationClient {
 		OF = oF;
 	}
 
-	public PCCPCEPSession getPceSession() {
+	public EmulatedPCCPCEPSession getPceSession() {
 		return pceSession;
 	}
 
-	public void setPceSession(PCCPCEPSession pceSession) {
+	public void setPceSession(EmulatedPCCPCEPSession pceSession) {
 		this.pceSession = pceSession;
 	}
 

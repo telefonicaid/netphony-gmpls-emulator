@@ -18,10 +18,10 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
 import tid.netManager.NetworkLSPManagerTypes;
 import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.management.AutomaticTesterManagementSever;
 import tid.pce.client.management.StopManagement;
 import tid.pce.client.tester.Activity;
@@ -52,12 +52,12 @@ public class Emulator {
 	/**
 	 * Sesi�nes con los PCE. 
 	 */
-	private Hashtable<Integer,PCCPCEPSession> PCEsessionList;
+	private Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
 	
 	/**
 	 * Session con el VNTM. Es posible que sea null, si no lanzamos el programa con la condicion de VNTM
 	 */
-	private PCCPCEPSession VNTMSession;
+	private EmulatedPCCPCEPSession VNTMSession;
 	
 	private LSPConfirmationDispatcher LSPConfDist;
 
@@ -147,8 +147,8 @@ public class Emulator {
      //private int [] cadenaSemilla_Tiempos;
     
               
-     public Emulator (InformationRequest informationRequest,Hashtable<Integer,PCCPCEPSession> PCEsessionList,
-			NetworkLSPManager networkLSPManager,PCCPCEPSession VNTMSession, AutomaticTesterStatistics stats){
+     public Emulator (InformationRequest informationRequest,Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList,
+			NetworkLSPManager networkLSPManager,EmulatedPCCPCEPSession VNTMSession, AutomaticTesterStatistics stats){
 		this.testerParams=informationRequest;
 		this.PCEsessionList = PCEsessionList;
 		statsLog=Logger.getLogger("stats");
@@ -160,8 +160,8 @@ public class Emulator {
 		automaticTesterManagementServerTask.start();
 		this.stats=stats;
 	}
-	public Emulator (InformationRequest informationRequest,Hashtable<Integer,PCCPCEPSession> PCEsessionList,
-			NetworkLSPManager networkLSPManager,PCCPCEPSession VNTMSession, AutomaticTesterStatistics stats, LSPConfirmationDispatcher LSPConfDist){
+	public Emulator (InformationRequest informationRequest,Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList,
+			NetworkLSPManager networkLSPManager,EmulatedPCCPCEPSession VNTMSession, AutomaticTesterStatistics stats, LSPConfirmationDispatcher LSPConfDist){
 		this.testerParams=informationRequest;
 		this.PCEsessionList = PCEsessionList;
 		statsLog=Logger.getLogger("stats");

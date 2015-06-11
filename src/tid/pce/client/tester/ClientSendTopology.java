@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
+import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
 import tid.netManager.NetworkLSPManagerParameters;
 import tid.netManager.OSPFSender;
@@ -14,7 +15,6 @@ import tid.netManager.TCPOSPFSender;
 import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
 import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 
 /**
  * Cada 30 segundos, lanza una tarea que envia OSPF's de toda la red
@@ -22,7 +22,7 @@ import tid.pce.client.PCCPCEPSession;
  *
  */
 public class ClientSendTopology {
-	private static PCCPCEPSession PCEsession;
+	private static EmulatedPCCPCEPSession PCEsession;
 	private static Logger log=Logger.getLogger("PCCClient");
 	private static Logger log2=Logger.getLogger("PCEPParser");
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
