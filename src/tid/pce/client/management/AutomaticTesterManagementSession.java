@@ -9,8 +9,8 @@ import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.client.emulator.Emulator;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
+import es.tid.pce.client.emulator.Emulator;
 import tid.pce.client.tester.InformationRequest;
 
 
