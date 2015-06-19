@@ -20,11 +20,11 @@ import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.BitmapLabelSet;
 import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import es.tid.rsvp.constructs.gmpls.DWDMWavelengthLabel;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
+import es.tid.tedb.DomainTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.MultiLayerTEDB;
+import es.tid.tedb.SimpleTEDB;
 import tid.netManager.emulated.LayerTypes;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.MultiLayerTEDB;
-import tid.pce.tedb.SimpleTEDB;
 
 public abstract class NetworkLSPManager {
 	Logger log= Logger.getLogger("PCCClient");

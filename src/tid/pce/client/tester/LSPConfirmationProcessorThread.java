@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import tid.netManager.NetworkLSPManager;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.tedb.DomainTEDB;
 import tid.vntm.LSP;
 import tid.vntm.LigthPathCreateIP;
 import cern.jet.random.Exponential;
@@ -16,6 +15,7 @@ import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
+import es.tid.tedb.DomainTEDB;
 
 public class LSPConfirmationProcessorThread extends Thread {
 

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import es.tid.pce.pcep.messages.PCEPMessageTypes;
-import tid.pce.pcepsession.PCEPSessionsInformation;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 
 public class StatefulSession {
 	

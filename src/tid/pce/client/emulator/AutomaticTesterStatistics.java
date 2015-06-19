@@ -2,7 +2,7 @@ package tid.pce.client.emulator;
 
 import java.util.ArrayList;
 
-import tid.util.Analysis;
+import es.tid.util.Analysis;
 
 public class AutomaticTesterStatistics {
 	

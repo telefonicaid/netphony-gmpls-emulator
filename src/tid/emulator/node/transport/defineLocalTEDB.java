@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-import tid.pce.tedb.InterDomainEdge;
-import tid.pce.tedb.IntraDomainEdge;
+import es.tid.tedb.InterDomainEdge;
+import es.tid.tedb.IntraDomainEdge;
 
 public class defineLocalTEDB {
 	private static Logger log;

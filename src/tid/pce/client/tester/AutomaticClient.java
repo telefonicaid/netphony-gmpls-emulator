@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
 import tid.netManager.NetworkLSPManagerParameters;
@@ -19,7 +20,6 @@ import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
 import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.pce.client.emulator.Emulator;
-import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.vntm.VNTMParameters;
 
 /**

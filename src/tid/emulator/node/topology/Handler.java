@@ -15,10 +15,10 @@ import es.tid.ospf.ospfv2.lsa.tlv.LinkTLV;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.LinkID;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.LocalInterfaceIPAddress;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.RemoteInterfaceIPAddress;
+import es.tid.tedb.DomainTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.MultiLayerTEDB;
 import tid.netManager.emulated.LayerTypes;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.MultiLayerTEDB;
 
 /**
  * Class which reads a topology network from an XML file, and sends it by OSPF.

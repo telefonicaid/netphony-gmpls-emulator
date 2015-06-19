@@ -3,11 +3,11 @@ package tid.emulator.node.transport;
 import java.net.Inet4Address;
 import java.util.logging.Logger;
 
+import es.tid.pce.client.ClientRequestManager;
+import es.tid.pce.client.PCEPClient;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
+import es.tid.pce.server.lspdb.ReportDB_Redis;
 import tid.emulator.node.transport.lsp.LSPManager;
-import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCEPClient;
-import tid.pce.pcepsession.PCEPSessionsInformation;
-import tid.pce.server.lspdb.ReportDB_Redis;
 
 public class PathComputationClient {
     private PCEPClient clientPCE;

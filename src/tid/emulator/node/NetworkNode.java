@@ -12,6 +12,13 @@ import java.util.logging.Logger;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
+import es.tid.pce.server.lspdb.ReportDB_Redis;
+import es.tid.tedb.DomainTEDB;
+import es.tid.tedb.InterDomainEdge;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.MDTEDB;
+import es.tid.tedb.SimpleTEDB;
+import es.tid.tedb.TEDB;
 import tid.emulator.node.management.NodeManagementSever;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.resources.mpls.MPLSResourceManager;
@@ -25,13 +32,6 @@ import tid.emulator.node.transport.lsp.te.TechnologyParameters;
 import tid.emulator.node.transport.ospf.OSPFController;
 import tid.emulator.node.transport.rsvp.RSVPManager;
 import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.server.lspdb.ReportDB_Redis;
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.InterDomainEdge;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.MDTEDB;
-import tid.pce.tedb.SimpleTEDB;
-import tid.pce.tedb.TEDB;
 
 /**
  * This class represent a Reconfigurable Optical Add Drop Multiplexer Node. A ROADM is composed

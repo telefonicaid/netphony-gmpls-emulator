@@ -34,12 +34,12 @@ import es.tid.rsvp.objects.subobjects.GeneralizedLabelEROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
+import es.tid.tedb.MDTEDB;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.emulator.node.transport.lsp.LSPKey;
 import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.pce.tedb.MDTEDB;
 
 /**
  * 

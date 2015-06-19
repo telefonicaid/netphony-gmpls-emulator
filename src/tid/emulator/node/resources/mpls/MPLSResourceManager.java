@@ -7,11 +7,11 @@ import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.rsvp.messages.RSVPPathTearMessage;
 import es.tid.rsvp.messages.te.RSVPTEPathMessage;
 import es.tid.rsvp.messages.te.RSVPTEResvMessage;
+import es.tid.tedb.MDTEDB;
 import tid.emulator.node.resources.ResourceManager;
 import tid.emulator.node.tedb.SimpleLocalTEDB;
 import tid.emulator.node.transport.lsp.LSPKey;
 import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.pce.tedb.MDTEDB;
 
 /**
  * 

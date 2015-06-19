@@ -1,8 +1,8 @@
 package tid.pce.client.multiDomain;
 import java.util.Timer;
 
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.pcepsession.PCEPSessionsInformation;
+import es.tid.pce.client.PCCPCEPSession;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 
 
 /**

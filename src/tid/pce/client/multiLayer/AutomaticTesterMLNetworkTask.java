@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import es.tid.pce.client.ClientRequestManager;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.messages.PCEPRequest;
@@ -22,7 +23,6 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import tid.emulator.node.transport.EmulatedPCCPCEPSession;
-import tid.pce.client.ClientRequestManager;
 
 
 public class AutomaticTesterMLNetworkTask  extends TimerTask {

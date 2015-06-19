@@ -2,6 +2,7 @@ package tid.test;
 
 import java.net.Inet4Address;
 
+import es.tid.pce.client.ClientRequestManager;
 import es.tid.pce.pcep.constructs.Request;
 import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.pce.pcep.messages.PCEPResponse;
@@ -9,9 +10,8 @@ import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.RequestParameters;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.emulator.node.transport.EmulatedPCCPCEPSession;
-import tid.pce.client.ClientRequestManager;
-import tid.pce.pcepsession.PCEPSessionsInformation;
 
 public class PCEClient {
 

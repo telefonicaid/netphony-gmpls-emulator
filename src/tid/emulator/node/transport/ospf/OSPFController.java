@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
-import tid.pce.tedb.DomainTEDB;
+import es.tid.tedb.DomainTEDB;
 
 public class OSPFController {
 	private DomainTEDB domainTEDB;

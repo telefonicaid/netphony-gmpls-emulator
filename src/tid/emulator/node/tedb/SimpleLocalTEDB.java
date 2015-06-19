@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumReservableBandwidth;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.SimpleTEDB;
 /**
  * Traffic Engineering Database of a Domain.
  *

@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-import tid.pce.tedb.DomainTEDB;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
+import es.tid.tedb.DomainTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.SimpleTEDB;
 
 public class OSPFSendAllTopology extends Thread {
 

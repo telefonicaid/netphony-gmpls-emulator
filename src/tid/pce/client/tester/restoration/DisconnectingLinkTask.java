@@ -29,10 +29,10 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.SimpleTEDB;
 import tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import tid.netManager.NetworkLSPManager;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
 
 /**
  * Class in charge of simulate a link failure. It is simulated filling the hole link with occupied lambdas

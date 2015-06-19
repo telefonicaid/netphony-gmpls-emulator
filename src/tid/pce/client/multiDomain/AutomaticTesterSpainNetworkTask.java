@@ -17,6 +17,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import es.tid.pce.client.ClientRequestManager;
+import es.tid.pce.client.PCCPCEPSession;
+import es.tid.pce.computingEngine.AlgorithmRule;
+import es.tid.pce.computingEngine.MapAlgoRule;
 import es.tid.pce.pcep.constructs.Request;
 import es.tid.pce.pcep.messages.PCEPMonReq;
 import es.tid.pce.pcep.messages.PCEPRequest;
@@ -26,10 +30,6 @@ import es.tid.pce.pcep.objects.Monitoring;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.PccReqId;
 import es.tid.pce.pcep.objects.RequestParameters;
-import tid.pce.client.ClientRequestManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.computingEngine.AlgorithmRule;
-import tid.pce.computingEngine.MapAlgoRule;
 
 public class AutomaticTesterSpainNetworkTask  extends TimerTask {
 	private final int portDomainA=4183;

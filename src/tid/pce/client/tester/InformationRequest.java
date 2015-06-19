@@ -19,9 +19,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import tid.pce.client.tester.restoration.RestorationCaseInformation;
-import tid.pce.computingEngine.MapAlgoRule;
 import cern.jet.random.engine.MersenneTwister;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MaximumReservableBandwidth;
+import es.tid.pce.computingEngine.MapAlgoRule;
 
 /**
  * Parametros de configuracion del cliente
