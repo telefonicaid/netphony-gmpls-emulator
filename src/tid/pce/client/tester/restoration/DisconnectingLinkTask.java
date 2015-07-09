@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.BitmapLabelSet;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.constructs.Request;
@@ -29,10 +31,8 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
-import tid.netManager.NetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.SimpleTEDB;
 
 /**
  * Class in charge of simulate a link failure. It is simulated filling the hole link with occupied lambdas
@@ -88,7 +88,7 @@ public class DisconnectingLinkTask extends TimerTask {
 	/**
 	 * Session with PCE
 	 */
-	PCCPCEPSession PCEsession;
+	EmulatedPCCPCEPSession PCEsession;
 	/**
 	 * Constructor
 	 * @param restorationCaseTable
@@ -99,7 +99,7 @@ public class DisconnectingLinkTask extends TimerTask {
 	 * @param logAttemps
 	 * @param logTimes
 	 */
-	public DisconnectingLinkTask (LinkedList<RestorationCaseTable> restorationCaseTable,NetworkLSPManager networkLSPManager,RestorationCaseParameters testerParams,PCCPCEPSession PCEsession, Logger logStats, Logger logAttemps,Logger logTimes){
+	public DisconnectingLinkTask (LinkedList<RestorationCaseTable> restorationCaseTable,NetworkLSPManager networkLSPManager,RestorationCaseParameters testerParams,EmulatedPCCPCEPSession PCEsession, Logger logStats, Logger logAttemps,Logger logTimes){
 		log = Logger.getLogger("PCCClient");
 		this.logStats=logStats;
 		this.logAttemps=logAttemps;
@@ -270,7 +270,7 @@ public class DisconnectingLinkTask extends TimerTask {
 		//RequestParameters
 		RequestParameters rp= new RequestParameters();
 		rp.setPbit(true);				
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());		
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());		
 		rp.setPrio(testerParams.getRequestToSendList().get(0).getRequestParameters().getPriority());		
 		rp.setReopt(testerParams.getRequestToSendList().get(0).getRequestParameters().isReoptimization());	
 		rp.setBidirect(testerParams.getRequestToSendList().get(0).getRequestParameters().isBidirectional());

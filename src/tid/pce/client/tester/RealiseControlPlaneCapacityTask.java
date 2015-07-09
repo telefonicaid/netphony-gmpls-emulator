@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.pcep.constructs.UpdateRequest;
 import es.tid.pce.pcep.messages.PCEPUpdate;
 import es.tid.pce.pcep.objects.BandwidthRequestedGeneralizedBandwidth;
 import es.tid.pce.pcep.objects.LSP;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
 
 public class RealiseControlPlaneCapacityTask  extends TimerTask {
 
@@ -19,11 +19,11 @@ public class RealiseControlPlaneCapacityTask  extends TimerTask {
 	private AutomaticTesterStatistics stats;
 	private LinkedList<LSP> lspList;
 	private boolean bidirectional; 
-	private PCCPCEPSession PCEPsession;
+	private EmulatedPCCPCEPSession PCEPsession;
 
 	
 	public RealiseControlPlaneCapacityTask(LinkedList<LSP> lspList,AutomaticTesterStatistics stats, boolean bidirectional, BandwidthRequestedGeneralizedBandwidth GB
-			, PCCPCEPSession PCEPsession){
+			, EmulatedPCCPCEPSession PCEPsession){
 		log=Logger.getLogger("PCCClient");
 		this.stats=stats;
 		this.lspList=lspList;

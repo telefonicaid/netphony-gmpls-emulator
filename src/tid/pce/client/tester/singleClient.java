@@ -11,6 +11,15 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
+import es.tid.netManager.NetworkLSPManagerParameters;
+import es.tid.netManager.OSPFSender;
+import es.tid.netManager.TCPOSPFSender;
+import es.tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
 import es.tid.pce.pcep.constructs.Path;
@@ -26,31 +35,22 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.ObjectiveFunction;
 import es.tid.pce.pcep.objects.RequestParameters;
 import es.tid.pce.pcep.objects.Reservation;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
-import tid.netManager.NetworkLSPManager;
-import tid.netManager.NetworkLSPManagerParameters;
-import tid.netManager.OSPFSender;
-import tid.netManager.TCPOSPFSender;
-import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
-import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
 import tid.pce.client.multiLayer.RealiseMLCapacityTask;
-import tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.vntm.VNTMParameters;
 
 public class singleClient {
 
-	private static Hashtable<Integer,PCCPCEPSession> PCEsessionList;
+	private static Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
 	private static Logger log=Logger.getLogger("PCCClient");
 	private static Logger log2=Logger.getLogger("PCEPParser");
 	private static Logger log3=Logger.getLogger("OSPFParser");
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	private static InformationRequest testerParams;
-	private static PCCPCEPSession VNTMSession;
+	private static EmulatedPCCPCEPSession VNTMSession;
 	static long id=1234;
 	/*Variable used for counter how many requests there are*/
 	/**
@@ -86,9 +86,9 @@ public class singleClient {
 
 			testerParams = new InformationRequest();
 			testerParams.readFile(args[0]);
-			PCEsessionList= new Hashtable<Integer,PCCPCEPSession>();
+			PCEsessionList= new Hashtable<Integer,EmulatedPCCPCEPSession>();
 			for (int i =0;i<testerParams.getPCCPCEPsessionParams().getNumSessions();i++){
-				PCCPCEPSession PCEsession = new PCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(), new PCEPSessionsInformation());
+				EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(), new PCEPSessionsInformation());
 				PCEsessionList.put(i, PCEsession);
 				PCEsession.start();
 			}
@@ -209,7 +209,7 @@ public class singleClient {
 		//RequestParameters
 		RequestParameters rp= new RequestParameters();
 		rp.setPbit(true);				
-		rp.setRequestID(PCCPCEPSession.getNewReqIDCounter());		
+		rp.setRequestID(EmulatedPCCPCEPSession.getNewReqIDCounter());		
 		rp.setPrio(testerParams.getRequestToSendList().get(i).getRequestParameters().getPriority());		
 		rp.setReopt(testerParams.getRequestToSendList().get(i).getRequestParameters().isReoptimization());	
 		rp.setBidirect(testerParams.getRequestToSendList().get(i).getRequestParameters().isBidirectional());
@@ -266,10 +266,10 @@ public class singleClient {
 	  * @param networkEmulatorParams 
 	  * @return
 	  */
-	static PCCPCEPSession createVNTMSession(){
+	static EmulatedPCCPCEPSession createVNTMSession(){
 		VNTMParameters VNTMParams = new VNTMParameters();
 		VNTMParams.initialize(testerParams.getVNTMFile());
-		PCCPCEPSession PCEsessionVNTM = new PCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false, new PCEPSessionsInformation());
+		EmulatedPCCPCEPSession PCEsessionVNTM = new EmulatedPCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false, new PCEPSessionsInformation());
 		PCEsessionVNTM.start();
 		return PCEsessionVNTM;
 	}
@@ -373,7 +373,7 @@ static void handleResponse(PCEPRequest request,PCEPResponse response,NetworkLSPM
 
 			
 	
-	static void handleResponse(PCEPRequest request,PCEPResponse response,PCCPCEPSession VNTMSession ){
+	static void handleResponse(PCEPRequest request,PCEPResponse response,EmulatedPCCPCEPSession VNTMSession ){
 		if (response.getResponseList().isEmpty()){
 			log.severe("ERROR in response");
 			//stats.addNoPathResponse();

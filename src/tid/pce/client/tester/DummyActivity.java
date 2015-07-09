@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.logging.Logger;
 
-import tid.netManager.NetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.computingEngine.ComputingResponse;
 import tid.vntm.LigthPathManagement;
 import cern.jet.random.Exponential;
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
+import es.tid.pce.computingEngine.ComputingResponse;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.pce.pcep.messages.PCEPResponse;
@@ -29,10 +29,10 @@ public class DummyActivity implements Activity{
 	private Logger log;
 	private Exponential connectionTime;	
 	private Timer planificationTimer;
-	private Hashtable<Integer,PCCPCEPSession> PCEsessionList = new Hashtable<Integer,PCCPCEPSession>();
+	private Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList = new Hashtable<Integer,EmulatedPCCPCEPSession>();
 	private boolean staticConnections= false;
 	
-	public DummyActivity(Exponential connectionTime,Timer planificationTimer, Hashtable<Integer,PCCPCEPSession> PCEsessionList, boolean staticConnections){
+	public DummyActivity(Exponential connectionTime,Timer planificationTimer, Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList, boolean staticConnections){
 		this.connectionTime=connectionTime;
 		this.planificationTimer=planificationTimer;
 		log=Logger.getLogger("PCCClient");
@@ -94,7 +94,7 @@ public class DummyActivity implements Activity{
 						IDsession = ((UnnumberIfIDEROSubobject)ero.getEROSubobjectList().get(1)).getRouterID();
 					int sessionID = findPCEPSessionToSendRequest(IDsession);
 					log.info("Session ID: "+sessionID);
-					PCCPCEPSession PCEPsession = PCEsessionList.get(sessionID);
+					EmulatedPCCPCEPSession PCEPsession = PCEsessionList.get(sessionID);
 					log.info("Ip dest --> "+PCEsessionList.get(sessionID).getPeerPCE_IPaddress());
 					if (PCEsessionList==null){
 						log.info("La lista es Null!");
@@ -147,7 +147,7 @@ public class DummyActivity implements Activity{
 	}
 		
 	@Override
-	public void addVNTMSession(PCCPCEPSession VNTMSession) {
+	public void addVNTMSession(EmulatedPCCPCEPSession VNTMSession) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -177,7 +177,7 @@ public class DummyActivity implements Activity{
 	}
 
 	@Override
-	public void addPCEsessionVNTM(PCCPCEPSession vNTMSession) {
+	public void addPCEsessionVNTM(EmulatedPCCPCEPSession vNTMSession) {
 		// TODO Auto-generated method stub
 		
 	}

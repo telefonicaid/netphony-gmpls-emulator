@@ -17,31 +17,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
+import es.tid.netManager.NetworkLSPManagerParameters;
+import es.tid.netManager.OSPFSender;
+import es.tid.netManager.TCPOSPFSender;
+import es.tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.complexFields.BitmapLabelSet;
 import es.tid.pce.pcep.constructs.Response;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 import es.tid.rsvp.objects.subobjects.IPv4prefixEROSubobject;
 import es.tid.rsvp.objects.subobjects.SubObjectValues;
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
-import tid.netManager.NetworkLSPManager;
-import tid.netManager.NetworkLSPManagerParameters;
-import tid.netManager.OSPFSender;
-import tid.netManager.TCPOSPFSender;
-import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
-import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.pcepsession.PCEPSessionsInformation;
-import tid.pce.tedb.IntraDomainEdge;
-import tid.pce.tedb.SimpleTEDB;
+import es.tid.tedb.IntraDomainEdge;
+import es.tid.tedb.SimpleTEDB;
 
 
 public class RestorationCaseClient {
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	private static  RestorationCaseParameters testerParams;
-	private static PCCPCEPSession PCEsession;
+	private static EmulatedPCCPCEPSession PCEsession;
 	/**
 	 * Restoration case
 	 */
@@ -98,7 +98,7 @@ public class RestorationCaseClient {
 		}
 		
 		PCEPSessionsInformation pcepSessionManager = new PCEPSessionsInformation();
-		PCEsession = new PCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(0), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(0), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
+		PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(0), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(0), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
 		PCEsession.start();
 		//AutomaticTesterStatistics stats = new AutomaticTesterStatistics(testerParams.getLoadIni());;
 		networkLSPManager = createNetworkLSPManager();

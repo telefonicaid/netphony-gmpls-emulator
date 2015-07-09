@@ -2,7 +2,7 @@ package tid.pce.client.tester;
 
 import java.util.TimerTask;
 
-import tid.netManager.NetworkLSPManager;
+import es.tid.netManager.NetworkLSPManager;
 
 public class SendTopologyClientTask extends TimerTask {
 	private NetworkLSPManager networkLSPManager;

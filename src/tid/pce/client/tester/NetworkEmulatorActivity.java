@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.logging.Logger;
 
-import tid.netManager.NetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
 import tid.vntm.LigthPathManagement;
 import cern.jet.random.Exponential;
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.messages.PCEPRequest;
 import es.tid.pce.pcep.messages.PCEPResponse;
@@ -17,7 +17,7 @@ import es.tid.pce.pcep.objects.ExplicitRouteObject;
 import es.tid.rsvp.objects.subobjects.EROSubobject;
 
 public class NetworkEmulatorActivity implements Activity{
-	private PCCPCEPSession VNTMSession;
+	private EmulatedPCCPCEPSession VNTMSession;
 	private NetworkLSPManager networkLSPManager;
 	private AutomaticTesterStatistics stats;
 	private PCEPRequest request;
@@ -114,12 +114,12 @@ public class NetworkEmulatorActivity implements Activity{
 	}
 
 	@Override
-	public void addVNTMSession(PCCPCEPSession VNTMSession) {
+	public void addVNTMSession(EmulatedPCCPCEPSession VNTMSession) {
 		this.VNTMSession=VNTMSession;
 	}
 
 	@Override
-	public void addPCEsessionVNTM(PCCPCEPSession vNTMSession) {
+	public void addPCEsessionVNTM(EmulatedPCCPCEPSession vNTMSession) {
 		// TODO Auto-generated method stub
 	}
 

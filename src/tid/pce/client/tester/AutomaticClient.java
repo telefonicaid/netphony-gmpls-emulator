@@ -7,19 +7,19 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
+import es.tid.netManager.NetworkLSPManager;
+import es.tid.netManager.NetworkLSPManagerParameters;
+import es.tid.netManager.OSPFSender;
+import es.tid.netManager.TCPOSPFSender;
+import es.tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
+import es.tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
-import tid.netManager.NetworkLSPManager;
-import tid.netManager.NetworkLSPManagerParameters;
-import tid.netManager.OSPFSender;
-import tid.netManager.TCPOSPFSender;
-import tid.netManager.emulated.AdvancedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.CompletedEmulatedNetworkLSPManager;
-import tid.netManager.emulated.DummyEmulatedNetworkLSPManager;
-import tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
-import tid.pce.client.PCCPCEPSession;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.client.emulator.Emulator;
-import tid.pce.pcepsession.PCEPSessionsInformation;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
+import es.tid.pce.client.emulator.Emulator;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
 import tid.vntm.VNTMParameters;
 
 /**
@@ -31,7 +31,7 @@ import tid.vntm.VNTMParameters;
  */
 public class AutomaticClient{
 
-	private static Hashtable<Integer,PCCPCEPSession> PCEsessionList;
+	private static Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
 	private static Logger log=Logger.getLogger("PCCClient");
 	private static Logger log2=Logger.getLogger("PCEPParser");
 	private static Logger log3=Logger.getLogger("OSPFParser");
@@ -105,17 +105,17 @@ public class AutomaticClient{
 			System.exit(1);
 		}
 		log.info("Create PCE Session List");
-		PCEsessionList= new Hashtable<Integer,PCCPCEPSession>();
+		PCEsessionList= new Hashtable<Integer,EmulatedPCCPCEPSession>();
 		for (int i =0;i<testerParams.getPCCPCEPsessionParams().getNumSessions();i++){
 			log.info("PCE IP : "+testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i));
 			PCEPSessionsInformation pcepSessionManager = new PCEPSessionsInformation();
-			PCCPCEPSession PCEsession = new PCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
+			EmulatedPCCPCEPSession PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(i), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(i), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
 			PCEsessionList.put(i, PCEsession);
 			log.info("Start PCE Session "+i);
 			PCEsession.start();
 		}
 		NetworkLSPManager networkLSPManager = null;
-		PCCPCEPSession VNTMSession=null;
+		EmulatedPCCPCEPSession VNTMSession=null;
 		
 		//Creamos las estadísticas
 		stats = new AutomaticTesterStatistics(testerParams.getLoadIni());
@@ -195,12 +195,12 @@ public class AutomaticClient{
 	  * @param networkEmulatorParams 
 	  * @return
 	  */
-	static PCCPCEPSession createVNTMSession(){
+	static EmulatedPCCPCEPSession createVNTMSession(){
 		VNTMParameters VNTMParams = new VNTMParameters();
 		VNTMParams.initialize(testerParams.getVNTMFile());
 		
 		PCEPSessionsInformation VNTMpcepSessionManager=new PCEPSessionsInformation();
-		PCCPCEPSession PCEsessionVNTM = new PCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false,VNTMpcepSessionManager);
+		EmulatedPCCPCEPSession PCEsessionVNTM = new EmulatedPCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false,VNTMpcepSessionManager);
 		PCEsessionVNTM.start();
 		return PCEsessionVNTM;
 	}
@@ -210,7 +210,7 @@ public class AutomaticClient{
 	  * @param networkEmulatorParams 
 	  * @return
 	  */
-	static PCCPCEPSession createVNTMSession(LSPConfirmationDispatcher lspDispatcher, 
+	static EmulatedPCCPCEPSession createVNTMSession(LSPConfirmationDispatcher lspDispatcher, 
 			NetworkLSPManager networkLSPManager){
 		/*************************************/
 		
@@ -221,11 +221,11 @@ public class AutomaticClient{
 		VNTMParameters VNTMParams = new VNTMParameters();
 		VNTMParams.initialize(testerParams.getVNTMFile());
 		PCEPSessionsInformation VNTMpcepSessionManager=new PCEPSessionsInformation();
-		PCCPCEPSession PCEsessionVNTM = null;
+		EmulatedPCCPCEPSession PCEsessionVNTM = null;
 		if (lspDispatcher!=null){
-			PCEsessionVNTM = new PCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false, lspDispatcher, VNTMpcepSessionManager);
+			PCEsessionVNTM = new EmulatedPCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false, lspDispatcher, VNTMpcepSessionManager);
 		}else{
-			PCEsessionVNTM = new PCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false/*,lspDispatcher, networkLSPManager*/,VNTMpcepSessionManager);
+			PCEsessionVNTM = new EmulatedPCCPCEPSession(VNTMParams.getVNTMAddress(),VNTMParams.getVNTMPort(),false/*,lspDispatcher, networkLSPManager*/,VNTMpcepSessionManager);
 		}		
 		PCEsessionVNTM.start();
 		return PCEsessionVNTM;
