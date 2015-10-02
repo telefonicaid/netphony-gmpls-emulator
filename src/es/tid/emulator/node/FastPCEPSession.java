@@ -104,10 +104,12 @@ public class FastPCEPSession extends Thread{
 			PCEPRequest p_req;
 			
 			try {
+				log.info("El msg que obtenemos es: "+ msg + "---");
 				p_req=new PCEPRequest(msg);
 				log.info(p_req.toString());
+				
 			} catch (PCEPProtocolViolationException e) {
-				e.printStackTrace();
+				e.printStackTrace(); 
 				return;
 			}
 			int OFcode=p_req.getRequestList().get(0).getObjectiveFunction().getOFcode();
