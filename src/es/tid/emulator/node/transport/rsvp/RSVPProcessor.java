@@ -22,6 +22,7 @@ import es.tid.rsvp.messages.te.RSVPTEPathMessage;
 import es.tid.rsvp.messages.te.RSVPTEResvMessage;
 import es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4;
 import es.tid.rsvp.objects.FlowSpec;
+import es.tid.rsvp.objects.IntservSenderTSpec;
 import es.tid.rsvp.objects.RSVPHopIPv4;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
@@ -174,6 +175,7 @@ public class RSVPProcessor extends Thread{
 			if(this.messageType == RSVPMessageTypes.MESSAGE_PATH){
 					
 					log.finer("RSVP-TE Path message received");
+					log.info("rub RSVP-TE Path message received");
 					RSVPTEPathMessage path = (RSVPTEPathMessage) message;
 					RSVPObject session = path.getSession();
 					if(session.getcType() == 7){	// IPv4 Tunnel
