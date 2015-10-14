@@ -661,14 +661,10 @@ public class LSPManager {
 
 		if(nodeType == LSPParameters.LSP_NODE_TYPE_DESTINATION){
 			//crear el RSPV RESV y enviarlo de vuelta
-			//log.info("Creando el RSVP RESV y enviarlo de vuelta");
+			
 			RSVPTEResvMessage resv = new RSVPTEResvMessage();
 
 			resv = resourceManager.getRSVPResvMessageFromDestination(path, lsp);
-			
-			//log.info(" XXXX El resv es:");
-			//System.out.println("."+resv+".");
-			
 			
 			LSPKey key = new LSPKey(lsp.getIdSource(), lsp.getIdLSP());
 

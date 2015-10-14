@@ -68,9 +68,7 @@ public class RSVPListener extends Thread{
         				RSVPTEPathMessage path = new RSVPTEPathMessage(data, length);
         				try{
         					path.decode();
-        					//log.info("XXXX Finaliza el decode");
         					RSVPMessageQueue.add(path);
-        					//log.info("XXXX Añade el path al RSVPMessageQueue");
         					
         				}catch(RSVPProtocolViolationException e){
         					log.severe("Failure decoding RSVP-TE Path Message");

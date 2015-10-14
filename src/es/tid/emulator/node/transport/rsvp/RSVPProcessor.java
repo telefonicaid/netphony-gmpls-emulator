@@ -163,7 +163,7 @@ public class RSVPProcessor extends Thread{
 		while (running){
 			try {
 				message=RSVPMessageQueue.take();
-				//log.info("Sacamos mensaje de la Cola");
+			
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -175,7 +175,6 @@ public class RSVPProcessor extends Thread{
 			if(this.messageType == RSVPMessageTypes.MESSAGE_PATH){
 					
 					log.finer("RSVP-TE Path message received");
-					//log.info("rub RSVP-TE Path message received");
 					RSVPTEPathMessage path = (RSVPTEPathMessage) message;
 					RSVPObject session = path.getSession();
 					if(session.getcType() == 7){	// IPv4 Tunnel

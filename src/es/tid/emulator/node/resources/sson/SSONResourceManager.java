@@ -375,10 +375,6 @@ public class SSONResourceManager implements ResourceManager{
 		
 		FilterSpecLSPTunnelIPv4 fs = new FilterSpecLSPTunnelIPv4(st_ipv4.getSenderNodeAddress(), st_ipv4.getLSPId());
 		FlowSpec fws = new FlowSpec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 300);
-		//log.info("jm buscando error al encontrar un lsp");
-		//log.info("jm path: "+path);
-		//log.info("rub path.getLabelRequest(): "+path.getLabelRequest()+" ...");
-		//log.info("jm path.getLabelRequest().getL3PID(): "+path.getLabelRequest().getL3PID());
 		GeneralizedLabel label = new GeneralizedLabel(path.getLabelRequest().getL3PID());
 		try {
 			FFFlowDescriptorTE fd = new FFFlowDescriptorTE(fws, fs, label, null, true);
