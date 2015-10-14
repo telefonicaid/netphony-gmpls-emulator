@@ -22,6 +22,7 @@ import es.tid.rsvp.messages.te.RSVPTEPathMessage;
 import es.tid.rsvp.messages.te.RSVPTEResvMessage;
 import es.tid.rsvp.objects.FilterSpecLSPTunnelIPv4;
 import es.tid.rsvp.objects.FlowSpec;
+import es.tid.rsvp.objects.IntservSenderTSpec;
 import es.tid.rsvp.objects.RSVPHopIPv4;
 import es.tid.rsvp.objects.RSVPObject;
 import es.tid.rsvp.objects.SenderTemplateLSPTunnelIPv4;
@@ -162,7 +163,7 @@ public class RSVPProcessor extends Thread{
 		while (running){
 			try {
 				message=RSVPMessageQueue.take();
-				log.info("Sacamos mensaje de la Cola");
+			
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
