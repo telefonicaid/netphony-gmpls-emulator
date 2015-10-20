@@ -582,7 +582,10 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 		{
 			return true;
 		}
-		
+		if (open.getLsp_database_version_tlv() == null)
+		{
+			return true;
+		}
 		long dataBaseId = open.getLsp_database_version_tlv().getLSPStateDBVersion();
 		log.info("dataBaseId:"+dataBaseId);
 		log.info("lspManager.getDataBaseVersion() :"+lspManager.getDataBaseVersion() );
