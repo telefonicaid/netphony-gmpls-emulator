@@ -28,7 +28,9 @@ import es.tid.pce.pcep.messages.PCEPUpdate;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.EndPointsUnnumberedIntf;
 import es.tid.pce.pcep.objects.ExplicitRouteObject;
+import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.pce.pcep.objects.RequestParameters;
@@ -265,8 +267,12 @@ public class FastPCEPSession extends Thread{
 
 					//lspManager.startLSP(lsp, eroOther);
 
-
-					Inet4Address destinationId=((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP();
+					log.info("jm ver tipo destino: "+p_init.getPcepIntiatedLSPList().get(0).getEndPoint().getClass().getName());
+					//Inet4Address destinationId=((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP();
+					
+					Inet4Address destinationId = null;
+					destinationId = (Inet4Address)  Inet4Address.getByName(getDestinationIP(p_init.getPcepIntiatedLSPList().get(0).getEndPoint()));
+					
 					lspManager.setFastSession(this);
 					lsp_id = lspManager.addnewLSP(destinationId, 1000, false, 1002,eroOther);
 					long time1= System.nanoTime();
@@ -445,6 +451,31 @@ public class FastPCEPSession extends Thread{
 		perror.getErrorObjList().add(perrorObject);				
 		sendPCEPMessage(perror);
 		
+	}
+	
+public String getDestinationIP(Object endPoint) {
+		
+		String destinationIP=null;
+		
+		if (endPoint == null){
+			log.info("jm endPoint es null");
+			
+		}else if (endPoint instanceof EndPointsIPv4){
+			log.info("jm endPoint es de tipo EndPointsIPv4");
+			destinationIP = ((EndPointsIPv4) endPoint).getDestIP().toString();
+			
+			
+		}else if (endPoint instanceof EndPointsUnnumberedIntf){
+			log.info("jm endPoint es de tipo EndPointsUnnumberedIntf");
+			destinationIP = ((EndPointsUnnumberedIntf) endPoint).getDestIP().toString();
+			
+		}else if (endPoint instanceof GeneralizedEndPoints){
+			log.info("jm endPoint es de tipo GeneralizedEndPoints");
+			destinationIP = ((GeneralizedEndPoints) endPoint).getP2PEndpoints().getDestinationEndPoint().toString();
+			
+		}else log.info("jm endPoint NO es de tipo conocido");
+		
+		return destinationIP;
 	}
 	
 }
