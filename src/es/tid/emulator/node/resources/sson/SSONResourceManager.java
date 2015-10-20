@@ -375,7 +375,6 @@ public class SSONResourceManager implements ResourceManager{
 		
 		FilterSpecLSPTunnelIPv4 fs = new FilterSpecLSPTunnelIPv4(st_ipv4.getSenderNodeAddress(), st_ipv4.getLSPId());
 		FlowSpec fws = new FlowSpec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 300);
-		
 		GeneralizedLabel label = new GeneralizedLabel(path.getLabelRequest().getL3PID());
 		try {
 			FFFlowDescriptorTE fd = new FFFlowDescriptorTE(fws, fs, label, null, true);
