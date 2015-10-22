@@ -29,7 +29,9 @@ import es.tid.pce.pcep.messages.PCEPResponse;
 import es.tid.pce.pcep.messages.PCEPTELinkConfirmation;
 import es.tid.pce.pcep.messages.PCEPUpdate;
 import es.tid.pce.pcep.objects.EndPointsIPv4;
+import es.tid.pce.pcep.objects.EndPointsUnnumberedIntf;
 import es.tid.pce.pcep.objects.ExplicitRouteObject;
+import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.OPEN;
 import es.tid.pce.pcep.objects.ObjectParameters;
@@ -404,8 +406,9 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 
 							//lspManager.startLSP(lsp, eroOther);
 
-
-							Inet4Address destinationId=((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP();
+							Inet4Address destinationId = null;
+							destinationId = (Inet4Address)  Inet4Address.getByName(getDestinationIP(p_init.getPcepIntiatedLSPList().get(0).getEndPoint()));
+							
 							long lsp_id = lspManager.addnewLSP(destinationId, 1000, false, 1002,eroOther);
 							log.info("LSPList: "+lspManager.getLSPList().size()+" "+(new LSPKey(lspManager.getLocalIP(), lsp_id)).toString());
 							long time1= System.nanoTime();
@@ -638,5 +641,30 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 		{
 			return true;
 		}
+	}
+	
+public String getDestinationIP(Object endPoint) {
+		
+		String destinationIP=null;
+		
+		if (endPoint == null){
+			log.info("jm endPoint es null");
+			
+		}else if (endPoint instanceof EndPointsIPv4){
+			log.info("jm endPoint es de tipo EndPointsIPv4");
+			destinationIP = ((EndPointsIPv4) endPoint).getDestIP().toString();
+			
+			
+		}else if (endPoint instanceof EndPointsUnnumberedIntf){
+			log.info("jm endPoint es de tipo EndPointsUnnumberedIntf");
+			destinationIP = ((EndPointsUnnumberedIntf) endPoint).getDestIP().toString();
+			
+		}else if (endPoint instanceof GeneralizedEndPoints){
+			log.info("jm endPoint es de tipo GeneralizedEndPoints");
+			destinationIP = ((GeneralizedEndPoints) endPoint).getP2PEndpoints().getDestinationEndPoint().toString();
+			
+		}else log.info("jm endPoint NO es de tipo conocido");
+		
+		return destinationIP;
 	}
 }
