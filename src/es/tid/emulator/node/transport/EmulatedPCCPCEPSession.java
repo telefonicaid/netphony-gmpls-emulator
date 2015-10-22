@@ -312,6 +312,8 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 					
 					break;
 					
+					
+					
 				case PCEPMessageTypes.MESSAGE_UPDATE:
 					log.info("Received Message Update");
 					if (pcepSessionManager.isStateful())
@@ -365,6 +367,8 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 					timeIni=System.nanoTime();
 					try {
 						PCEPInitiate p_init = new PCEPInitiate(msg);
+						log.info("ini from "+this.remotePeerIP+":"+p_init);
+						long sRP_ID_number = p_init.getPcepIntiatedLSPList().get(0).getRsp().getSRP_ID_number();
 						//LSPTE lsp = new LSPTE(lsp_id, lspManager.getLocalIP(), ((EndPointsIPv4)p_init.getPcepIntiatedLSPList().get(0).getEndPoint()).getDestIP(), false, 1001, 10000, PathStateParameters.creatingLPS);
 						PathSetupTLV pstlv = p_init.getPcepIntiatedLSPList().get(0).getRsp().getPathSetupTLV();
 						if (pstlv != null && pstlv.isSR())
@@ -406,7 +410,42 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 							log.info("LSPList: "+lspManager.getLSPList().size()+" "+(new LSPKey(lspManager.getLocalIP(), lsp_id)).toString());
 							long time1= System.nanoTime();
 							lspManager.waitForLSPaddition(lsp_id, 1000);
-							log.info("notifying established lsp...");
+							
+							LSPTE lspp=lspManager.getLSP(lsp_id,lspManager.getLocalIP());
+							
+							if (lspp!=null){
+								log.info("LSP with id "+lsp_id+" has been established");
+								
+								PCEPReport pcrep = new PCEPReport();
+								StateReport srep = new StateReport();
+
+								Path path = new Path();
+								path.seteRO(ero);
+								
+								SRP srp = new SRP();
+								srp.setSRP_ID_number(sRP_ID_number);
+								srep.setSRP(srp);
+								LSP lsp = new LSP();
+								lsp.setLspId((int)lsp_id);
+								srep.setLSP(lsp);
+								srep.setLSP(lsp);
+								srep.setPath(path);
+								
+								pcrep.addStateReport(srep);
+								
+								pcrep.encode();
+								log.info("sending: "+ pcrep.toString());					
+								this.socket.getOutputStream().write(pcrep.getBytes());
+								this.socket.getOutputStream().flush();
+								
+								
+								log.info("Sending Report message to pce...");
+								
+							}else {
+								log.warning("LSP with id "+lsp_id+" has NOT been established");
+							}
+							
+							
 							//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
 							
 							//UpdateRequest ur =p_init.getUpdateRequestList().getFirst();		
