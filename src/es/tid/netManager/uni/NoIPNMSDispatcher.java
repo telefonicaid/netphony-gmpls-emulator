@@ -6,8 +6,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
-import tid.ipnms.datamodel.misc.AuthInfo;
-import tid.ipnms.datamodel.router.RouterDesc;
+import es.tid.ipnms.datamodel.misc.AuthInfo;
+import es.tid.ipnms.datamodel.router.RouterDesc;
 import tid.ipnms.datamodel.router.LabelSwitchedPath.LabelSwitchedPath;
 import tid.ipnms.datamodel.router.LabelSwitchedPath.LabelSwitchedPathProperties;
 import tid.ipnms.datamodel.router.LabelSwitchedPath.LabelSwitchedPathWithUnnumIf;
