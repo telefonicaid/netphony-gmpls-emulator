@@ -19,6 +19,7 @@ import es.tid.emulator.node.transport.lsp.LSPManager;
 import es.tid.emulator.node.transport.lsp.te.LSPTE;
 import es.tid.pce.client.ClientRequestManager;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.constructs.EndPoint;
 import es.tid.pce.pcep.constructs.Path;
 import es.tid.pce.pcep.constructs.StateReport;
 import es.tid.pce.pcep.messages.PCEPInitiate;
@@ -38,6 +39,7 @@ import es.tid.pce.pcep.objects.ObjectParameters;
 import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.tlvs.PathSetupTLV;
+import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
 import es.tid.pce.pcepsession.DeadTimerThread;
 import es.tid.pce.pcepsession.GenericPCEPSession;
 import es.tid.pce.pcepsession.KeepAliveThread;
@@ -398,41 +400,57 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 						else
 						{
 							log.info("Found initiate message without segment routing.");
-							ExplicitRouteObject ero = p_init.getPcepIntiatedLSPList().get(0).getEro();
-
-							ERO eroOther = new ERO();
-
-							eroOther.setEroSubobjects(ero.getEROSubobjectList());
-
-							//lspManager.startLSP(lsp, eroOther);
-
-							Inet4Address destinationId = null;
-							destinationId = (Inet4Address)  Inet4Address.getByName(getDestinationIP(p_init.getPcepIntiatedLSPList().get(0).getEndPoint()));
 							
-							long lsp_id = lspManager.addnewLSP(destinationId, 1000, false, 1002,eroOther);
-							log.info("LSPList: "+lspManager.getLSPList().size()+" "+(new LSPKey(lspManager.getLocalIP(), lsp_id)).toString());
-							long time1= System.nanoTime();
-							lspManager.waitForLSPaddition(lsp_id, 1000);
+							SRP srpp = p_init.getPcepIntiatedLSPList().get(0).getRsp();
+							boolean delete=srpp.isrFlag();
 							
-							LSPTE lspp=lspManager.getLSP(lsp_id,lspManager.getLocalIP());
 							
-							if (lspp!=null){
-								log.info("LSP with id "+lsp_id+" has been established");
+							if (delete){
 								
+								long lsp_id = p_init.getPcepIntiatedLSPList().get(0).getLsp().getLspId();
+								
+								LSPTE lspp=lspManager.getLSP(lsp_id,lspManager.getLocalIP());
+								
+								ExplicitRouteObject ero =new ExplicitRouteObject();
+								
+								ero.addEROSubobjectList(lspp.getEro().getEroSubobjects());
+								
+								
+								log.info("Delete EmulatedPCCPCEPSession");
+								
+								this.lspManager.deleteLSP(this.lspManager.getLocalIP(), p_init.getPcepIntiatedLSPList().get(0).getLsp().getLspId());
+									
+								log.info("Getting the ero from the p_init");
+																		
 								PCEPReport pcrep = new PCEPReport();
 								StateReport srep = new StateReport();
-
+	
 								Path path = new Path();
 								path.seteRO(ero);
-								
+									
 								SRP srp = new SRP();
 								srp.setSRP_ID_number(sRP_ID_number);
+								srp.setrFlag(true);
 								srep.setSRP(srp);
 								LSP lsp = new LSP();
 								lsp.setLspId((int)lsp_id);
 								srep.setLSP(lsp);
-								srep.setLSP(lsp);
+								
 								srep.setPath(path);
+								SymbolicPathNameTLV symbolicPathNameTLV_tlv = new SymbolicPathNameTLV();
+								log.info( "XXXX p_init:"+p_init);
+								log.info(" XXXX p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv():"+p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv());
+								log.info( "XXXX p_init ... getSymbolicPathNameID():"+p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv().getSymbolicPathNameID());
+								
+								
+								if (p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv()!=null){
+									symbolicPathNameTLV_tlv.setSymbolicPathNameID(p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv().getSymbolicPathNameID());
+									lsp.setSymbolicPathNameTLV_tlv(symbolicPathNameTLV_tlv);
+									log.info("XXXX lsp.getSymbolicPathNameTLV_tlv(): "+lsp.getSymbolicPathNameTLV_tlv());
+									
+								}else {
+									log.warning("NO SYMBOLIC PATH NAME TLV!!!" );
+								}
 								
 								pcrep.addStateReport(srep);
 								
@@ -440,13 +458,82 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 								log.info("sending: "+ pcrep.toString());					
 								this.socket.getOutputStream().write(pcrep.getBytes());
 								this.socket.getOutputStream().flush();
-								
-								
+									
 								log.info("Sending Report message to pce...");
+									
 								
-							}else {
-								log.warning("LSP with id "+lsp_id+" has NOT been established");
+								
+								log.info(" Finish Delete EmulatedPCCPCEPSession");
+								
+								
+							} else {
+								ExplicitRouteObject ero = p_init.getPcepIntiatedLSPList().get(0).getEro();
+
+								ERO eroOther = new ERO();
+
+								eroOther.setEroSubobjects(ero.getEROSubobjectList());
+
+								//lspManager.startLSP(lsp, eroOther);
+
+								Inet4Address destinationId = null;
+								destinationId = (Inet4Address)  Inet4Address.getByName(getDestinationIP(p_init.getPcepIntiatedLSPList().get(0).getEndPoint()));
+								
+								long lsp_id = lspManager.addnewLSP(destinationId, 1000, false, 1002,eroOther);
+								log.info("LSPList: "+lspManager.getLSPList().size()+" "+(new LSPKey(lspManager.getLocalIP(), lsp_id)).toString());
+								long time1= System.nanoTime();
+								lspManager.waitForLSPaddition(lsp_id, 1000);
+								
+								LSPTE lspp=lspManager.getLSP(lsp_id,lspManager.getLocalIP());
+								
+								if (lspp!=null){
+									log.info("LSP with id "+lsp_id+" has been established");
+									
+									PCEPReport pcrep = new PCEPReport();
+									StateReport srep = new StateReport();
+
+									Path path = new Path();
+									path.seteRO(ero);
+									
+									SRP srp = new SRP();
+									srp.setSRP_ID_number(sRP_ID_number);
+									srep.setSRP(srp);
+									LSP lsp = new LSP();
+									lsp.setLspId((int)lsp_id);
+									srep.setLSP(lsp);
+									
+									//srep.setLSP(lsp);
+									srep.setPath(path);
+									SymbolicPathNameTLV symbolicPathNameTLV_tlv = new SymbolicPathNameTLV();
+									log.info( "XXXX p_init:"+p_init);
+									log.info(" XXXX p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv():"+p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv());
+									log.info( "XXXX p_init ... getSymbolicPathNameID():"+p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv().getSymbolicPathNameID());
+									
+									
+									if (p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv()!=null){
+										symbolicPathNameTLV_tlv.setSymbolicPathNameID(p_init.getPcepIntiatedLSPList().get(0).getLsp().getSymbolicPathNameTLV_tlv().getSymbolicPathNameID());
+										lsp.setSymbolicPathNameTLV_tlv(symbolicPathNameTLV_tlv);
+										log.info("XXXX lsp.getSymbolicPathNameTLV_tlv(): "+lsp.getSymbolicPathNameTLV_tlv());
+										
+									}else {
+										log.warning("NO SYMBOLIC PATH NAME TLV!!!" );
+									}
+									
+									pcrep.addStateReport(srep);
+									
+									pcrep.encode();
+									log.info("sending: "+ pcrep.toString());					
+									this.socket.getOutputStream().write(pcrep.getBytes());
+									this.socket.getOutputStream().flush();
+									
+									
+									log.info("Sending Report message to pce...");
+									
+								}else {
+									log.warning("LSP with id "+lsp_id+" has NOT been established");
+								}
+								
 							}
+							
 							
 							
 							//lspManager.notifyLPSEstablished(lsp_id, lspManager.getLocalIP());
@@ -648,13 +735,36 @@ public String getDestinationIP(Object endPoint) {
 		String destinationIP=null;
 		
 		if (endPoint == null){
-			log.info("jm endPoint es null");
+			log.info(" endPoint es null");
 			
-		}else if (endPoint instanceof EndPointsIPv4){
-			log.info("jm endPoint es de tipo EndPointsIPv4");
+		}else 
+			
+			
+			if (endPoint instanceof EndPointsIPv4){
+			log.info(" endPoint es de tipo EndPointsIPv4");
 			destinationIP = ((EndPointsIPv4) endPoint).getDestIP().toString();
 			
 			
+			}else{ 
+				
+				if (endPoint instanceof GeneralizedEndPoints){   
+					log.info(" endPoint es de tipo GeneralizedEndPoints");
+											
+					EndPoint destEndPoint= ((GeneralizedEndPoints) endPoint).getP2PEndpoints().getDestinationEndPoint();
+					if (destEndPoint.getEndPointIPv4TLV()!=null){
+						destinationIP=destEndPoint.getEndPointIPv4TLV().getIPv4address().getHostAddress();
+					}else if (destEndPoint.getUnnumberedEndpoint()!=null) {
+						destinationIP=destEndPoint.getUnnumberedEndpoint().getIPv4address().getHostAddress();
+					}
+						
+				}else log.info(" endPoint NO es de tipo conocido");
+			}
+				
+			
+			
+			
+			
+			/*	
 		}else if (endPoint instanceof EndPointsUnnumberedIntf){
 			log.info("jm endPoint es de tipo EndPointsUnnumberedIntf");
 			destinationIP = ((EndPointsUnnumberedIntf) endPoint).getDestIP().toString();
@@ -664,7 +774,17 @@ public String getDestinationIP(Object endPoint) {
 			destinationIP = ((GeneralizedEndPoints) endPoint).getP2PEndpoints().getDestinationEndPoint().toString();
 			
 		}else log.info("jm endPoint NO es de tipo conocido");
-		
+		*/
+			
+				
 		return destinationIP;
 	}
+
 }
+
+
+
+
+
+
+
