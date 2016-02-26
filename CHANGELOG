@@ -1,0 +1,7 @@
+v1.2
+- Fixed maven support
+- Works with network protocols 1.2.1 and netphony-topology 1.2.1
+v1.1.1
+- Added maven support and adaptation to other netphony libraries
+v1.0.0
+- Initial version

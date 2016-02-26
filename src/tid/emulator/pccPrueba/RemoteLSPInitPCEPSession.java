@@ -4,42 +4,24 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Timer;
 import java.util.logging.Logger;
 
-import tid.emulator.node.transport.LSPCreationException;
-import tid.emulator.node.transport.lsp.LSPManager;
-import tid.emulator.node.transport.lsp.te.LSPTE;
-import tid.pce.client.emulator.AutomaticTesterStatistics;
-import tid.pce.computingEngine.ComputingResponse;
-import tid.pce.computingEngine.RequestDispatcher;
-import tid.pce.pcep.PCEPProtocolViolationException;
-import tid.pce.pcep.constructs.UpdateRequest;
-import tid.pce.pcep.messages.PCEPClose;
-import tid.pce.pcep.messages.PCEPError;
-import tid.pce.pcep.messages.PCEPMessage;
-import tid.pce.pcep.messages.PCEPMessageTypes;
-import tid.pce.pcep.messages.PCEPMonReq;
-import tid.pce.pcep.messages.PCEPNotification;
-import tid.pce.pcep.messages.PCEPRequest;
-import tid.pce.pcep.messages.PCEPTELinkConfirmation;
-import tid.pce.pcep.messages.PCEPUpdate;
-import tid.pce.pcep.objects.EndPointsIPv4;
-import tid.pce.pcep.objects.LSP;
-import tid.pce.pcep.objects.PCEPErrorObject;
-import tid.pce.pcep.objects.RequestParameters;
-import tid.pce.pcepsession.DeadTimerThread;
-import tid.pce.pcepsession.GenericPCEPSession;
-import tid.pce.pcepsession.KeepAliveThread;
-import tid.pce.pcepsession.PCEPSessionsInformation;
-import tid.pce.pcepsession.PCEPValues;
-import tid.pce.server.NotificationDispatcher;
-import tid.pce.server.PCEServerParameters;
-import tid.pce.server.communicationpce.CollaborationPCESessionManager;
-import tid.pce.server.communicationpce.RollSessionType;
-import tid.pce.server.wson.ReservationManager;
+import es.tid.emulator.node.transport.lsp.LSPManager;
+import es.tid.pce.client.emulator.AutomaticTesterStatistics;
+import es.tid.pce.computingEngine.ComputingResponse;
+import es.tid.pce.pcep.PCEPProtocolViolationException;
+import es.tid.pce.pcep.messages.PCEPMessage;
+import es.tid.pce.pcep.messages.PCEPMessageTypes;
+import es.tid.pce.pcep.messages.PCEPTELinkConfirmation;
+import es.tid.pce.pcepsession.DeadTimerThread;
+import es.tid.pce.pcepsession.GenericPCEPSession;
+import es.tid.pce.pcepsession.KeepAliveThread;
+import es.tid.pce.pcepsession.PCEPSessionsInformation;
+import es.tid.pce.server.NotificationDispatcher;
+import es.tid.pce.server.PCEServerParameters;
+import es.tid.pce.server.communicationpce.CollaborationPCESessionManager;
 
 public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 	
@@ -171,28 +153,29 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_PCREP:
-					log.info("Received PCE RESPONSE message");
+					log.info("Received PCE RESPONSE message, FIX THE CODE");
 					long timeIni=System.nanoTime();
 					ComputingResponse pcres=new ComputingResponse();
-					try {
-						pcres.decode(msg);
-						
-						log.info("IdResponse: "+pcres.getResponse(0).getRequestParameters().getRequestID());
-						Object lock=crm.locks.get(new Long(pcres.getResponse(0).getRequestParameters().getRequestID()));
-						if (lock!=null){
-							synchronized (lock) {
-								crm.notifyResponse(pcres, timeIni);
-							}							
-						}
-						else{
-							log.warning("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
-						}
-						
-					} catch (PCEPProtocolViolationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						break;
-					}					
+//FIXME: THIS BLOCK DOESNT WORK, CHANGE IN THE FUTURE
+//					try {
+//						pcres.decode(msg);
+//						
+//						log.info("IdResponse: "+pcres.getResponse(0).getRequestParameters().getRequestID());
+//						Object lock=crm.locks.get(new Long(pcres.getResponse(0).getRequestParameters().getRequestID()));
+//						if (lock!=null){
+//							synchronized (lock) {
+//								crm.notifyResponse(pcres, timeIni);
+//							}							
+//						}
+//						else{
+//							log.warning("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
+//						}
+//						
+//					} catch (PCEPProtocolViolationException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//						break;
+//					}					
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_PCREQ:
