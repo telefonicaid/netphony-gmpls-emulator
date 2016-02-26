@@ -34,7 +34,6 @@ import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.PCEPErrorObject;
 import es.tid.pce.pcep.objects.RequestParameters;
-import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import es.tid.rsvp.objects.ERO;
@@ -208,7 +207,7 @@ public class FastPCEPSession extends Thread{
 			try {
 				p_upd=new PCEPUpdate(msg);
 				UpdateRequest ur =p_upd.getUpdateRequestList().getFirst();
-				LSP lsp = ur.getLSP();
+				LSP lsp = ur.getLsp();
 				log.info("El lsp id es:" + lsp.getLspId());
 				
 				this.lspManager.deleteLSP(idRoadm, (int)lsp.getLspId());
@@ -238,14 +237,14 @@ public class FastPCEPSession extends Thread{
 				if (pstlv != null && pstlv.isSR())
 				{
 					log.info("Found initiate message with segment routing..sending report");
-					SRERO srero = p_init.getPcepIntiatedLSPList().get(0).getSrero();					
+					ExplicitRouteObject srero = p_init.getPcepIntiatedLSPList().get(0).getEro();					
 					SRP rsp = p_init.getPcepIntiatedLSPList().get(0).getRsp();
 					LSP lsp = p_init.getPcepIntiatedLSPList().get(0).getLsp();
 					PCEPReport pcrep = new PCEPReport();
 					StateReport srep = new StateReport();
 
 					Path path = new Path();
-					path.setSRERO(srero);
+					path.setEro(srero);
 					
 					srep.setSRP(rsp);
 					srep.setLSP(lsp);

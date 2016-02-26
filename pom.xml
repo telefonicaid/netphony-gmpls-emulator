@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.tid.netphony</groupId>
-  <artifactId>network-protocols</artifactId>
-  <version>1.1.1</version>
+  <artifactId>network-emulator</artifactId>
+  <version>1.2</version>
   <packaging>jar</packaging>
-  <name>Netphony Network Protocols</name>
+  <name>Netphony Network Emulator</name>
   <description>BGP-LS,OSPF-TE,PCEP and RSVP-TE protocol encodings.</description>
   <url>http://coretransport.tid.es/netphony</url>
   <licenses>
@@ -19,6 +19,47 @@
       <artifactId>slf4j-api</artifactId>
       <version>1.7.7</version>
     </dependency>
+<dependency>
+      <groupId>es.tid.netphony</groupId>
+      <artifactId>network-protocols</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+<dependency>
+      <groupId>es.tid.netphony</groupId>
+      <artifactId>pce</artifactId>
+      <version>1.2</version>
+    </dependency>
+<dependency>
+	<groupId>commons-net</groupId>
+	<artifactId>commons-net</artifactId>
+	<version>3.3</version>
+</dependency>
+<dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>8.1.11.v20130520</version>
+</dependency>
+<dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-servlet</artifactId>
+        <version>8.1.11.v20130520</version>
+</dependency>
+<dependency>
+	<groupId>org.eclipse.jetty</groupId>
+	<artifactId>jetty-client</artifactId>
+	<version>8.1.11.v20130520</version>
+</dependency>
+
+<dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.3</version>
+</dependency>
+<dependency>
+	<groupId>commons-codec</groupId>
+	<artifactId>commons-codec</artifactId>
+	<version>1.10</version>
+</dependency>
   </dependencies>
   <build>
     <sourceDirectory>${basedir}/src</sourceDirectory>

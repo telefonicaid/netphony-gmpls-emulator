@@ -404,7 +404,7 @@ static void handleResponse(PCEPRequest request,PCEPResponse response,NetworkLSPM
 						log.info("Reserving LSP and sending capacity update");
 						PCEPTELinkSuggestion telinksug=new PCEPTELinkSuggestion();
 						Path path2=new Path();
-						path2.seteRO(eroList.get(i));
+						path2.setEro(eroList.get(i));
 						telinksug.setPath(path2);	
 						try {
 							telinksug.encode();

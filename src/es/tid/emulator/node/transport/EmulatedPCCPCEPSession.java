@@ -36,7 +36,6 @@ import es.tid.pce.pcep.objects.GeneralizedEndPoints;
 import es.tid.pce.pcep.objects.LSP;
 import es.tid.pce.pcep.objects.OPEN;
 import es.tid.pce.pcep.objects.ObjectParameters;
-import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.SRP;
 import es.tid.pce.pcep.objects.tlvs.PathSetupTLV;
 import es.tid.pce.pcep.objects.tlvs.SymbolicPathNameTLV;
@@ -378,14 +377,14 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 						if (pstlv != null && pstlv.isSR())
 						{
 							log.info("Found initiate message with segment routing..sending report");
-							SRERO srero = p_init.getPcepIntiatedLSPList().get(0).getSrero();					
+							ExplicitRouteObject srero = p_init.getPcepIntiatedLSPList().get(0).getEro();					
 							SRP rsp = p_init.getPcepIntiatedLSPList().get(0).getRsp();
 							LSP lsp = p_init.getPcepIntiatedLSPList().get(0).getLsp();
 							PCEPReport pcrep = new PCEPReport();
 							StateReport srep = new StateReport();
 
 							Path path = new Path();
-							path.setSRERO(srero);
+							path.setEro(srero);
 							
 							srep.setSRP(rsp);
 							srep.setLSP(lsp);
@@ -426,11 +425,11 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 								StateReport srep = new StateReport();
 	
 								Path path = new Path();
-								path.seteRO(ero);
+								path.setEro(ero);
 									
 								SRP srp = new SRP();
 								srp.setSRP_ID_number(sRP_ID_number);
-								srp.setrFlag(true);
+								srp.setRFlag(true);
 								srep.setSRP(srp);
 								LSP lsp = new LSP();
 								lsp.setLspId((int)lsp_id);
@@ -492,7 +491,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 									StateReport srep = new StateReport();
 
 									Path path = new Path();
-									path.seteRO(ero);
+									path.setEro(ero);
 									
 									SRP srp = new SRP();
 									srp.setSRP_ID_number(sRP_ID_number);

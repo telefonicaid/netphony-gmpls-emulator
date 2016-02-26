@@ -139,9 +139,9 @@ public class StatefulPCEPSession extends GenericPCEPSession
 					pr.getPcepIntiatedLSPList().get(0).setLsp(new LSP());
 					pr.getPcepIntiatedLSPList().get(0).setRsp(new SRP());
 					if (this.operation.equals("add")){
-						pr.getPcepIntiatedLSPList().get(0).getRsp().setrFlag(false);
+						pr.getPcepIntiatedLSPList().get(0).getRsp().setRFlag(false);
 					} else if (this.operation.equals("del")){
-						pr.getPcepIntiatedLSPList().get(0).getRsp().setrFlag(true);
+						pr.getPcepIntiatedLSPList().get(0).getRsp().setRFlag(true);
 					} else {
 						log.warning("Tipo de operacion no soportada");
 					}

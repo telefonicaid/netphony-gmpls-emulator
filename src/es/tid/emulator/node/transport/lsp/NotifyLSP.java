@@ -74,13 +74,13 @@ public class NotifyLSP
 		LSP lsp = new LSP();
 
 		/* LSP is active */
-		lsp.setaFlag(true);
+		lsp.setAFlag(true);
 		/* Delegate the LSP*/
-		lsp.setdFlag(dFlag);
+		lsp.setDFlag(dFlag);
 		/* No sync */
-		lsp.setsFlag(rSync);
+		lsp.setSFlag(rSync);
 		/* LSP has been removed */
-		lsp.setrFlag(rFlag);
+		lsp.setRFlag(rFlag);
 
 		/* Is LSP operational? */
 		lsp.setOpFlags(ObjectParameters.LSP_OPERATIONAL_UP);
@@ -119,7 +119,7 @@ public class NotifyLSP
 		ExplicitRouteObject auxERO = new ExplicitRouteObject();
 		auxERO.setEROSubobjectList(lspte.getEro().getEroSubobjects());
 
-		path.seteRO(auxERO);
+		path.setEro(auxERO);
 
 		BandwidthRequested bw = new BandwidthRequested();
 
