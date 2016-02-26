@@ -150,7 +150,7 @@ public class AutomaticExponentialTesterMLNetworkTask  extends TimerTask {
 				for (int i=0;i<numNewLinks;++i){
 					PCEPTELinkSuggestion telinksug=new PCEPTELinkSuggestion();
 					Path path2=new Path();
-					path2.seteRO(eroList.get(i));
+					path2.setEro(eroList.get(i));
 					telinksug.setPath(path2);	
 					try {
 						telinksug.encode();

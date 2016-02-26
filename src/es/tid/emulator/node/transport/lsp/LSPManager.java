@@ -35,7 +35,6 @@ import es.tid.pce.pcep.messages.PCEPUpdate;
 import es.tid.pce.pcep.objects.Bandwidth;
 import es.tid.pce.pcep.objects.BandwidthRequested;
 import es.tid.pce.pcep.objects.ExplicitRouteObject;
-import es.tid.pce.pcep.objects.SRERO;
 import es.tid.pce.pcep.objects.subobjects.SREROSubobject;
 import es.tid.pce.server.lspdb.ReportDB;
 import es.tid.rsvp.messages.RSVPMessage;
@@ -72,7 +71,7 @@ public class LSPManager {
 	 * List of LSPs 
 	 */
 
-	private LinkedList<SRERO> SREROList;
+	private LinkedList<ExplicitRouteObject> SREROList;
 	/**
 	 * List of LSP with SIDs
 	 */
@@ -448,11 +447,11 @@ public class LSPManager {
 					sendRSVPMessage(path,prox);
 				}
 			}
-			else if(resp.getPathList().get(0).getSRERO()!=null)
+			else if(resp.getPathList().get(0).geteRO()!=null)
 			{
-				SRERO srero = new SRERO();
-				LinkedList<SREROSubobject> clone = (LinkedList<SREROSubobject>) resp.getPathList().get(0).getSRERO().getSREROSubobjectList().clone();
-				srero.setSREROSubobjectList(clone);
+				ExplicitRouteObject srero = new ExplicitRouteObject();
+				LinkedList<EROSubobject> clone = (LinkedList<EROSubobject>) resp.getPathList().get(0).geteRO().getEROSubobjectList().clone();
+				srero.setEROSubobjectList(clone);
 				lsp.setSRERO(srero);
 				log.info("SID encontrado: "+srero.toString());
 
@@ -551,10 +550,10 @@ public class LSPManager {
 
 		for(int i=0;i<SREROList.size();i++){
 			sb.append("SID path: {");
-			LinkedList<SREROSubobject> srerosublist = SREROList.get(i).getSREROSubobjectList();
-			sb.append(srerosublist.get(0).getSID());
+			LinkedList<EROSubobject> srerosublist = SREROList.get(i).getEROSubobjectList();
+			sb.append(((SREROSubobject)srerosublist.get(0)).getSID());
 			for(int j=1;j<srerosublist.size();j++){
-				sb.append(" --> "+srerosublist.get(j).getSID());
+				sb.append(" --> "+((SREROSubobject)(srerosublist.get(j))).getSID());
 
 			}
 			sb.append("}\n");
@@ -712,14 +711,14 @@ public class LSPManager {
 	{
 		//There should be a better way to do this, but for the time being is OK
 		log.info("Updating LSP!");
-		Inet4Address addres = pupdt.getUpdateRequestList().get(0).getLSP().getLspIdentifiers_tlv().getTunnelSenderIPAddress();
+		Inet4Address addres = pupdt.getUpdateRequestList().get(0).getLsp().getLspIdentifiers_tlv().getTunnelSenderIPAddress();
 
 		for (int i = 0; i < pupdt.getUpdateRequestList().size(); i++)
 		{
 			log.info("Address: "+ addres);
-			log.info("lspID: "+ pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
+			log.info("lspID: "+ pupdt.getUpdateRequestList().get(i).getLsp().getLspId());
 
-			final LSPTE previous = LSPList.get(new LSPKey(addres,pupdt.getUpdateRequestList().get(i).getLSP().getLspId()));
+			final LSPTE previous = LSPList.get(new LSPKey(addres,pupdt.getUpdateRequestList().get(i).getLsp().getLspId()));
 
 			if ((previous == null) ||(!previous.isDelegated()) || (!(previous.getDelegatedAdress().equals(PCESession.getPeerPCE_IPaddress()))))
 			{
@@ -728,11 +727,11 @@ public class LSPManager {
 			}
 			else
 			{
-				if (pupdt.getUpdateRequestList().get(i).getLSP().isrFlag())
+				if (pupdt.getUpdateRequestList().get(i).getLsp().isrFlag())
 				{
 					log.info("Removing LSP due to PCEPUpdate received message");
 					dataBaseVersion.incrementAndGet();
-					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
+					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLsp().getLspId());
 					notiLSP.notify(previous, false, false, true, false, getPCESession().getOut());
 				}
 				else
@@ -755,7 +754,7 @@ public class LSPManager {
 					ero.setEroSubobjects(path.geteRO().getEROSubobjectList());
 					lsp.setEro(ero);
 					dataBaseVersion.incrementAndGet();
-					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLSP().getLspId());
+					deleteLSP(addres, pupdt.getUpdateRequestList().get(i).getLsp().getLspId());
 					log.info("previous.getIdDestination()" + previous.getIdDestination());
 					log.info(" path.getBandwidth().getBw()" +  bw);
 

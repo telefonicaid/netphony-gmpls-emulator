@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RestorationCaseStatistics {
 
 	/**
-	 * Tiempo de restauración por conexión (guardar todos)
+	 * Tiempo de restauraciï¿½n por conexiï¿½n (guardar todos)
 	 */
 	private ArrayList<Double> restorationTime;
 	/**
@@ -14,7 +14,7 @@ public class RestorationCaseStatistics {
 	private ArrayList<Integer> numberRetries;
 	
 	/**
-	 * Tiempo máximo de restauracion por ejecucion
+	 * Tiempo maximo de restauracion por ejecucion
 	 */
 	private double maxTime;
 	/**

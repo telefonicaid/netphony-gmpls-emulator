@@ -269,7 +269,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						try {
 							p_upd=new PCEPUpdate(msg);
 							UpdateRequest ur =p_upd.getUpdateRequestList().getFirst();
-							LSP lsp_upd = ur.getLSP();
+							LSP lsp_upd = ur.getLsp();
 							log.info("El automatic lsp id es:" + lsp_upd.getLspId());
 							//this.lspManager.deleteLSP(idRoadm, lspIdsCorelation.remove(lsp_upd.getLspId()));
 							//sendPCEPMessage(p_upd);

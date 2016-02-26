@@ -43,7 +43,7 @@ public class RealiseControlPlaneCapacityTask  extends TimerTask {
 		PCEPUpdate updMssg = new PCEPUpdate();
 		LinkedList <UpdateRequest> urList = new LinkedList <UpdateRequest>();
 		UpdateRequest ur = new UpdateRequest();
-		ur.setLSP(lspList.getFirst());
+		ur.setLsp(lspList.getFirst());
 		
 		urList.add(ur);
 		updMssg.setUpdateRequestList(urList);

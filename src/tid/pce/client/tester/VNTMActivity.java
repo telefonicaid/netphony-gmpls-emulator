@@ -91,7 +91,7 @@ public class VNTMActivity implements Activity{
 						log.info("Reserving LSP and sending capacity update");
 						PCEPTELinkSuggestion telinksug=new PCEPTELinkSuggestion();
 						Path path2=new Path();
-						path2.seteRO(eroList.get(i));
+						path2.setEro(eroList.get(i));
 						BandwidthRequested bandwidth = new BandwidthRequested();
 						float bw=((BandwidthRequested)(response.getResponseList().get(0).getBandwidth())).getBw();
 						bandwidth.setBw(bw);
@@ -172,7 +172,7 @@ public class VNTMActivity implements Activity{
 						log.info("Reserving LSP and sending capacity update");
 						PCEPTELinkSuggestion telinksug=new PCEPTELinkSuggestion();
 						Path path2=new Path();
-						path2.seteRO(eroList.get(i));
+						path2.setEro(eroList.get(i));
 						NumWL = (eroList.get(i).getEROSubobjectList().size() - 4)/2;
 						stats.addNumWL(NumWL);
 						
