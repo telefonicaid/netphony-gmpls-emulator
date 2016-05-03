@@ -1,3 +1,5 @@
+v1.2.1
+- Moved all to es.tid package
 v1.2
 - Fixed maven support
 - Works with network protocols 1.2.1 and netphony-topology 1.2.1

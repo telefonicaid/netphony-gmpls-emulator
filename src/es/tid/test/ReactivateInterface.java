@@ -1,6 +1,6 @@
 package es.tid.test;
 
-import tid.ipnms.wsimpl.impl.IdaTelnetClientPrueba;
+import es.tid.ipnms.wsimpl.impl.IdaTelnetClientPrueba;
 
 
 public class ReactivateInterface {

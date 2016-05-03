@@ -24,8 +24,8 @@ import es.tid.rsvp.objects.subobjects.UnnumberIfIDEROSubobject;
 import es.tid.tedb.IntraDomainEdge;
 import es.tid.tedb.MultiLayerTEDB;
 import es.tid.tedb.SimpleTEDB;
-import tid.vntm.LSPManager;
-import tid.vntm.LigthPathCreateIP;
+import es.tid.vntm.LSPManager;
+import es.tid.vntm.LigthPathCreateIP;
 
 /**
  * Network Emulator.
