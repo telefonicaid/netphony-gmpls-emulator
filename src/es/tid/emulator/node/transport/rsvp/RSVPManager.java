@@ -4,7 +4,7 @@
  */
 package es.tid.emulator.node.transport.rsvp;
 
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
+import static es.tid.rocksaw.net.RawSocket.PF_INET;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -12,7 +12,7 @@ import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import com.savarese.rocksaw.net.RawSocket;
+import es.tid.rocksaw.net.RawSocket;
 
 import es.tid.emulator.node.resources.ResourceManager;
 import es.tid.emulator.node.transport.lsp.LSPManager;

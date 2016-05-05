@@ -1,13 +1,13 @@
 package es.tid.emulator.node.transport.ospf;
 
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
+import static es.tid.rocksaw.net.RawSocket.PF_INET;
 
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import com.savarese.rocksaw.net.RawSocket;
+import es.tid.rocksaw.net.RawSocket;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 
