@@ -1,4 +1,7 @@
-v1.2.1
+v1.3.0
+- Uploaded to Maven Central
+- Added maven profiles
+- Updated reference to es.tid.rocksaw library
 - Moved all to es.tid package
 v1.2
 - Fixed maven support

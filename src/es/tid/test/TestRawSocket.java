@@ -1,6 +1,6 @@
 package es.tid.test;
 
-import static com.savarese.rocksaw.net.RawSocket.PF_INET;
+import static es.tid.rocksaw.net.RawSocket.PF_INET;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -10,7 +10,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.savarese.rocksaw.net.RawSocket;
+import es.tid.rocksaw.net.RawSocket;
 //import tid.util.Utils;
 
 

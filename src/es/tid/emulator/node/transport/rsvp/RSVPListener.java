@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
-import com.savarese.rocksaw.net.RawSocket;
+import es.tid.rocksaw.net.RawSocket;
 
 import es.tid.emulator.node.NetworkNode;
 import es.tid.rsvp.RSVPProtocolViolationException;
