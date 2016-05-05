@@ -101,7 +101,7 @@
   </profile>
 
 
-   <profile>
+  <profile>
     <id>generate-autojar</id>
     <build>
       <plugins>
@@ -141,6 +141,19 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.2.1</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.9.1</version>
           <executions>
@@ -168,6 +181,16 @@
         </plugin>
       </plugins>
     </build>
+  </profile>
+
+  <profile>
+    <id>disable-java8-doclint</id>
+    <activation>
+      <jdk>[1.8,)</jdk>
+    </activation>
+    <properties>
+      <additionalparam>-Xdoclint:none</additionalparam>
+    </properties>
   </profile>
 </profiles>
 
