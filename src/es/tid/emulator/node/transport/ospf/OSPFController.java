@@ -2,7 +2,8 @@ package es.tid.emulator.node.transport.ospf;
 
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import es.tid.tedb.DomainTEDB;
@@ -19,7 +20,7 @@ public class OSPFController {
 	 */
 	private LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue;
 
-	Logger log=Logger.getLogger("OSPFParser");
+	Logger log=LoggerFactory.getLogger("OSPFParser");
 	
 	public OSPFController(){
 		sendingQueue= new LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket>();

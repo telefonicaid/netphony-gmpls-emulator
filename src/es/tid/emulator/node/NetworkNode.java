@@ -5,9 +5,12 @@
 package es.tid.emulator.node;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
@@ -135,47 +138,47 @@ public class NetworkNode {
 		nodeInformation.readNodeConfiguration();
 
 		// Create the Logs
-		log = Logger.getLogger("ROADM");
-		log.setLevel(Level.ALL);
-		Logger log2 = Logger.getLogger("PCCClient");
-		log2.setLevel(Level.ALL);
-		Logger log3 = Logger.getLogger("OSPFParser");
-		log3.setLevel(Level.ALL);
-		Logger log4 = Logger.getLogger("PCEPParser");
-		log4.setLevel(Level.SEVERE);
+		log = LoggerFactory.getLogger("ROADM");
+		//log.setLevel(Level.ALL);
+		Logger log2 = LoggerFactory.getLogger("PCCClient");
+		//log2.setLevel(Level.ALL);
+		Logger log3 = LoggerFactory.getLogger("OSPFParser");
+		//log3.setLevel(Level.ALL);
+		Logger log4 = LoggerFactory.getLogger("PCEPParser");
+		//log4.setLevel(Level.SEVERE);
 
-		try{
-			FileHandler fh = new FileHandler("Roadm.log", false);
-			log.addHandler(fh);
-			FileHandler fh2 = new FileHandler("PCCClient.log", false);
-			log2.addHandler(fh2);
-			FileHandler fh3 = new FileHandler("OSPFParser.log", false);
-			log3.addHandler(fh3);
-			FileHandler fh4 = new FileHandler("PCEPParser.log", false);
-			log4.addHandler(fh4);
+//		try{
+//			FileHandler fh = new FileHandler("Roadm.log", false);
+//			log.addHandler(fh);
+//			FileHandler fh2 = new FileHandler("PCCClient.log", false);
+//			log2.addHandler(fh2);
+//			FileHandler fh3 = new FileHandler("OSPFParser.log", false);
+//			log3.addHandler(fh3);
+//			FileHandler fh4 = new FileHandler("PCEPParser.log", false);
+//			log4.addHandler(fh4);
+//
+//			log.setLevel(Level.ALL);
+//			log2.setLevel(Level.ALL);
+//			log3.setLevel(Level.ALL);
 
-			log.setLevel(Level.ALL);
-			log2.setLevel(Level.ALL);
-			log3.setLevel(Level.ALL);
+//			if (nodeInformation.isSetTraces() == false){
+//				log.info("Traces Out!");
+//				log.setLevel(Level.SEVERE);
+//				log2.setLevel(Level.SEVERE);
+//				log3.setLevel(Level.SEVERE);
+//			}else {
+//				log.setLevel(Level.ALL);
+//				log2.setLevel(Level.ALL);
+//				log3.setLevel(Level.ALL);
+//			}
 
-			if (nodeInformation.isSetTraces() == false){
-				log.info("Traces Out!");
-				log.setLevel(Level.SEVERE);
-				log2.setLevel(Level.SEVERE);
-				log3.setLevel(Level.SEVERE);
-			}else {
-				log.setLevel(Level.ALL);
-				log2.setLevel(Level.ALL);
-				log3.setLevel(Level.ALL);
-			}
+//		}catch(IOException e){
+//			log.warn("Exception with logs!");
+//			e.printStackTrace();
+//			System.exit(1);
+//		}
 
-		}catch(IOException e){
-			log.warning("Exception with logs!");
-			e.printStackTrace();
-			System.exit(1);
-		}
-
-		log.severe("ROADM Created");
+		log.error("ROADM Created");
 		log.info("ROADM created con info");
 		if (nodeInformation.isRsvpMode()== true){
 			// Create the RSVP Manager
@@ -221,7 +224,7 @@ public class NetworkNode {
 		}else if (nodeInformation.getNodeTechnology() == TechnologyParameters.SSON){
 			resourceManager = new SSONResourceManager((SimpleLocalTEDB)ted, nodeInformation.getId(), (MDTEDB)MDted);
 		}else if (nodeInformation.getNodeTechnology() == TechnologyParameters.UNKNOWN){
-			log.severe("Technology not valid!");
+			log.error("Technology not valid!");
 			System.exit(-1);
 		}
 

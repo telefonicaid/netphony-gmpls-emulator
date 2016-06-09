@@ -1,5 +1,6 @@
 package es.tid.vntm;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -14,7 +15,7 @@ public class VNTMParameters {
 	private int VNTMPort;
 	private int VNTMManagementPort;
 	private String VNTMAddress;
-	private Logger log=Logger.getLogger("VNTMServer");
+	private Logger log=LoggerFactory.getLogger("VNTMServer");
 	private int PMPort;
 	private int PCEL0Port;
 	private String PMAddress;
@@ -206,7 +207,7 @@ public class VNTMParameters {
 			};
 			saxParser.parse(file, handler);          
 		}catch (Exception e) {
-			log.warning("Problemas al leer la configuracion");	
+			log.warn("Problemas al leer la configuracion");	
 			e.printStackTrace();
 			System.exit(1);
 		}

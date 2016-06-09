@@ -3,7 +3,8 @@ package es.tid.emulator.node.transport.lsp;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.te.LSPTE;
 import es.tid.pce.pcep.constructs.Path;
@@ -166,8 +167,8 @@ public class NotifyLSP
 		} 
 		catch (Exception e11) 
 		{
-			log.severe("ERROR ENCODING ERROR OBJECT, BUG DETECTED, INFORM!!! "+e11.getMessage());
-			log.severe("Ending Session");
+			log.error("ERROR ENCODING ERROR OBJECT, BUG DETECTED, INFORM!!! "+e11.getMessage());
+			log.error("Ending Session");
 		}
 		try 
 		{			
@@ -176,7 +177,7 @@ public class NotifyLSP
 		} 
 		catch (IOException e) 
 		{
-			log.severe("Problem writing message, finishing session "+e.getMessage());
+			log.error("Problem writing message, finishing session "+e.getMessage());
 		}
 	}
 }

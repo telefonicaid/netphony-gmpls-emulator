@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
 
@@ -26,7 +27,7 @@ public class OSPFSender extends Thread {
 	Inet4Address dirPCE;
 	private Logger log;
 	public OSPFSender(Inet4Address dirPCE){
-		log=Logger.getLogger("OSPFParser");
+		log=LoggerFactory.getLogger("OSPFParser");
 		sendingQueue= new LinkedBlockingQueue<LSA>();
 		this.dirPCE=dirPCE;
 	}

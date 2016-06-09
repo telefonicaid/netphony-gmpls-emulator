@@ -7,7 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.netManager.NetworkLSPManagerTypes;
@@ -45,7 +46,7 @@ public class LSPManager {
 		lspList = new Hashtable<Integer, LSP> ();
 		lspListIP = new Hashtable<Integer, LSP> ();
 		
-		log=Logger.getLogger("VNTMServer");
+		log=LoggerFactory.getLogger("VNTMServer");
 		
 	}
 	/**

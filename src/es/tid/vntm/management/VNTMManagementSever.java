@@ -1,7 +1,8 @@
 package es.tid.vntm.management;
 
 import java.net.ServerSocket;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.vntm.LSPManager;
 
@@ -11,7 +12,7 @@ public class VNTMManagementSever extends Thread {
 	private LSPManager lspmanager;
 	int port;
 	public VNTMManagementSever( LSPManager lspmanager,int port){
-		log =Logger.getLogger("PCEServer");
+		log =LoggerFactory.getLogger("PCEServer");
 		this.lspmanager=lspmanager;
 	}
 	
@@ -23,7 +24,7 @@ public class VNTMManagementSever extends Thread {
 	          serverSocket = new ServerSocket(port);
 		  }
 		catch (Exception e){
-			 log.severe("Could not listen management on port "+port);
+			 log.error("Could not listen management on port "+port);
 			e.printStackTrace();
 			return;
 		}

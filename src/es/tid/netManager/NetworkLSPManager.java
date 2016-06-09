@@ -5,7 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -27,7 +28,7 @@ import es.tid.tedb.MultiLayerTEDB;
 import es.tid.tedb.SimpleTEDB;
 
 public abstract class NetworkLSPManager {
-	Logger log= Logger.getLogger("PCCClient");
+	Logger log= LoggerFactory.getLogger("PCCClient");
 	private DomainTEDB domainTEDB;
 	private LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue;
 //	DataOutputStream out;

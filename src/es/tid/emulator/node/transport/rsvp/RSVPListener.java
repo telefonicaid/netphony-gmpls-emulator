@@ -6,7 +6,8 @@
 package es.tid.emulator.node.transport.rsvp;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
 
@@ -34,7 +35,7 @@ public class RSVPListener extends Thread{
     public RSVPListener(LinkedBlockingQueue<RSVPMessage> RSVPMessageQueue,RawSocket socket ){
     	this.socket=socket;
     	this.RSVPMessageQueue=RSVPMessageQueue;
-    	log=Logger.getLogger("ROADM");
+    	log=LoggerFactory.getLogger("ROADM");
     }
 
     private int getTipo(){
@@ -71,7 +72,7 @@ public class RSVPListener extends Thread{
         					RSVPMessageQueue.add(path);
         					
         				}catch(RSVPProtocolViolationException e){
-        					log.severe("Failure decoding RSVP-TE Path Message");
+        					log.error("Failure decoding RSVP-TE Path Message");
         				}
         				break;
         			case RSVPMessageTypes.MESSAGE_RESV:
@@ -81,7 +82,7 @@ public class RSVPListener extends Thread{
         					resv.decode();
         					RSVPMessageQueue.add(resv);
         				}catch(RSVPProtocolViolationException e){
-        					log.severe("Failure decoding RSVP-TE Resv Message");
+        					log.error("Failure decoding RSVP-TE Resv Message");
         				}
         				break;
         			case RSVPMessageTypes.MESSAGE_PATHTEAR:
@@ -91,11 +92,11 @@ public class RSVPListener extends Thread{
         					tear.decode();
         					RSVPMessageQueue.add(tear);
         				}catch(RSVPProtocolViolationException e){
-        					log.severe("Failure decoding RSVP-TE Path Tear Message");
+        					log.error("Failure decoding RSVP-TE Path Tear Message");
         				}
         				break;
         			default:
-        				log.severe("Unrecongizable RSVP Message");
+        				log.error("Unrecongizable RSVP Message");
         				break;
         		}
     		}catch(IOException e){

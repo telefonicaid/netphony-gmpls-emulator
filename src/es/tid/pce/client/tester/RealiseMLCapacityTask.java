@@ -8,7 +8,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.pcep.messages.PCEPRequest;
@@ -30,7 +31,7 @@ public class RealiseMLCapacityTask  extends TimerTask {
 	
 	
 	public RealiseMLCapacityTask(ArrayList<String> sourceList, ArrayList<String> destinationList,AutomaticTesterStatistics stats ){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.sourceList = sourceList;
 		this.destinationList=destinationList;
 		this.stats=stats;

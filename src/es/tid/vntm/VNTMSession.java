@@ -16,7 +16,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
@@ -105,7 +106,7 @@ public class VNTMSession extends GenericPCEPSession{
 		super(pcepSessionManager);
 		this.socket=s;
 		this.lspmanager=lspmanager;
-		log=Logger.getLogger("VNTMServer");
+		log=LoggerFactory.getLogger("VNTMServer");
 		timer=new Timer();
 		this.oPtable=oPtable;
 		this.keepAliveLocal=30;
@@ -143,7 +144,7 @@ public class VNTMSession extends GenericPCEPSession{
 				catch (IOException e1) 
 				{
 				}
-				log.warning("Finishing PCEP Session abruptly");
+				log.warn("Finishing PCEP Session abruptly");
 				return;
 			}
 			log.info(this.msg.toString());
@@ -154,41 +155,41 @@ public class VNTMSession extends GenericPCEPSession{
 				switch(PCEPMessage.getMessageType(this.msg)) {
 
 				case PCEPMessageTypes.MESSAGE_OPEN:
-					log.fine("OPEN message received");
+					log.debug("OPEN message received");
 					//After the session has been started, ignore subsequent OPEN messages
-					log.warning("OPEN message ignored");
+					log.warn("OPEN message ignored");
 					break;
 
 				case PCEPMessageTypes.MESSAGE_KEEPALIVE:
-					log.fine("KEEPALIVE message received");
+					log.debug("KEEPALIVE message received");
 					//The Keepalive message allows to reset the deadtimer
 					break;
 
 				case PCEPMessageTypes.MESSAGE_CLOSE:
-					log.fine("CLOSE message received");
+					log.debug("CLOSE message received");
 
 					try {
 						PCEPClose m_close=new PCEPClose(this.msg);		
-						log.warning("Closing due to reason "+m_close.getReason());
+						log.warn("Closing due to reason "+m_close.getReason());
 						this.killSession();
 					} catch (PCEPProtocolViolationException e1) {
-						log.warning("Problem decoding message, closing session"+e1.getMessage());
+						log.warn("Problem decoding message, closing session"+e1.getMessage());
 						this.killSession();
 						return;
 					}					
 					return;
 
 				case PCEPMessageTypes.MESSAGE_ERROR:
-					log.fine("ERROR message received");
+					log.debug("ERROR message received");
 					//Up to now... we do not do anything in the server side
 					break;
 
 				case PCEPMessageTypes.MESSAGE_NOTIFY:
-					log.fine("Received NOTIFY message");
+					log.debug("Received NOTIFY message");
 					break;
 
 				case PCEPMessageTypes.MESSAGE_FULL_TOPOLOGY:
-					log.fine("Full topology. Just a testing case..");
+					log.debug("Full topology. Just a testing case..");
 					String requestToDo = null;
 					//Abro el socket!
 					Socket socket = null;
@@ -350,12 +351,12 @@ public class VNTMSession extends GenericPCEPSession{
 					break;*/
 
 				default:
-					log.warning("ERROR: unexpected message received");
+					log.warn("ERROR: unexpected message received");
 					pceMsg = false;
 				}
 
 				if (pceMsg) {
-					log.fine("Reseting Dead Timer as PCEP Message has arrived");
+					log.debug("Reseting Dead Timer as PCEP Message has arrived");
 					resetDeadTimer();
 				}
 			} 
@@ -1132,7 +1133,7 @@ public class VNTMSession extends GenericPCEPSession{
 		catch (IOException e) 
 		{
 			log.info(UtilsFunctions.exceptionToString(e));
-			log.severe("Couldn't get I/O for connection to port" + vntmparams.getPMPort());
+			log.error("Couldn't get I/O for connection to port" + vntmparams.getPMPort());
 		}
 
 
@@ -1466,7 +1467,7 @@ public class VNTMSession extends GenericPCEPSession{
 				}
 			}
 			else if (r==-1){
-				//log.warning("End of stream has been reached");
+				//log.warn("End of stream has been reached");
 				throw new IOException();
 			}
 		}
@@ -1502,10 +1503,10 @@ public class VNTMSession extends GenericPCEPSession{
 					r = in.read(hdr, offset, 1);
 				}
 			} catch (IOException e){
-				log.warning("Error reading data: "+ e.getMessage());
+				log.warn("Error reading data: "+ e.getMessage());
 				throw e;
 			}catch (Exception e) {
-				log.warning("readMsg Oops: " + e.getMessage());
+				log.warn("readMsg Oops: " + e.getMessage());
 				throw new IOException();
 			}
 
@@ -1525,7 +1526,7 @@ public class VNTMSession extends GenericPCEPSession{
 				offset++;
 			}
 			else if (r==-1){
-				log.warning("End of stream has been reached");
+				log.warn("End of stream has been reached");
 				throw new IOException();
 			}
 		}

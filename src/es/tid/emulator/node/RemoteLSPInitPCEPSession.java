@@ -5,7 +5,8 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Hashtable;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.LSPCreationException;
 import es.tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
@@ -63,7 +64,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 		this.lspManager=lspManager;
 		this.socket=s;
 		this.idRoadm=idRoadm;
-		this.log=Logger.getLogger("ROADM");
+		this.log=LoggerFactory.getLogger("ROADM");
 		timer=new Timer();
 		lspIdsCorelation = new Hashtable<Long,Long>();
 	}
@@ -103,9 +104,9 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						in.close();
 						out.close();
 					} catch (Exception e1) {
-						log.warning("AYAYAYYA");
+						log.warn("AYAYAYYA");
 					}
-					log.warning("Finishing PCEP Session abruptly!");
+					log.warn("Finishing PCEP Session abruptly!");
 					return;
 				}
 				if (this.msg != null) {//If null, it is not a valid PCEP message								
@@ -117,7 +118,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 					case PCEPMessageTypes.MESSAGE_OPEN:
 						log.info("OPEN message received");
 						//After the session has been started, ignore subsequent OPEN messages
-						log.warning("OPEN message ignored");
+						log.warn("OPEN message ignored");
 						break;
 
 					case PCEPMessageTypes.MESSAGE_KEEPALIVE:
@@ -130,10 +131,10 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 
 						try {
 							PCEPClose m_close=new PCEPClose(this.msg);		
-							log.warning("Closing due to reason "+m_close.getReason());
+							log.warn("Closing due to reason "+m_close.getReason());
 							this.killSession();
 						} catch (PCEPProtocolViolationException e1) {
-							log.warning("Problem decoding message, closing session"+e1.getMessage());
+							log.warn("Problem decoding message, closing session"+e1.getMessage());
 							this.killSession();
 							return;
 						}					
@@ -151,7 +152,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 							m_not=new PCEPNotification(this.msg);		
 							notificationDispatcher.dispatchNotification(m_not);
 						} catch (PCEPProtocolViolationException e1) {
-							log.warning("Problem decoding notify message, ignoring message"+e1.getMessage());
+							log.warn("Problem decoding notify message, ignoring message"+e1.getMessage());
 							e1.printStackTrace();
 						}						
 						break;
@@ -276,7 +277,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 							//log.info("Message sent correctly:" + lsp_upd.getLspId());
 							//log.info(p_req.toString());
 						} catch (PCEPProtocolViolationException e) {
-							log.severe("PROBLEMON");
+							log.error("PROBLEMON");
 							e.printStackTrace();
 							return;
 						}
@@ -294,18 +295,18 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 						log.info("PCMonREP message received");
 						break;	
 					default:
-						log.warning("ERROR: unexpected message received");
+						log.warn("ERROR: unexpected message received");
 						pceMsg = false;
 					}
 
 					if (pceMsg) {
-						log.fine("Reseting Dead Timer as PCEP Message has arrived");
+						log.debug("Reseting Dead Timer as PCEP Message has arrived");
 						resetDeadTimer();
 					}
 				} 
 			}
 		}finally{
-			log.severe("SESSION "+ internalSessionID+" IS KILLED");
+			log.error("SESSION "+ internalSessionID+" IS KILLED");
 			this.FSMstate=PCEPValues.PCEP_STATE_IDLE;
 			endSession();
 		}

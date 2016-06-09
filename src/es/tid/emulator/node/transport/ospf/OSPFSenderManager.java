@@ -3,7 +3,8 @@ package es.tid.emulator.node.transport.ospf;
 import java.net.Inet4Address;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 import es.tid.ospf.ospfv2.lsa.LSA;
@@ -31,7 +32,7 @@ public class OSPFSenderManager {
 
 	private LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue;
 	
-	Logger log=Logger.getLogger("OSPFParser");
+	Logger log=LoggerFactory.getLogger("OSPFParser");
 	
 	public void sendMessageOSPF(Inet4Address src,Inet4Address dst){
 		log.info("SEND OSPF");

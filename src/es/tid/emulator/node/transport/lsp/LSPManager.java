@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.FastPCEPSession;
 import es.tid.emulator.node.resources.ResourceManager;
@@ -136,7 +137,7 @@ public class LSPManager {
 	private ReportDB rptdb;
 	
 	public LSPManager(boolean isStateful){
-		log = Logger.getLogger("ROADM");
+		log = LoggerFactory.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
 		conditionList=new Hashtable<Long,Condition>();
 		LSPList = new Hashtable<LSPKey, LSPTE>();
@@ -152,7 +153,7 @@ public class LSPManager {
 
 	public LSPManager(){
 		dataBaseVersion = new AtomicInteger();
-		log = Logger.getLogger("ROADM");
+		log = LoggerFactory.getLogger("ROADM");
 		lockList=new Hashtable<Long,Lock>();
 		conditionList=new Hashtable<Long,Condition>();
 		LSPList = new Hashtable<LSPKey, LSPTE>();
@@ -432,7 +433,7 @@ public class LSPManager {
 					//FIXME: Crear el pathErr para enviar
 					//Creamos Path Error Message
 					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
-					log.warning("There are no resources available");
+					log.warn("There are no resources available");
 					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
 				}else{
 					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
@@ -463,7 +464,7 @@ public class LSPManager {
 				//					//FIXME: Crear el pathErr para enviar
 				//					//Creamos Path Error Message
 				//					RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
-				//					log.warning("There are no resources available");
+				//					log.warn("There are no resources available");
 				//					throw new LSPCreationException(LSPCreationErrorTypes.NO_RESOURCES);
 				//				}else{
 				//					//FIXME: ver si añadimos la lambda al LSP en otro momento o no
@@ -494,7 +495,7 @@ public class LSPManager {
 			//FIXME: Crear el pathErr para enviar
 			//Creamos Path Error Message
 			RSVPPathErrMessage PathErr = new RSVPPathErrMessage();
-			log.warning("There are no resources available");
+			log.warn("There are no resources available");
 		}else{
 			//FIXME: ver si añadimos la lambda al LSP en otro momento o no
 			// de momento la información de lambda asociada la tenemos en el RSVP Manager
@@ -722,7 +723,7 @@ public class LSPManager {
 
 			if ((previous == null) ||(!previous.isDelegated()) || (!(previous.getDelegatedAdress().equals(PCESession.getPeerPCE_IPaddress()))))
 			{
-				log.warning("An align PCE is trying to delegate on us or the LSP to be updated was not found:"+(previous == null));
+				log.warn("An align PCE is trying to delegate on us or the LSP to be updated was not found:"+(previous == null));
 				log.info("PCEPErr message should be sent");
 			}
 			else
@@ -784,12 +785,12 @@ public class LSPManager {
 							}
 							catch (InterruptedException e) 
 							{
-								log.warning("Thread interrupted during the updating of a LSP");
+								log.warn("Thread interrupted during the updating of a LSP");
 								e.printStackTrace();
 							}
 							catch (LSPCreationException e) 
 							{
-								log.warning("Error updating LSP");
+								log.warn("Error updating LSP");
 								e.printStackTrace();
 							}
 						}

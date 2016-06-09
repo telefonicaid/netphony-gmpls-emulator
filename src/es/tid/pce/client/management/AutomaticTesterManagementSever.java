@@ -2,7 +2,8 @@ package es.tid.pce.client.management;
 
 import java.net.ServerSocket;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.client.emulator.Emulator;
@@ -28,7 +29,7 @@ public class AutomaticTesterManagementSever extends Thread {
 
 	
 	public AutomaticTesterManagementSever(/*PCCPCEPSession PCEsession,PCCPCEPSession PCEsessionVNTM,*/Timer timer, Timer printStatisticsTimer, /*Timer planificationTimer,*/AutomaticTesterStatistics stats,  InformationRequest info){
-		log =Logger.getLogger("PCCClient");		
+		log =LoggerFactory.getLogger("PCCClient");		
 		this.timer = timer;
 		this.stats=stats;
 		this.informationRequest=info;	
@@ -40,7 +41,7 @@ public class AutomaticTesterManagementSever extends Thread {
 	}
 	
 	public AutomaticTesterManagementSever(Emulator emulator){
-		log =Logger.getLogger("PCCClient");	
+		log =LoggerFactory.getLogger("PCCClient");	
 		this.emulator=emulator;
 	}
 	
@@ -54,7 +55,7 @@ public class AutomaticTesterManagementSever extends Thread {
 			serverSocket = new ServerSocket(port);
 		}
 		catch (Exception e){
-			log.severe("Could not listen management on port "+port);
+			log.error("Could not listen management on port "+port);
 			e.printStackTrace();
 			return;
 		}

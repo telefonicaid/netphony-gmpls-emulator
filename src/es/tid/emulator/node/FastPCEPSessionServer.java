@@ -2,7 +2,8 @@ package es.tid.emulator.node;
 
 import java.net.Inet4Address;
 import java.net.ServerSocket;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.LSPManager;
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
@@ -17,7 +18,7 @@ public class FastPCEPSessionServer extends Thread {
 	
 	public FastPCEPSessionServer(LSPManager lspManager, Inet4Address idRoadm, int nodeTechnology)
 	{
-		log=Logger.getLogger("ROADM");
+		log=LoggerFactory.getLogger("ROADM");
 		this.idRoadm=idRoadm;
 		this.lspManager=lspManager;
 		this.nodeTechnology=nodeTechnology;
@@ -31,7 +32,7 @@ public class FastPCEPSessionServer extends Thread {
 	          serverSocket = new ServerSocket(2222);
 		}
 		catch (Exception e){
-			log.severe("Could not listen fast PCEP on port 222");
+			log.error("Could not listen fast PCEP on port 222");
 			e.printStackTrace();
 			return;
 		}

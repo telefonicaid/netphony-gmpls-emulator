@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.client.emulator.Emulator;
@@ -50,7 +52,7 @@ public class AutomaticTesterManagementSession extends Thread {
 
 		this.printStatisticsTimer=printStatisticsTimer;
 		this.informationRequest=info;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		isRunning=true;
 		this.load=load;
 //		this.planificationTimer=planificationTimer;
@@ -61,7 +63,7 @@ public class AutomaticTesterManagementSession extends Thread {
 	}
 	
 	public AutomaticTesterManagementSession(Socket s,Emulator emulator){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		log.info("Creamos el AutomaticTesterManagementSession");
 		this.socket=s;
 		this.emulator=emulator;		
@@ -234,19 +236,19 @@ public class AutomaticTesterManagementSession extends Thread {
 					
 				}
 				else if (command.equals("set traces on")) {
-					log.setLevel(Level.ALL);		
-					Logger log2=Logger.getLogger("PCEPParser");
-					log2.setLevel(Level.ALL);
-					Logger log3= Logger.getLogger("OSPFParser");
-					log3.setLevel(Level.ALL);
+//					log.setLevel(Level.ALL);		
+//					Logger log2=LoggerFactory.getLogger("PCEPParser");
+//					log2.setLevel(Level.ALL);
+//					Logger log3= LoggerFactory.getLogger("OSPFParser");
+//					log3.setLevel(Level.ALL);
 					out.print("traces on!\r\n");
 				} 
 				else if (command.equals("set traces off")) {
-					log.setLevel(Level.SEVERE);		
-					Logger log2=Logger.getLogger("PCEPParser");
-					log2.setLevel(Level.SEVERE);
-					Logger log3= Logger.getLogger("OSPFParser");
-					log3.setLevel(Level.SEVERE);
+//					log.setLevel(Level.SEVERE);		
+//					Logger log2=LoggerFactory.getLogger("PCEPParser");
+//					log2.setLevel(Level.SEVERE);
+//					Logger log3= LoggerFactory.getLogger("OSPFParser");
+//					log3.setLevel(Level.SEVERE);
 					out.print("traces off!\r\n");
 				} 	else if (command.equals("quit")){
 					out.print("byte\r\n");

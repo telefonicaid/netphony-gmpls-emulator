@@ -5,7 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.netManager.NetworkLSPManagerParameters;
@@ -34,7 +35,7 @@ public class VNTMServer {
 	/**
 	 * Logger
 	 */
-	public static final Logger Log =Logger.getLogger("VNTMServer");
+	public static final Logger Log =LoggerFactory.getLogger("VNTMServer");
 	
 	static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	static String VNTMFile = "VNTMConfiguration.xml";
@@ -56,7 +57,7 @@ public class VNTMServer {
 			fh2.setFormatter(new SimpleFormatter());
 			Log.addHandler(fh);
 			Log.setLevel(Level.SEVERE);
-			Logger log2=Logger.getLogger("PCEPParser");
+			Logger log2=LoggerFactory.getLogger("PCEPParser");
 			log2.addHandler(fh2);
 			log2.setLevel(Level.SEVERE);
 		} catch (Exception e1) {

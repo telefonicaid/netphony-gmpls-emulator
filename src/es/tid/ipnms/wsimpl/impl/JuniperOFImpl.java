@@ -1,6 +1,7 @@
 package es.tid.ipnms.wsimpl.impl;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ipnms.datamodel.router.RouterDesc;
 import es.tid.ipnms.datamodel.router.GRETunnel.GRETunnelDesc;
@@ -18,7 +19,7 @@ import es.tid.provisioningManager.objects.openflow.PushFlowFloodlight;
 import es.tid.provisioningManager.objects.openflow.StaticFlow;
 
 public class JuniperOFImpl  implements IPnmsWs {
-	private Logger log=Logger.getLogger("JuniperOFImpl");
+	private Logger log=LoggerFactory.getLogger("JuniperOFImpl");
 	@Override
 	public int configureIPInterface(RouterDesc desc, IPInterfaceDesc ifDesc,
 			IPInterfaceConfig config) {

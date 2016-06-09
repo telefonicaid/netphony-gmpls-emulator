@@ -5,8 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.LSPCreationException;
 import es.tid.emulator.node.transport.lsp.LSPCreationErrorTypes;
@@ -77,8 +79,8 @@ public class FastPCEPSession extends Thread{
 	public FastPCEPSession(Socket s, LSPManager lspManager, Inet4Address idRoadm, int nodeTechnology, AutomaticTesterStatistics stats){
 		this.socket=s;
 		this.idRoadm=idRoadm;	
-		log=Logger.getLogger("ROADM");
-		log.setLevel(Level.INFO);
+		log=LoggerFactory.getLogger("ROADM");
+		//log.setLevel(Level.INFO);
 		this.lspManager=lspManager;
 		this.nodeTechnology=nodeTechnology;
 		this.stats = stats;
@@ -215,7 +217,7 @@ public class FastPCEPSession extends Thread{
 				log.info("Message sent correctly:" + lsp.getLspId());
 				//log.info(p_req.toString());
 			} catch (PCEPProtocolViolationException e) {
-				log.severe("PROBLEMON");
+				log.error("PROBLEMON");
 				e.printStackTrace();
 				return;
 			}
@@ -325,7 +327,7 @@ public class FastPCEPSession extends Thread{
 				*/
 				
 			} catch (Exception e) {
-				log.severe("PROBLEMON");
+				log.error("PROBLEMON");
 				e.printStackTrace();
 				return;
 			}
@@ -362,10 +364,10 @@ public class FastPCEPSession extends Thread{
 					r = in.read(hdr, offset, 1);
 				}
 			} catch (IOException e){
-				log.warning("Error reading data: "+ e.getMessage());
+				log.warn("Error reading data: "+ e.getMessage());
 				throw e;
 		    }catch (Exception e) {
-				log.warning("readMsg Oops: " + e.getMessage());
+				log.warn("readMsg Oops: " + e.getMessage());
 				throw new IOException();
 			}
 		    
@@ -385,7 +387,7 @@ public class FastPCEPSession extends Thread{
 				offset++;
 			}
 			else if (r==-1){
-				log.warning("End of stream has been reached");
+				log.warn("End of stream has been reached");
 				throw new IOException();
 			}
 		}
@@ -405,12 +407,12 @@ public class FastPCEPSession extends Thread{
 				out.close();
 			}
 			if (this.socket != null) {
-				log.warning("Closing socket");
+				log.warn("Closing socket");
 				this.socket.close();
 			}
 			
 		} catch (Exception e) {
-			log.warning("Error closing connections: " + e.getMessage());
+			log.warn("Error closing connections: " + e.getMessage());
 		}
 	}
 	
@@ -428,15 +430,15 @@ public class FastPCEPSession extends Thread{
 		try {
 			message.encode();
 		} catch (Exception e11) {
-			log.severe("ERROR ENCODING ERROR OBJECT, BUG DETECTED, INFORM!!! "+e11.getMessage());
-			log.severe("Ending Session");
+			log.error("ERROR ENCODING ERROR OBJECT, BUG DETECTED, INFORM!!! "+e11.getMessage());
+			log.error("Ending Session");
 			closeSession();
 		}
 		try {			
 			out.write(message.getBytes());
 			out.flush();
 		} catch (IOException e) {
-			log.severe("Problem writing message, finishing session "+e.getMessage());
+			log.error("Problem writing message, finishing session "+e.getMessage());
 			closeSession();
 		}
 	}

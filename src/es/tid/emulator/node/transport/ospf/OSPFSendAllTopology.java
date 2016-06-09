@@ -10,7 +10,8 @@ package es.tid.emulator.node.transport.ospf;
 import java.net.Inet4Address;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -30,7 +31,7 @@ public class OSPFSendAllTopology extends Thread {
 		//this.roadm=roadm;
 		this.domainTEDB=domainTEDB;
 		this.ospfSenderManager=ospfsenderManager;
-		log = Logger.getLogger("OSPFParser");
+		log = LoggerFactory.getLogger("OSPFParser");
 	}
 	/**
 	 * Starts the keepAliveLSP process

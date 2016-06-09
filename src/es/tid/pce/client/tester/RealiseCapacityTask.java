@@ -3,7 +3,8 @@ package es.tid.pce.client.tester;
 
 import java.util.LinkedList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
@@ -24,7 +25,7 @@ public class RealiseCapacityTask  extends TimerTask {
 	private boolean VirtualTELink=false;
 	
 	public RealiseCapacityTask(NetworkLSPManager networkLSPManager, LinkedList<EROSubobject> erolist,AutomaticTesterStatistics stats, boolean bidirectional, BandwidthRequestedGeneralizedBandwidth GB){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.stats=stats;
 		this.erolist=erolist;
 		this.GB=GB;
@@ -35,7 +36,7 @@ public class RealiseCapacityTask  extends TimerTask {
 	
 	public RealiseCapacityTask(NetworkLSPManager networkLSPManager, LinkedList<EROSubobject> erolist,AutomaticTesterStatistics stats, boolean bidirectional, BandwidthRequestedGeneralizedBandwidth GB,
 			float bw, boolean VirtualTELink){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.stats=stats;
 		this.erolist=erolist;
 		this.GB=GB;

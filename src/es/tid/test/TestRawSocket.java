@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
 //import tid.util.Utils;
@@ -28,7 +31,7 @@ public class TestRawSocket {
 	  // Timeout para el socket
 	private static final int TIMEOUT = 0;
 	
-	private static Logger log=Logger.getLogger("OSPFParser");;
+	private static Logger log=LoggerFactory.getLogger("OSPFParser");;
 	/**
 	 * @param args
 	 */
@@ -40,18 +43,18 @@ public class TestRawSocket {
 		String ipLocal2;
 		String bindAddr;
 		
-		FileHandler fh=null;
-		try {
-			fh=new FileHandler("OSPFParser.log");
-		} catch (SecurityException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		log.addHandler(fh);
-		log.setLevel(Level.ALL);
+//		FileHandler fh=null;
+//		try {
+//			fh=new FileHandler("OSPFParser.log");
+//		} catch (SecurityException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		} catch (IOException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+//		log.addHandler(fh);
+//		log.setLevel(Level.ALL);
 		if (args.length >=4 ){
 			bindAddr=args[0];
 			mCast=args[1];
@@ -178,7 +181,7 @@ public class TestRawSocket {
 		//FuncionesUtiles.printByte(temp, "Hemos leido "+r+" bytes: ");
 		}catch (IOException e){
 			log.info("Salgo por excepcion");
-			//log.warning("Error reading data: "+ e.getMessage());
+			//log.warn("Error reading data: "+ e.getMessage());
 			throw e;
 
 		}catch (Exception e) {		
@@ -211,7 +214,7 @@ public class TestRawSocket {
 //				}
 //			}catch (IOException e){
 //				log.info("Salgo por excepcion");
-//				//log.warning("Error reading data: "+ e.getMessage());
+//				//log.warn("Error reading data: "+ e.getMessage());
 //				throw e;
 //
 //			}catch (Exception e) {		
@@ -267,7 +270,7 @@ public class TestRawSocket {
 ////			}
 ////			else if (r==-1){
 ////				log.info("r=-1");
-////				//log.warning("End of stream has been reached");
+////				//log.warn("End of stream has been reached");
 ////				throw new IOException();
 ////
 ////			}

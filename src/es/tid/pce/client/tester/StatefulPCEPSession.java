@@ -9,8 +9,10 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.pcep.constructs.PCEPIntiatedLSP;
 import es.tid.pce.pcep.messages.PCEPInitiate;
@@ -55,8 +57,8 @@ public class StatefulPCEPSession extends GenericPCEPSession
 	{
 		super(pcepSessionManager);
 		this.socket=s;
-		log=Logger.getLogger("Stateful");
-		log.setLevel(Level.OFF);
+		log=LoggerFactory.getLogger("Stateful");
+		//log.setLevel(Level.OFF);
 		timer=new Timer();
 		this.keepAliveLocal=30;
 		this.deadTimerLocal=180;
@@ -143,7 +145,7 @@ public class StatefulPCEPSession extends GenericPCEPSession
 					} else if (this.operation.equals("del")){
 						pr.getPcepIntiatedLSPList().get(0).getRsp().setRFlag(true);
 					} else {
-						log.warning("Tipo de operacion no soportada");
+						log.warn("Tipo de operacion no soportada");
 					}
 					BandwidthRequested bw= new BandwidthRequested();
 					bw.setBw(bandwidth);
@@ -218,10 +220,10 @@ public class StatefulPCEPSession extends GenericPCEPSession
 					r = in.read(hdr, offset, 1);
 				}
 			} catch (IOException e){
-				log.warning("Error reading data: "+ e.getMessage());
+				log.warn("Error reading data: "+ e.getMessage());
 				throw e;
 		    }catch (Exception e) {
-				log.warning("readMsg Oops: " + e.getMessage());
+				log.warn("readMsg Oops: " + e.getMessage());
 				throw new IOException();
 			}
 		    
@@ -241,7 +243,7 @@ public class StatefulPCEPSession extends GenericPCEPSession
 				offset++;
 			}
 			else if (r==-1){
-				log.warning("End of stream has been reached");
+				log.warn("End of stream has been reached");
 				throw new IOException();
 			}
 		}

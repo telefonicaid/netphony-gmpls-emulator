@@ -7,7 +7,8 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
@@ -67,7 +68,7 @@ public class VNTMClientSession extends GenericPCEPSession
 	{
 		super(pcepSessionManager);
 		this.socket=s;
-		log=Logger.getLogger("ABNO Controller");
+		log=LoggerFactory.getLogger("ABNO Controller");
 		timer=new Timer();
 		this.keepAliveLocal=30;
 		this.deadTimerLocal=180;
@@ -82,7 +83,7 @@ public class VNTMClientSession extends GenericPCEPSession
 	{
 		super(pcepSessionManager);
 		this.socket=s;
-		log=Logger.getLogger("ABNO Controller");
+		log=LoggerFactory.getLogger("ABNO Controller");
 		timer=new Timer();
 		this.keepAliveLocal=30;
 		this.deadTimerLocal=180;
@@ -92,7 +93,7 @@ public class VNTMClientSession extends GenericPCEPSession
 	{
 		super(pcepSessionManager);
 		this.socket=s;
-		log=Logger.getLogger("ABNO Controller");
+		log=LoggerFactory.getLogger("ABNO Controller");
 		timer=new Timer();
 		this.keepAliveLocal=30;
 		this.deadTimerLocal=180;
@@ -109,7 +110,7 @@ public class VNTMClientSession extends GenericPCEPSession
 	{
 		super(pcepSessionManager);
 		this.socket=s;
-		log=Logger.getLogger("ABNO Controller");
+		log=LoggerFactory.getLogger("ABNO Controller");
 		timer=new Timer();
 		this.keepAliveLocal=30;
 		this.deadTimerLocal=180;
@@ -234,7 +235,7 @@ public class VNTMClientSession extends GenericPCEPSession
 			} else if (this.operation.equals("del")){
 				pr.getPcepIntiatedLSPList().get(0).getRsp().setRFlag(true);
 			} else {
-				log.warning("Tipo de operacion no soportada");
+				log.warn("Tipo de operacion no soportada");
 			}
 			pr.getPcepIntiatedLSPList().get(0).getLsp().setLspId((int)lspid);			
 			EndPointsIPv4 ep=new EndPointsIPv4();
@@ -347,10 +348,10 @@ public class VNTMClientSession extends GenericPCEPSession
 					r = in.read(hdr, offset, 1);
 				}
 			} catch (IOException e){
-				log.warning("Error reading data: "+ e.getMessage());
+				log.warn("Error reading data: "+ e.getMessage());
 				throw e;
 		    }catch (Exception e) {
-				log.warning("readMsg Oops: " + e.getMessage());
+				log.warn("readMsg Oops: " + e.getMessage());
 				throw new IOException();
 			}
 		    
@@ -370,7 +371,7 @@ public class VNTMClientSession extends GenericPCEPSession
 				offset++;
 			}
 			else if (r==-1){
-				log.warning("End of stream has been reached");
+				log.warn("End of stream has been reached");
 				throw new IOException();
 			}
 		}

@@ -2,9 +2,12 @@ package es.tid.pce.client.tester;
 
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -23,8 +26,8 @@ import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
  */
 public class ClientSendTopology {
 	private static EmulatedPCCPCEPSession PCEsession;
-	private static Logger log=Logger.getLogger("PCCClient");
-	private static Logger log2=Logger.getLogger("PCEPParser");
+	private static Logger log=LoggerFactory.getLogger("PCCClient");
+	private static Logger log2=LoggerFactory.getLogger("PCEPParser");
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	
 	/**
@@ -40,22 +43,22 @@ public class ClientSendTopology {
 			return;
 		}
 		  
-		FileHandler fh;
-		FileHandler fh2;
-		try {
-			fh=new FileHandler("PCCClient.log");
-			fh2=new FileHandler("PCEPClientParser.log");
-			//fh.setFormatter(new SimpleFormatter());
-			
-			log.addHandler(fh);
-			log.setLevel(Level.ALL);
-			log2.addHandler(fh2);
-			log2.setLevel(Level.ALL);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			System.exit(1);
-		}
+//		FileHandler fh;
+//		FileHandler fh2;
+//		try {
+//			fh=new FileHandler("PCCClient.log");
+//			fh2=new FileHandler("PCEPClientParser.log");
+//			//fh.setFormatter(new SimpleFormatter());
+//			
+//			log.addHandler(fh);
+//			log.setLevel(Level.ALL);
+//			log2.addHandler(fh2);
+//			log2.setLevel(Level.ALL);
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//			System.exit(1);
+//		}
 		
 		ClientSendTopologyConfiguration clientConf = new ClientSendTopologyConfiguration(args[0]);
 		

@@ -3,7 +3,8 @@ package es.tid.vntm;
 import java.net.Inet4Address;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -30,7 +31,7 @@ public class LigthPathCreateIP {
 	private Logger log;
 			
 	public LigthPathCreateIP(DomainTEDB tedb){
-		log = Logger.getLogger("PCCClient.log");
+		log = LoggerFactory.getLogger("PCCClient.log");
 		this.ted=(DomainTEDB)tedb;
 		graphlock = new ReentrantLock();
 	}
@@ -53,7 +54,7 @@ public class LigthPathCreateIP {
 		
 		
 		if (graph_IP == null){
-			log.warning("Graph IP is Null!");
+			log.warn("Graph IP is Null!");
 			return false;
 		}
 		

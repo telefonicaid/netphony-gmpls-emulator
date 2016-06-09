@@ -1,7 +1,8 @@
 package es.tid.emulator.node.management;
 
 import java.net.ServerSocket;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.NetworkNode;
 
@@ -12,7 +13,7 @@ public class NodeManagementSever extends Thread {
 
 		
 	public NodeManagementSever(NetworkNode node){
-		log =Logger.getLogger("PCEServer");
+		log =LoggerFactory.getLogger("PCEServer");
 		this.node=node;
 	}
 
@@ -25,7 +26,7 @@ public class NodeManagementSever extends Thread {
 	        serverSocket = new ServerSocket(6666);
 		}
 		catch (Exception e){
-			log.severe("Could not listen management on port 6666");
+			log.error("Could not listen management on port 6666");
 			e.printStackTrace();
 			return;
 		}

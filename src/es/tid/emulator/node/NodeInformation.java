@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Properties;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.te.TechnologyParameters;
 
@@ -48,7 +49,7 @@ public class NodeInformation {
 
 	public void readNodeConfiguration(){
     	
-    	log=Logger.getLogger("ROADM");
+    	log=LoggerFactory.getLogger("ROADM");
     	
 		Properties props = new Properties();
 		Properties props_node = new Properties();

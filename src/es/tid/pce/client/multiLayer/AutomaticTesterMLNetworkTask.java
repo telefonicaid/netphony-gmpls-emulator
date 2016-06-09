@@ -10,7 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.pce.client.ClientRequestManager;
@@ -39,7 +40,7 @@ public class AutomaticTesterMLNetworkTask  extends TimerTask {
 	
 	public AutomaticTesterMLNetworkTask(PCEPRequest request,EmulatedPCCPCEPSession ps,EmulatedPCCPCEPSession psVNTM ){
 		this.request = request;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.crm=ps.crm;
 		this.psVNTM=psVNTM;
 	}

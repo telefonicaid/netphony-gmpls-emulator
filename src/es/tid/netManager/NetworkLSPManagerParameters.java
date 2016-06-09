@@ -2,7 +2,8 @@ package es.tid.netManager;
 import java.io.File;
 import java.net.Inet4Address;
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,7 +32,7 @@ public class NetworkLSPManagerParameters {
 		 */
 		private Inet4Address address;
 		
-		Logger log=Logger.getLogger("PCCClient");
+		Logger log=LoggerFactory.getLogger("PCCClient");
 
 
 		public Inet4Address getAddress() {

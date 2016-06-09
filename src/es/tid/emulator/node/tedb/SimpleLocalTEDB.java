@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -24,7 +25,7 @@ public class SimpleLocalTEDB extends SimpleTEDB{
 		
 	public SimpleLocalTEDB(){
 		TEDBlock=new ReentrantLock();
-		log = Logger.getLogger("ROADM");
+		log = LoggerFactory.getLogger("ROADM");
 	}
 	
 	//Check resources SSON

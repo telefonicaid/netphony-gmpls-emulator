@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import cern.jet.random.engine.MersenneTwister;
@@ -52,7 +53,7 @@ public class AutomaticTesterMLNetworkRandomTask  extends TimerTask {
 	
 	public AutomaticTesterMLNetworkRandomTask(Exponential expSendRequest,Exponential connectionTime, Timer timer,Timer planificationTimer,ClientRequestManager crm,EmulatedPCCPCEPSession psVNTM,AutomaticTesterStatistics stats,PrintWriter pw, PrintWriter apw,MersenneTwister mt ){
 		this.mt=mt;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.crm=crm;
 		this.psVNTM=psVNTM;
 		this.expSendRequest=expSendRequest;
@@ -95,7 +96,7 @@ public class AutomaticTesterMLNetworkRandomTask  extends TimerTask {
 		log.info("Request Time "+reqTime_us+" us");
 		String strPrev=null;
 		if (pr.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			//FIXME: QUE HACEMOS? CANCELAMOS SIMULACION?
 			//stats.addNoPathResponse();
 			System.exit(1);

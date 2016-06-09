@@ -2,7 +2,8 @@ package es.tid.pce.client.tester;
 
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
@@ -31,9 +32,9 @@ public class NetworkEmulatorActivity implements Activity{
 	public NetworkEmulatorActivity(Exponential connectionTime,Timer planificationTimer){
 		this.connectionTime=connectionTime;
 		this.planificationTimer=planificationTimer;
-		log=Logger.getLogger("PCCClient");
-//		logErrores=Logger.getLogger("PruebaLambdas");
-//		logPrueba=Logger.getLogger("mmmerrores");
+		log=LoggerFactory.getLogger("PCCClient");
+//		logErrores=LoggerFactory.getLogger("PruebaLambdas");
+//		logPrueba=LoggerFactory.getLogger("mmmerrores");
 	}
 
 	public void addNetworkEmulator(NetworkLSPManager networkLSPManager){
@@ -59,11 +60,11 @@ public class NetworkEmulatorActivity implements Activity{
 		// TODO Auto-generated method stub
 		if (response == null){
 			stats.addNoResponse();
-			log.severe("Response null");			
+			log.error("Response null");			
 			return;
 		}
 		if (response.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			//FIXME: QUE HACEMOS? CANCELAMOS SIMULACION?
 			//stats.addNoPathResponse();
 			System.exit(1);
@@ -100,7 +101,7 @@ public class NetworkEmulatorActivity implements Activity{
 						planificationTimer.schedule(realiseCapacity,duration);
 					}else
 					{
-						//Logger logPrueba=Logger.getLogger("LogPrueba");
+						//Logger logPrueba=LoggerFactory.getLogger("LogPrueba");
 						stats.addStolenLambdasLSP();
 						stats.analyzeLambdaBlockingProbability(1);
 						stats.analyzeBlockingProbability(1);

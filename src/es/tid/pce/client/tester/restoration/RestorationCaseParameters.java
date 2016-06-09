@@ -6,7 +6,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,7 +35,7 @@ public class RestorationCaseParameters {
 //	private boolean networkEmulator=false;
 
 	private LinkedList<RequestToSend> requestToSendList;
-	private Logger log=Logger.getLogger("PCCClient");
+	private Logger log=LoggerFactory.getLogger("PCCClient");
 	//private int maxNumberIterations;
 	//Variable para poner las trazas del cliente
 	//private long printStatisticsTime=10000;

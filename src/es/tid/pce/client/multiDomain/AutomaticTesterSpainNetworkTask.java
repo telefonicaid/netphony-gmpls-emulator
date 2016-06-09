@@ -7,7 +7,8 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -55,7 +56,7 @@ public class AutomaticTesterSpainNetworkTask  extends TimerTask {
 		algorithmRuleList = new LinkedList<MapAlgoRule>();
 		destination = new ArrayList<Inet4Address>();
 		source  = new ArrayList<Inet4Address>();
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.crm=ps.crm;
 		this.PCEServerPort=port;
 		this.ps = ps;

@@ -2,7 +2,8 @@ package es.tid.netManager.uni;
 
 import java.net.Inet4Address;
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ipnms.datamodel.router.LabelSwitchedPath.LabelSwitchedPathProperties;
 import es.tid.ipnms.datamodel.router.LabelSwitchedPath.LabelSwitchedPathWithUnnumIf;
@@ -18,7 +19,7 @@ public class UniNetworkLSPManager extends NetworkLSPManager {
 	/**
 	 * Logger
 	 */
-	 Logger log =Logger.getLogger("UniNetworkLSPManager");
+	 Logger log =LoggerFactory.getLogger("UniNetworkLSPManager");
 	 
 	public UniNetworkLSPManager(){
 		this.setEmulatorType(NetworkLSPManagerTypes.UNI_NETWORK);		

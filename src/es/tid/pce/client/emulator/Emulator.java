@@ -12,11 +12,16 @@ import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import cern.jet.random.engine.MersenneTwister;
@@ -151,9 +156,9 @@ public class Emulator {
 			NetworkLSPManager networkLSPManager,EmulatedPCCPCEPSession VNTMSession, AutomaticTesterStatistics stats){
 		this.testerParams=informationRequest;
 		this.PCEsessionList = PCEsessionList;
-		statsLog=Logger.getLogger("stats");
+		statsLog=LoggerFactory.getLogger("stats");
 		numberExecution=0;
-		log = Logger.getLogger("PCCClient");
+		log = LoggerFactory.getLogger("PCCClient");
 		this.networkLSPManager=networkLSPManager;
 		this.VNTMSession=VNTMSession;
 		automaticTesterManagementServerTask =  new AutomaticTesterManagementSever(this);
@@ -164,9 +169,9 @@ public class Emulator {
 			NetworkLSPManager networkLSPManager,EmulatedPCCPCEPSession VNTMSession, AutomaticTesterStatistics stats, LSPConfirmationDispatcher LSPConfDist){
 		this.testerParams=informationRequest;
 		this.PCEsessionList = PCEsessionList;
-		statsLog=Logger.getLogger("stats");
+		statsLog=LoggerFactory.getLogger("stats");
 		numberExecution=0;
-		log = Logger.getLogger("PCCClient");
+		log = LoggerFactory.getLogger("PCCClient");
 		this.networkLSPManager=networkLSPManager;
 		this.VNTMSession=VNTMSession;
 		automaticTesterManagementServerTask =  new AutomaticTesterManagementSever(this);
@@ -370,7 +375,7 @@ public class Emulator {
 		}
 		if (moreExecutionsLeft()){
 			if (!getLoad()){
-				log.severe("Problem trying to get the current Load");
+				log.error("Problem trying to get the current Load");
 				return;
 			}
 
@@ -381,28 +386,28 @@ public class Emulator {
 					((CompletedEmulatedNetworkLSPManager)networkLSPManager).setStats(stats);
 			}
 			stats.setNumberNodes(testerParams.getNumberNodes());
-			FileHandler fh=null;
-			try {
-				if (testerParams.getRequestToSendList().get(0).getRequestParameters().isReservation())
-					fh=new FileHandler("stats_ConReserva_load_"+currentLoad*(testerParams.getNumberNodes())*(testerParams.getNumberNodes()-1)+"_TimeReserved"+(testerParams.getRequestToSendList().get(0).getRequestParameters().getTimeReserved())+".log");
-				else 
-					fh=new FileHandler("stats_SinReserva_load_"+testerParams.getNumfileBW()+"_"+currentLoad*(testerParams.getNumberNodes())*(testerParams.getNumberNodes()-1)+".log");
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			FileHandler fh=null;
+//			try {
+//				if (testerParams.getRequestToSendList().get(0).getRequestParameters().isReservation())
+//					fh=new FileHandler("stats_ConReserva_load_"+currentLoad*(testerParams.getNumberNodes())*(testerParams.getNumberNodes()-1)+"_TimeReserved"+(testerParams.getRequestToSendList().get(0).getRequestParameters().getTimeReserved())+".log");
+//				else 
+//					fh=new FileHandler("stats_SinReserva_load_"+testerParams.getNumfileBW()+"_"+currentLoad*(testerParams.getNumberNodes())*(testerParams.getNumberNodes()-1)+".log");
+//			} catch (SecurityException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 			int numberRequest = testerParams.getRequestToSendList().size();
 			
 						
 			//Para el logger de las estadisticas
-			fh.setFormatter(new SimpleFormatter());			
+			//fh.setFormatter(new SimpleFormatter());			
 			PrintStatistics printStatistics = new PrintStatistics(stats);
-			statsLog.setLevel(Level.ALL);
-			statsLog.addHandler(fh);
+			//statsLog.setLevel(Level.ALL);
+			//statsLog.addHandler(fh);
 			statsLog.info("-------------------------------------------------------------------------");
 			statsLog.info("LOAD: "+currentLoad);
 			statsLog.info("MeanTimeBetweenRequest:"+currentMeanTimeBetweenRequest+"\t MeanConnectionTime"+currentMeanConnectionTime);
@@ -658,11 +663,11 @@ public class Emulator {
 //		LogManager.getLogManager().reset();	
 		if (moreExecutionsLeft()){	
 			numberExecution++;
-			statsLog.removeHandler(statsLog.getHandlers()[0]);
+			//statsLog.removeHandler(statsLog.getHandlers()[0]);
 			this.start();
 		}
 		else{
-			LogManager.getLogManager().reset();					
+			//LogManager.getLogManager().reset();					
 			//planificationTimer.cancel();
 			System.exit(0);
 		}

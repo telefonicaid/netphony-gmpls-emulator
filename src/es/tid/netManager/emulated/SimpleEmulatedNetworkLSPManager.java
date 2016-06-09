@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -40,7 +41,7 @@ import es.tid.tedb.TE_Information;
  */
 
 public class SimpleEmulatedNetworkLSPManager extends NetworkLSPManager{
-	Logger log= Logger.getLogger("PCCClient");
+	Logger log= LoggerFactory.getLogger("PCCClient");
 	public SimpleEmulatedNetworkLSPManager(LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue, String file ){
 		this.setEmulatorType(NetworkLSPManagerTypes.SIMPLE_EMULATED_NETWORK);
 		this.setDomainTEDB(new SimpleTEDB());
@@ -50,7 +51,7 @@ public class SimpleEmulatedNetworkLSPManager extends NetworkLSPManager{
 			this.getDomainTEDB().initializeFromFile(file);
 		}
 		else {
-			log.severe("Network file NOT included!!!");
+			log.error("Network file NOT included!!!");
 		}
 
 		this.setSendingQueue(sendingQueue);
@@ -294,7 +295,7 @@ public class SimpleEmulatedNetworkLSPManager extends NetworkLSPManager{
 
 			}
 			else {
-				log.severe("Error en setMLLSP. Edge null");
+				log.error("Error en setMLLSP. Edge null");
 			}		
 
 		}
@@ -370,7 +371,7 @@ public class SimpleEmulatedNetworkLSPManager extends NetworkLSPManager{
 
 			}
 			else {
-				log.severe("Error en setMLLSP. Edge null");
+				log.error("Error en setMLLSP. Edge null");
 			}		
 
 		}
@@ -385,7 +386,7 @@ public class SimpleEmulatedNetworkLSPManager extends NetworkLSPManager{
 			this.getDomainTEDB().initializeFromFile(this.getFile());
 		}
 		else {
-			log.severe("Network file NOT included!!!");
+			log.error("Network file NOT included!!!");
 			return false;
 		}
 

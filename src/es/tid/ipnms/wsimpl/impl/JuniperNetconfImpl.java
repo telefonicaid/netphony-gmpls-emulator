@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ipnms.datamodel.router.RouterDesc;
 import es.tid.ipnms.datamodel.router.GRETunnel.GRETunnelDesc;
@@ -19,7 +20,7 @@ import es.tid.ipnms.datamodel.router.routing.routingprotocol.RProtocolDesc;
 import es.tid.ipnms.wsimpl.IPnmsWs;
 
 public class JuniperNetconfImpl implements IPnmsWs {
-	private Logger log=Logger.getLogger("JuniperOFImpl");
+	private Logger log=LoggerFactory.getLogger("JuniperOFImpl");
 	@Override
 	public int configureIPInterface(RouterDesc desc, IPInterfaceDesc ifDesc,
 			IPInterfaceConfig config) {

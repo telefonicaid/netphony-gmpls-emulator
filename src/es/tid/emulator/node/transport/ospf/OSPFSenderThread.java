@@ -5,7 +5,8 @@ import static es.tid.rocksaw.net.RawSocket.PF_INET;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
 
@@ -24,7 +25,7 @@ public class OSPFSenderThread extends Thread{
 	
 	private LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue;
 	
-	Logger log=Logger.getLogger("OSPFParser");
+	Logger log=LoggerFactory.getLogger("OSPFParser");
 	
 	public OSPFSenderThread (LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingqueue, Inet4Address NodeLocalAddress){
 		this.sendingQueue=sendingqueue;
@@ -59,7 +60,7 @@ public class OSPFSenderThread extends Thread{
 				
 				OSPF_msg=sendingQueue.take();
 			} catch (InterruptedException e) {
-				log.severe("Exception tying to take a OSPF message from the sendingQueue in OSPFSender.");
+				log.error("Exception tying to take a OSPF message from the sendingQueue in OSPFSender.");
 				return;
 			}
 			try {

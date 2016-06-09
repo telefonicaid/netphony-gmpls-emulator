@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.tid.netphony</groupId>
   <artifactId>network-emulator</artifactId>
-  <version>1.3.0</version>
+  <version>1.3.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Netphony Network Emulator</name>
   <description>Emulator of GMPLS-controlled transport Network</description>
@@ -22,12 +22,12 @@
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.2</version>
     </dependency>
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>pce</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.2-SNAPSHOT</version>
     </dependency>
     <dependency>
      <groupId>commons-net</groupId>

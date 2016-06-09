@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.emulated.SimpleEmulatedNetworkLSPManager;
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
@@ -24,7 +26,7 @@ public class VNTMManagementSession extends Thread {
 	public VNTMManagementSession(Socket s, LSPManager lspmanager){
 		this.socket=s;
 		this.lspmanager=lspmanager;
-		log=Logger.getLogger("PCEServer");
+		log=LoggerFactory.getLogger("PCEServer");
 	}
 	
 	public void run(){
@@ -45,7 +47,7 @@ public class VNTMManagementSession extends Thread {
 				try {
 					command = br.readLine();
 				} catch (IOException ioe) {
-					log.warning("IO error trying to read your command");
+					log.warn("IO error trying to read your command");
 					return;
 				}
 				if (command.equals("quit")) {
@@ -88,19 +90,19 @@ public class VNTMManagementSession extends Thread {
 					
 				}
 				else if (command.equals("set traces on")) {
-					log.setLevel(Level.ALL);		
-					Logger log2=Logger.getLogger("VNTMServer");
-					log2.setLevel(Level.ALL);
-					Logger log3= Logger.getLogger("PCEPParser");
-					log3.setLevel(Level.ALL);
+//					log.setLevel(Level.ALL);		
+//					Logger log2=LoggerFactory.getLogger("VNTMServer");
+//					log2.setLevel(Level.ALL);
+//					Logger log3= LoggerFactory.getLogger("PCEPParser");
+//					log3.setLevel(Level.ALL);
 					out.print("traces on!\r\n");
 				} 
 				else if (command.equals("set traces off")) {
-					log.setLevel(Level.SEVERE);		
-					Logger log2=Logger.getLogger("VNTMServer");
-					log2.setLevel(Level.SEVERE);
-					Logger log3= Logger.getLogger("PCEPParser");
-					log3.setLevel(Level.SEVERE);
+//					log.setLevel(Level.SEVERE);		
+//					Logger log2=LoggerFactory.getLogger("VNTMServer");
+//					log2.setLevel(Level.SEVERE);
+//					Logger log3= LoggerFactory.getLogger("PCEPParser");
+//					log3.setLevel(Level.SEVERE);
 					out.print("traces off!\r\n");
 				} 
 

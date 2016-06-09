@@ -6,7 +6,8 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
@@ -31,7 +32,7 @@ public class VNTMActivity implements Activity{
 	private AutomaticTesterStatistics stats;
 	private PCEPRequest request;
 	private PCEPResponse response;
-	private Logger log = Logger.getLogger("PCCClient");
+	private Logger log = LoggerFactory.getLogger("PCCClient");
 	private Exponential connectionTime;
 	private Timer planificationTimer;
 	private double TrafficHops=0;
@@ -57,7 +58,7 @@ public class VNTMActivity implements Activity{
 	@Override
 	public void run() {
 		if (response.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			//stats.addNoPathResponse();
 			System.exit(1);
 			return;
