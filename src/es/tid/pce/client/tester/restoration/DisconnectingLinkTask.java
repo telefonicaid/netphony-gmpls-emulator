@@ -7,10 +7,14 @@ import java.util.LinkedList;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -100,53 +104,53 @@ public class DisconnectingLinkTask extends TimerTask {
 	 * @param logTimes
 	 */
 	public DisconnectingLinkTask (LinkedList<RestorationCaseTable> restorationCaseTable,NetworkLSPManager networkLSPManager,RestorationCaseParameters testerParams,EmulatedPCCPCEPSession PCEsession, Logger logStats, Logger logAttemps,Logger logTimes){
-		log = Logger.getLogger("PCCClient");
+		log = LoggerFactory.getLogger("PCCClient");
 		this.logStats=logStats;
 		this.logAttemps=logAttemps;
 		this.logTimes=logTimes;
 		nummberResponsedAffected=0;
-		FileHandler fh1;
-		logSendResponse = Logger.getLogger("logSendResponse");
-		try {
-			fh1=new FileHandler("logSendResponse.log");
-			fh1.setFormatter(new SimpleFormatter());
-			logSendResponse.addHandler(fh1);
-			logSendResponse.setLevel(Level.ALL);			
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		FileHandler fh2;
-		logRequestSent= Logger.getLogger("logRequestSent");
-		try {
-			fh2=new FileHandler("logRequestSent.log");
-			fh2.setFormatter(new SimpleFormatter());
-			logRequestSent.addHandler(fh2);
-			logRequestSent.setLevel(Level.ALL);			
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		FileHandler fh3;
-		logTiemposVsNumberSaltos= Logger.getLogger("logTiemposVsNumberSaltos");
-		try {
-			fh3=new FileHandler("logTiemposVsNumberSaltos"+testerParams.getRequestToSendList().get(0).getRequestParameters().getTimeReserved()+"_"+testerParams.getExecutionNumber()+".log");
-			fh3.setFormatter(new SimpleFormatter());
-			logTiemposVsNumberSaltos.addHandler(fh3);
-			logTiemposVsNumberSaltos.setLevel(Level.ALL);			
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//	FileHandler fh1;
+		logSendResponse = LoggerFactory.getLogger("logSendResponse");
+//		try {
+//			fh1=new FileHandler("logSendResponse.log");
+//			fh1.setFormatter(new SimpleFormatter());
+//			logSendResponse.addHandler(fh1);
+//			logSendResponse.setLevel(Level.ALL);			
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		FileHandler fh2;
+		logRequestSent= LoggerFactory.getLogger("logRequestSent");
+//		try {
+//			fh2=new FileHandler("logRequestSent.log");
+//			fh2.setFormatter(new SimpleFormatter());
+//			logRequestSent.addHandler(fh2);
+//			logRequestSent.setLevel(Level.ALL);			
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		FileHandler fh3;
+		logTiemposVsNumberSaltos= LoggerFactory.getLogger("logTiemposVsNumberSaltos");
+//		try {
+//			fh3=new FileHandler("logTiemposVsNumberSaltos"+testerParams.getRequestToSendList().get(0).getRequestParameters().getTimeReserved()+"_"+testerParams.getExecutionNumber()+".log");
+//			fh3.setFormatter(new SimpleFormatter());
+//			logTiemposVsNumberSaltos.addHandler(fh3);
+//			logTiemposVsNumberSaltos.setLevel(Level.ALL);			
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		this.restorationCaseTableList=restorationCaseTable;
 		this.networkLSPManager=networkLSPManager;
 		this.testerParams=testerParams;

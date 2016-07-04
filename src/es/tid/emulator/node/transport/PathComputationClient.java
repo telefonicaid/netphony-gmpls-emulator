@@ -1,7 +1,8 @@
 package es.tid.emulator.node.transport;
 
 import java.net.Inet4Address;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.LSPManager;
 import es.tid.pce.client.ClientRequestManager;
@@ -23,7 +24,7 @@ public class PathComputationClient {
 	public PathComputationClient(){
 		crm = new ClientRequestManager();
 		clientPCE = new PCEPClient();
-		log = Logger.getLogger("ROADM");
+		log = LoggerFactory.getLogger("ROADM");
 	}
 	
 	 public void addPCE(boolean manually, Inet4Address pceAddress, int pcepPort, boolean setStateful, boolean setActive, LSPManager lspManager,boolean setSRCapable,int MSD){

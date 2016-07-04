@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.LSPManager;
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
@@ -52,7 +53,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 	
 	public RemoteLSPInitPCEPSession(Socket socket, PCEPSessionsInformation pcepSessionManager, ClientRequestManagerPrueba crm) {
 		super(pcepSessionManager);
-		this.log=Logger.getLogger("ROADM");
+		this.log=LoggerFactory.getLogger("ROADM");
 		timer=new Timer();
 		this.serverSocket=socket;
 		this.crm=crm;
@@ -74,7 +75,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 		    out = new DataOutputStream(socket.getOutputStream());
 		    in = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			log.warning("Problem in the sockets, ending PCEPSession");
+			log.warn("Problem in the sockets, ending PCEPSession");
 		    killSession();
 		    return;
 		}
@@ -98,7 +99,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 					out.close();
 				} catch (IOException e1) {
 				}
-				log.warning("Finishing PCEP Session abruptly!");
+				log.warn("Finishing PCEP Session abruptly!");
 				return;
 			}
 			if (this.msg != null) {//If null, it is not a valid PCEP message								
@@ -110,7 +111,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 				case PCEPMessageTypes.MESSAGE_OPEN:
 					log.info("OPEN message received");
 					//After the session has been started, ignore subsequent OPEN messages
-					log.warning("OPEN message ignored");
+					log.warn("OPEN message ignored");
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_KEEPALIVE:
@@ -127,7 +128,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 					
 					// CONFIRMATION FROM THE VNTM LSP ESTABLISHEMENT
 				case PCEPMessageTypes.MESSAGE_TE_LINK_SUGGESTION_CONFIRMATION:
-					log.fine("Confirmation from the VNMT received!!!");
+					log.debug("Confirmation from the VNMT received!!!");
 					//Establish the TE LINK in the UPPER LAYER
 					PCEPTELinkConfirmation telinkconf;
 					
@@ -168,7 +169,7 @@ public class RemoteLSPInitPCEPSession extends GenericPCEPSession {
 //							}							
 //						}
 //						else{
-//							log.warning("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
+//							log.warn("Ha llegado la request con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
 //						}
 //						
 //					} catch (PCEPProtocolViolationException e) {

@@ -6,8 +6,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,7 +55,7 @@ public class InformationRequest {
 	private boolean VNTMSession=false;
 	private String VNTMFile = "VNTMConfiguration.xml";
 	private LinkedList<RequestToSend> requestToSendList;
-	private Logger log=Logger.getLogger("PCCClient");
+	private Logger log=LoggerFactory.getLogger("PCCClient");
 	private int maxNumberIterations;
 	//Variable para poner las trazas del cliente
 	private long printStatisticsTime=10000;
@@ -681,11 +683,11 @@ public class InformationRequest {
 			}
 			
 			if (setTraces == false){
-				log.setLevel(Level.SEVERE);		
-				Logger log2=Logger.getLogger("PCEPClientParser");
-				log2.setLevel(Level.SEVERE);
-				Logger log3= Logger.getLogger("OSPFParser");
-				log3.setLevel(Level.SEVERE);
+//				log.setLevel(Level.SEVERE);		
+//				Logger log2=LoggerFactory.getLogger("PCEPClientParser");
+//				log2.setLevel(Level.SEVERE);
+//				Logger log3= LoggerFactory.getLogger("OSPFParser");
+//				log3.setLevel(Level.SEVERE);
 				log.info("traces off!\r\n");
 			}
 			NodeList isExponential_nl = doc.getElementsByTagName("isExponential");

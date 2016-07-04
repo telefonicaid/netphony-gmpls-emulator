@@ -17,8 +17,10 @@ public class RemoteAutomaticPCC {public void startRemoteAutomaticPCC() {}}
 //import java.net.UnknownHostException;
 //import java.util.concurrent.ScheduledThreadPoolExecutor;
 //import java.util.concurrent.TimeUnit;
-//import java.util.logging.FileHandler;
-//import java.util.logging.Logger;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 //
 //import tid.pce.client.PCCPCEPSession;
 //import tid.pce.client.tester.Activity;
@@ -59,9 +61,9 @@ public class RemoteAutomaticPCC {public void startRemoteAutomaticPCC() {}}
 //    public RemoteAutomaticPCC(){
 //    	
 //    	// Create the Logs
-//        log=Logger.getLogger("ROADM");
+//        log=LoggerFactory.getLogger("ROADM");
 //
-//		log2 = Logger.getLogger("PCCClient");
+//		log2 = LoggerFactory.getLogger("PCCClient");
 //		try{
 //			FileHandler fh = new FileHandler("Roadm.log", false);
 //			log.addHandler(fh);
@@ -102,7 +104,7 @@ public class RemoteAutomaticPCC {public void startRemoteAutomaticPCC() {}}
 //			try {
 //				command = br.readLine();
 //			} catch (IOException ioe) {
-//				log.severe("IO error trying to read your command");
+//				log.error("IO error trying to read your command");
 //				System.exit(1);
 //			}
 //			//New Requests
@@ -126,7 +128,7 @@ public class RemoteAutomaticPCC {public void startRemoteAutomaticPCC() {}}
 //						log.info("No delay activated");
 //					}*/
 //				} catch (IOException e) {
-//					log.severe("Couldn't get I/O for connection to in port 2222");
+//					log.error("Couldn't get I/O for connection to in port 2222");
 //					//FIXME: Salir de manera limpia
 //					System.exit(1);
 //				}
@@ -158,7 +160,7 @@ public class RemoteAutomaticPCC {public void startRemoteAutomaticPCC() {}}
 //					
 //					
 //				} catch (IOException e) {
-//					log.severe("Problem in the sockets, ending PCEPSession");
+//					log.error("Problem in the sockets, ending PCEPSession");
 //				    //killSession();
 //				    return;
 //				}

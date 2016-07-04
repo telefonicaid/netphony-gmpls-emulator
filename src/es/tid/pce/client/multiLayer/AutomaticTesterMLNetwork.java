@@ -1,6 +1,7 @@
 
 package es.tid.pce.client.multiLayer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.pce.client.ClientRequestManager;
@@ -35,7 +36,7 @@ public class AutomaticTesterMLNetwork {
 //		  
 //		FileHandler fh;
 //		FileHandler fh2;
-//		Logger log=Logger.getLogger("PCCClient");
+//		Logger log=LoggerFactory.getLogger("PCCClient");
 //		try {
 //			fh=new FileHandler("PCCClient.log");
 //			fh2=new FileHandler("PCEPClientParser.log");
@@ -43,7 +44,7 @@ public class AutomaticTesterMLNetwork {
 //				
 //			log.addHandler(fh);
 //			log.setLevel(Level.ALL);
-//			Logger log2=Logger.getLogger("PCEPParser");
+//			Logger log2=LoggerFactory.getLogger("PCEPParser");
 //			log2.addHandler(fh2);
 //			log2.setLevel(Level.ALL);
 //		} catch (Exception e1) {

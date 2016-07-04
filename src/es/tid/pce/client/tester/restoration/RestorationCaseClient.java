@@ -12,10 +12,14 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -51,10 +55,10 @@ public class RestorationCaseClient {
 		 */
 //		private static Logger log;
 		private static NetworkLSPManager networkLSPManager = null;
-		private static Logger log=Logger.getLogger("PCCClient");
-		private static Logger log2=Logger.getLogger("PCEPParser");
-		private static Logger log3=Logger.getLogger("OSPFParser");
-		private static Logger log4=Logger.getLogger("NetworkLSPManager");
+		private static Logger log=LoggerFactory.getLogger("PCCClient");
+		private static Logger log2=LoggerFactory.getLogger("PCEPParser");
+		private static Logger log3=LoggerFactory.getLogger("OSPFParser");
+		private static Logger log4=LoggerFactory.getLogger("NetworkLSPManager");
 		
 	/**
 	 * @param args
@@ -64,38 +68,38 @@ public class RestorationCaseClient {
 		testerParams = new RestorationCaseParameters();		
 		testerParams.readFile(args[0]);
 		//Initialize loggers
-		FileHandler fh;
-		FileHandler fh2;
-		FileHandler fh3;
-		FileHandler fh4;
-		
-		try {
-			fh=new FileHandler("PCCClient.log");
-			fh2=new FileHandler("PCEPClientParser.log");
-			fh3=new FileHandler("OSPFParser.log");
-			fh4 = new  FileHandler("NetworkLSPManager.log");
-
-			log.addHandler(fh);
-			log2.addHandler(fh2);				
-			log3.addHandler(fh3);
-			log4.addHandler(fh4);
-			if (testerParams.isSetTraces() == false){		    	
-				log.setLevel(Level.SEVERE);
-				log2.setLevel(Level.SEVERE);	
-				log3.setLevel(Level.SEVERE);
-				log4.setLevel(Level.SEVERE);
-			}				
-			else{
-				log.setLevel(Level.ALL);
-				log2.setLevel(Level.ALL);
-				log3.setLevel(Level.ALL);
-				log4.setLevel(Level.ALL);
-			}
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			System.exit(1);
-		}
+//		FileHandler fh;
+//		FileHandler fh2;
+//		FileHandler fh3;
+//		FileHandler fh4;
+//		
+//		try {
+//			fh=new FileHandler("PCCClient.log");
+//			fh2=new FileHandler("PCEPClientParser.log");
+//			fh3=new FileHandler("OSPFParser.log");
+//			fh4 = new  FileHandler("NetworkLSPManager.log");
+//
+//			log.addHandler(fh);
+//			log2.addHandler(fh2);				
+//			log3.addHandler(fh3);
+//			log4.addHandler(fh4);
+//			if (testerParams.isSetTraces() == false){		    	
+//				log.setLevel(Level.SEVERE);
+//				log2.setLevel(Level.SEVERE);	
+//				log3.setLevel(Level.SEVERE);
+//				log4.setLevel(Level.SEVERE);
+//			}				
+//			else{
+//				log.setLevel(Level.ALL);
+//				log2.setLevel(Level.ALL);
+//				log3.setLevel(Level.ALL);
+//				log4.setLevel(Level.ALL);
+//			}
+//
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//			System.exit(1);
+//		}
 		
 		PCEPSessionsInformation pcepSessionManager = new PCEPSessionsInformation();
 		PCEsession = new EmulatedPCCPCEPSession(testerParams.getPCCPCEPsessionParams().getIpPCEList().get(0), testerParams.getPCCPCEPsessionParams().getPCEServerPortList().get(0), testerParams.getPCCPCEPsessionParams().isNoDelay(), pcepSessionManager);
@@ -194,21 +198,21 @@ public class RestorationCaseClient {
 	 * @return Logger
 	 */
 	private static Logger createLogger(String nameLogger,String nameFileHandler){
-		FileHandler fh;
+		//FileHandler fh;
 		//String name =testerParams.getNameRestorationCaseFile();
-		Logger log = Logger.getLogger(nameLogger);
-		try {
-			fh=new FileHandler(nameFileHandler);
-			fh.setFormatter(new SimpleFormatter());
-			log.addHandler(fh);
-			log.setLevel(Level.ALL);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Logger log = LoggerFactory.getLogger(nameLogger);
+//		try {
+//			fh=new FileHandler(nameFileHandler);
+//			fh.setFormatter(new SimpleFormatter());
+//			log.addHandler(fh);
+//			log.setLevel(Level.ALL);
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		return log;
 	}
 	private static void disconnetLink(){

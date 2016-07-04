@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.netManager.NetworkLSPManagerTypes;
@@ -32,7 +33,7 @@ import es.tid.tedb.SimpleTEDB;
  */
 public class AdvancedEmulatedNetworkLSPManager extends NetworkLSPManager{
 	 private ReentrantLock lock = new ReentrantLock();
-	 Logger log= Logger.getLogger("PCCClient");
+	 Logger log= LoggerFactory.getLogger("PCCClient");
 	public AdvancedEmulatedNetworkLSPManager(LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue, String file ){
 		this.setEmulatorType(NetworkLSPManagerTypes.ADVANCED_EMULATED_NETWORK);
 		this.setDomainTEDB(new SimpleTEDB());
@@ -42,7 +43,7 @@ public class AdvancedEmulatedNetworkLSPManager extends NetworkLSPManager{
 			this.getDomainTEDB().initializeFromFile(file);
 		}
 		else {
-			log.severe("Network file NOT included!!!");
+			log.error("Network file NOT included!!!");
 		}
 
 		this.setSendingQueue(sendingQueue);
@@ -206,7 +207,7 @@ public class AdvancedEmulatedNetworkLSPManager extends NetworkLSPManager{
 				}
 			}
 			else {
-				log.severe("Error en setMLLSP. Edge null");
+				log.error("Error en setMLLSP. Edge null");
 			}		
 		}
 	}
@@ -257,7 +258,7 @@ public class AdvancedEmulatedNetworkLSPManager extends NetworkLSPManager{
 
 			}
 			else {
-				log.severe("Error en removeMLLSP. Edge null");
+				log.error("Error en removeMLLSP. Edge null");
 			}		
 
 		}
@@ -323,7 +324,7 @@ public class AdvancedEmulatedNetworkLSPManager extends NetworkLSPManager{
 			}
 		}
 		else {			
-			log.severe("Error en setMLLSP. Edge null");
+			log.error("Error en setMLLSP. Edge null");
 			return false;
 		}
 		return true;

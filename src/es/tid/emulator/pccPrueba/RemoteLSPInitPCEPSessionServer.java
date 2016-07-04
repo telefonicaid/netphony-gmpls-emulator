@@ -2,7 +2,8 @@ package es.tid.emulator.pccPrueba;
 
 import java.net.Socket;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.pcepsession.GenericPCEPSession;
@@ -24,7 +25,7 @@ public class RemoteLSPInitPCEPSessionServer extends GenericPCEPSession {
 			ClientRequestManagerPrueba crm) {
 		super(pcepSessionManager);
 		this.setFSMstate(PCEPValues.PCEP_STATE_IDLE);
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.peerNode_IPaddress=ip;
 		this.crm= crm;
 		this.keepAliveLocal=30;

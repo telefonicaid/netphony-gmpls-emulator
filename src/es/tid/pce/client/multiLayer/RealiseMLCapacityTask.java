@@ -10,7 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
 import es.tid.pce.pcep.PCEPProtocolViolationException;
@@ -34,14 +35,14 @@ public class RealiseMLCapacityTask  extends TimerTask {
 	private PCEPTELinkSuggestion telinksug;
 	
 	public RealiseMLCapacityTask(ArrayList<String> sourceList, ArrayList<String> destinationList,AutomaticTesterStatistics stats ){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.sourceList = sourceList;
 		this.destinationList=destinationList;
 		this.stats=stats;
 	}
 	
 	public RealiseMLCapacityTask(AutomaticTesterStatistics stats,DataOutputStream out,PCEPTELinkSuggestion telinksug){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.telinksug=telinksug;
 		this.out=out;
 		this.stats=stats;

@@ -1,7 +1,8 @@
 package es.tid.pce.client.tester;
 
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -70,7 +71,7 @@ public class ClientSendTopologyConfiguration {
 		
 			}
 		public void endElement(String uri, String localName,String qName) throws SAXException {
-			log = Logger.getLogger("PCCClient");			
+			log = LoggerFactory.getLogger("PCCClient");			
 			try{
 				log.info("End Element :" + qName);
 				if (qName.equalsIgnoreCase("ipPCE")){

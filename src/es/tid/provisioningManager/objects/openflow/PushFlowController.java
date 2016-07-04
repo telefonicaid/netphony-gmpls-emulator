@@ -1,7 +1,8 @@
 package es.tid.provisioningManager.objects.openflow;
 
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.eclipse.jetty.client.ContentExchange;
 import org.eclipse.jetty.client.HttpClient;
@@ -16,7 +17,7 @@ public class PushFlowController {
 	
 	String directory;
 	String url;
-	Logger log=Logger.getLogger("PushFlow");
+	Logger log=LoggerFactory.getLogger("PushFlow");
 
 	public PushFlowController(StaticFlow flow,String ip, String port)
 	{

@@ -1,7 +1,8 @@
 package es.tid.pce.client.emulator;
 
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -17,7 +18,7 @@ public class PrintStatistics   extends TimerTask {
 	private Logger statsLog;
 
 	public PrintStatistics(AutomaticTesterStatistics ats){
-		statsLog=Logger.getLogger("stats");
+		statsLog=LoggerFactory.getLogger("stats");
 		this.ats=ats;
 	}
 

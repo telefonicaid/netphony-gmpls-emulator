@@ -5,7 +5,8 @@ import java.net.UnknownHostException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
@@ -35,22 +36,22 @@ public class DummyActivity implements Activity{
 	public DummyActivity(Exponential connectionTime,Timer planificationTimer, Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList, boolean staticConnections){
 		this.connectionTime=connectionTime;
 		this.planificationTimer=planificationTimer;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.PCEsessionList=PCEsessionList;
 		this.staticConnections=staticConnections;
-//		logErrores=Logger.getLogger("PruebaLambdas");
-//		logPrueba=Logger.getLogger("mmmerrores");
+//		logErrores=LoggerFactory.getLogger("PruebaLambdas");
+//		logPrueba=LoggerFactory.getLogger("mmmerrores");
 	}
 	
 	@Override
 	public void run() {
 		if (response == null){
 			stats.addNoResponse();
-			log.warning("Response null");			
+			log.warn("Response null");			
 			return;
 		}
 		if (response.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			System.exit(1);
 		}else {
 			try{
@@ -114,7 +115,7 @@ public class DummyActivity implements Activity{
 					}
 					/*}else
 					{
-						//Logger logPrueba=Logger.getLogger("LogPrueba");
+						//Logger logPrueba=LoggerFactory.getLogger("LogPrueba");
 						stats.addStolenLambdasLSP();
 						stats.analyzeLambdaBlockingProbability(1);
 						stats.analyzeBlockingProbability(1);

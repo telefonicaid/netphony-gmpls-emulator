@@ -2,7 +2,8 @@ package es.tid.pce.client.tester;
 
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.netManager.NetworkLSPManager;
@@ -56,7 +57,7 @@ public class LSPConfirmationDispatcher {
 				stats, connectionTime, planificationTimer);		
 		
 		npt.start();
-		log=Logger.getLogger("PCCclient");
+		log=LoggerFactory.getLogger("PCCclient");
 	}
 
 	public Timer getPlanificationTimer() {

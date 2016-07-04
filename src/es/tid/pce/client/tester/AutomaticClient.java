@@ -3,9 +3,12 @@ package es.tid.pce.client.tester;
 
 import java.util.Hashtable;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -32,13 +35,13 @@ import es.tid.vntm.VNTMParameters;
 public class AutomaticClient{
 
 	private static Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
-	private static Logger log=Logger.getLogger("PCCClient");
-	private static Logger log2=Logger.getLogger("PCEPParser");
-	private static Logger log3=Logger.getLogger("OSPFParser");
-	private static Logger log4=Logger.getLogger("NetworkLSPManager");
-//	private static Logger log5=Logger.getLogger("NetworkLSPManager");
-//	private static Logger log6=Logger.getLogger("requestID");
-//	private static Logger log7=Logger.getLogger("mmmerrores");
+	private static Logger log=LoggerFactory.getLogger("PCCClient");
+	private static Logger log2=LoggerFactory.getLogger("PCEPParser");
+	private static Logger log3=LoggerFactory.getLogger("OSPFParser");
+	private static Logger log4=LoggerFactory.getLogger("NetworkLSPManager");
+//	private static Logger log5=LoggerFactory.getLogger("NetworkLSPManager");
+//	private static Logger log6=LoggerFactory.getLogger("requestID");
+//	private static Logger log7=LoggerFactory.getLogger("mmmerrores");
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	private static InformationRequest testerParams;
 	static AutomaticTesterStatistics stats;
@@ -57,43 +60,43 @@ public class AutomaticClient{
 			return;
 		}
 		//Initialize loggers
-		FileHandler fh;
-		FileHandler fh2;
-		FileHandler fh3;
-		FileHandler fh4;
+//		FileHandler fh;
+//		FileHandler fh2;
+//		FileHandler fh3;
+//		FileHandler fh4;
 //		FileHandler fh5;
 //		FileHandler fh6;
 //		FileHandler fh7;
 		testerParams = new InformationRequest();
 		testerParams.readFile(args[0]);
 		try {
-			fh=new FileHandler("PCCClient.log");
-			fh2=new FileHandler("PCEPClientParser.log");
-			fh3=new FileHandler("OSPFParser.log");
-//			fh4=new FileHandler("PruebaLambdas.log");
-			fh4 = new  FileHandler("NetworkLSPManager.log");
+//			fh=new FileHandler("PCCClient.log");
+//			fh2=new FileHandler("PCEPClientParser.log");
+//			fh3=new FileHandler("OSPFParser.log");
+////			fh4=new FileHandler("PruebaLambdas.log");
+//			fh4 = new  FileHandler("NetworkLSPManager.log");
 //			fh6 = new  FileHandler("requestID.log");
 //			fh7 = new  FileHandler("mmmerrores.log");
 			//fh.setFormatter(new SimpleFormatter());
 //			fh6.setFormatter(new SimpleFormatter());
 //			fh7.setFormatter(new SimpleFormatter());
 //			fh4.setFormatter(new SimpleFormatter());
-			log.addHandler(fh);
-			log2.addHandler(fh2);				
-			log3.addHandler(fh3);
-			log4.addHandler(fh4);
-			if (testerParams.isSetTraces() == false){		    	
-				log.setLevel(Level.SEVERE);
-				log2.setLevel(Level.SEVERE);	
-				log3.setLevel(Level.SEVERE);
-				log4.setLevel(Level.SEVERE);
-			}				
-			else{
-				log.setLevel(Level.ALL);
-				log2.setLevel(Level.ALL);
-				log3.setLevel(Level.ALL);
-				log4.setLevel(Level.ALL);
-			}
+//			log.addHandler(fh);
+//			log2.addHandler(fh2);				
+//			log3.addHandler(fh3);
+//			log4.addHandler(fh4);
+//			if (testerParams.isSetTraces() == false){		    	
+//				log.setLevel(Level.SEVERE);
+//				log2.setLevel(Level.SEVERE);	
+//				log3.setLevel(Level.SEVERE);
+//				log4.setLevel(Level.SEVERE);
+//			}				
+//			else{
+//				log.setLevel(Level.ALL);
+//				log2.setLevel(Level.ALL);
+//				log3.setLevel(Level.ALL);
+//				log4.setLevel(Level.ALL);
+//			}
 //			log5.setLevel(Level.ALL);
 //			log5.addHandler(fh5);
 //			log6.setLevel(Level.ALL);

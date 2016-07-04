@@ -12,8 +12,10 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -96,7 +98,7 @@ public class NodeManagementSession extends Thread {
 	
 	public NodeManagementSession(Socket s, NetworkNode node){
 		this.socket=s;
-		log=Logger.getLogger("PCEServer");
+		log=LoggerFactory.getLogger("PCEServer");
 		state = INITIAL_STATE;
 		this.node=node;
 	}
@@ -107,7 +109,7 @@ public class NodeManagementSession extends Thread {
 		try {
 			out=new PrintStream(socket.getOutputStream());
 		} catch (IOException e) {
-			log.warning("Management session cancelled: "+e.getMessage());
+			log.warn("Management session cancelled: "+e.getMessage());
 			return;
 		}
 //		out.print("***********************************************");
@@ -251,19 +253,19 @@ public class NodeManagementSession extends Thread {
 							out.print("quit\r\n");						
 						}
 						else if (command.equals("set traces on")|| command.equals("5")) {
-							log.setLevel(Level.ALL);		
-							Logger log2=Logger.getLogger("PCEPParser");
-							log2.setLevel(Level.ALL);
-							Logger log3= Logger.getLogger("OSPFParser");
-							log3.setLevel(Level.ALL);
+//							log.setLevel(Level.ALL);		
+//							Logger log2=LoggerFactory.getLogger("PCEPParser");
+//							log2.setLevel(Level.ALL);
+//							Logger log3= LoggerFactory.getLogger("OSPFParser");
+//							log3.setLevel(Level.ALL);
 							out.print("traces on!\r\n");
 						} 
 						else if (command.equals("set traces off")|| command.equals("6")) {
-							log.setLevel(Level.SEVERE);		
-							Logger log2=Logger.getLogger("PCEPParser");
-							log2.setLevel(Level.SEVERE);
-							Logger log3= Logger.getLogger("OSPFParser");
-							log3.setLevel(Level.SEVERE);
+//							log.setLevel(Level.SEVERE);		
+//							Logger log2=LoggerFactory.getLogger("PCEPParser");
+//							log2.setLevel(Level.SEVERE);
+//							Logger log3= LoggerFactory.getLogger("OSPFParser");
+//							log3.setLevel(Level.SEVERE);
 							out.print("traces off!\r\n");
 						}else if (command.equals("print eros")|| command.equals("8")){
 							out.print("\nInsert the name of the file: ");
@@ -312,7 +314,7 @@ public class NodeManagementSession extends Thread {
 						
 					case CONFIGURATION_STATE:
 						
-						log.finer("Configuration");
+						log.debug("Configuration");
 						out.print("\nYou chose CONFIGURATION");
 						out.print("\nThe following options are available:\n");
 						out.print("\n\t1) Use the last ROADM configuration");
@@ -366,7 +368,7 @@ public class NodeManagementSession extends Thread {
 						break;
 					
 					case NODE_SHOW_TOPOLOGY:
-						log.finer("show topology");
+						log.debug("show topology");
 						out.print(node.getTed().printTopology());
 						//No enseñamos la topología multidominio
 						state = INITIAL_STATE;
@@ -391,7 +393,7 @@ public class NodeManagementSession extends Thread {
 	public void manuallyConfigureROADM(){
 		
 		while(state == MANUALLYCONFIGURATION_STATE){
-			log.finer("Manually ROADM Configuration");
+			log.debug("Manually ROADM Configuration");
 			out.print("\nYou chose MANUALLY CONFIGURATION");
 			out.print("\nThe following options are available:");
 			out.print("\n\t1) Set Node Id");
@@ -407,7 +409,7 @@ public class NodeManagementSession extends Thread {
 				try{
 					node.getNodeInformation().setId((Inet4Address)InetAddress.getByName(getCommand()));
 				}catch(UnknownHostException e){
-					log.severe("Unknown Host exception when defining LSP destination address");
+					log.error("Unknown Host exception when defining LSP destination address");
 				}
 			}else if(command.equals("2")){
 				// FIXME: Implementar metodo para anadir interfaz
@@ -434,7 +436,7 @@ public class NodeManagementSession extends Thread {
 	public void defaultROADMConfiguration(){
 		while(state == DEFAULTCONFIGURATION_STATE){
 			
-			log.finer("Default ROADM Configuration");
+			log.debug("Default ROADM Configuration");
 			Properties props = new Properties();
 			// FIXME: Mirar esto del código OF si es necesario
 			int OF = 10;
@@ -464,7 +466,7 @@ public class NodeManagementSession extends Thread {
 					//Añadimos el PCE y creamos la sesión PCEP
 					addPCE(false,pceAddress,pcepPort);
 
-					log.finer("Default ROADM Configuration Accomplished");
+					log.debug("Default ROADM Configuration Accomplished");
 					
 					/** Leer la topología y crear la TEDB Local del nodo
 					 * 
@@ -487,7 +489,7 @@ public class NodeManagementSession extends Thread {
 				
 					state = INITIAL_STATE;
 				}catch(UnknownHostException e){
-					log.severe("Unknown Host exception when defining LSP destination address");
+					log.error("Unknown Host exception when defining LSP destination address");
 				}
 				
 			}catch(IOException e){
@@ -497,7 +499,7 @@ public class NodeManagementSession extends Thread {
 		}
 	}
 	public void addPCE(boolean manually, String pceAddress, String pcepPort){
-		log.finer("Adding PCE");
+		log.debug("Adding PCE");
 		
 		if(manually){
 			out.print("\nYou chose ADD PCE");
@@ -519,7 +521,7 @@ public class NodeManagementSession extends Thread {
 		}			
 	}
 	public void killLSP(){
-		log.finer("Killing LSP");
+		log.debug("Killing LSP");
 		
 		out.print("\nYou chose Kill LSP");
 		out.print("\nInsert the LSP identifier Please");
@@ -535,12 +537,12 @@ public class NodeManagementSession extends Thread {
 			node.getManagerLSP().deleteLSP(source, id);
 			
 		}catch(UnknownHostException e){
-			log.severe("Unknown Host exception when defining LSP source address");
+			log.error("Unknown Host exception when defining LSP source address");
 		}
 	}
 	public void addLSP(){
 		
-		log.finer("Adding LSP");
+		log.debug("Adding LSP");
 		//request a destination
 		out.print("\nYou chose ADD LSP");
 		out.print("\nInsert the Destination Node ID Please: ");
@@ -596,7 +598,7 @@ public class NodeManagementSession extends Thread {
 				}
 			}
 		}catch(UnknownHostException e){
-			log.severe("Unknown Host exception when defining LSP destination address");
+			log.error("Unknown Host exception when defining LSP destination address");
 		}
 		out.print("\nLSP being established");
 	}

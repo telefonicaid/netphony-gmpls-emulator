@@ -2,7 +2,8 @@ package es.tid.emulator.node.resources.wson;
 
 import java.net.Inet4Address;
 import java.util.Hashtable;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.resources.ResourceManager;
 import es.tid.emulator.node.tedb.SimpleLocalTEDB;
@@ -68,7 +69,7 @@ public class WSONResourceManager implements ResourceManager{
 	public WSONResourceManager(SimpleLocalTEDB tedb, Inet4Address localID){
 		this.ted=tedb;
 		this.localID=localID;
-		log=Logger.getLogger("ROADM");
+		log=LoggerFactory.getLogger("ROADM");
 		lspLambdaAllocation = new Hashtable<LSPKey,Integer>();
 		proxHopIPv4List = new Hashtable<LSPKey,Inet4Address>();
 		previousHopIPv4List = new Hashtable<LSPKey,Inet4Address>();
@@ -77,7 +78,7 @@ public class WSONResourceManager implements ResourceManager{
 	public WSONResourceManager(SimpleLocalTEDB tedb, Inet4Address localID, MDTEDB MDted){
 		this.ted=tedb;
 		this.localID=localID;
-		log=Logger.getLogger("ROADM");
+		log=LoggerFactory.getLogger("ROADM");
 		lspLambdaAllocation = new Hashtable<LSPKey,Integer>();
 		proxHopIPv4List = new Hashtable<LSPKey,Inet4Address>();
 		previousHopIPv4List = new Hashtable<LSPKey,Inet4Address>();

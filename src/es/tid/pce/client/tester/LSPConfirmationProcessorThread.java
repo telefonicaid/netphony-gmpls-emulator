@@ -4,7 +4,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.netManager.NetworkLSPManager;
@@ -40,7 +41,7 @@ public class LSPConfirmationProcessorThread extends Thread {
 			Exponential connectionTime, Timer planificationTimer){//ReservationManager 
 		running=true;
 		this.pathList=pathList;
-		log=Logger.getLogger("PCEServer");
+		log=LoggerFactory.getLogger("PCEServer");
 		this.ted=(DomainTEDB)tedb;
 		LPcreateIP = new LigthPathCreateIP(tedb);
 		this.netLSPManager=networkLSPManager;

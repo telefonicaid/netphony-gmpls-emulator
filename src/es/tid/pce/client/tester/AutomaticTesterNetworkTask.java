@@ -3,7 +3,8 @@ package es.tid.pce.client.tester;
 
 
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.pce.client.ClientRequestManager;
@@ -25,7 +26,7 @@ public class AutomaticTesterNetworkTask  extends TimerTask {
 	PCEPMessage request;
 	AutomaticTesterNetworkTask(PCEPMessage request,EmulatedPCCPCEPSession ps,boolean PCMonReqBool){
 		this.request = request;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.crm=ps.crm;
 		this.PCMonReqBool = PCMonReqBool;
 	}

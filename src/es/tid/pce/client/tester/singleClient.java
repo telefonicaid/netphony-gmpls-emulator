@@ -7,9 +7,12 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -45,9 +48,9 @@ import es.tid.vntm.VNTMParameters;
 public class singleClient {
 
 	private static Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList;
-	private static Logger log=Logger.getLogger("PCCClient");
-	private static Logger log2=Logger.getLogger("PCEPParser");
-	private static Logger log3=Logger.getLogger("OSPFParser");
+	private static Logger log=LoggerFactory.getLogger("PCCClient");
+	private static Logger log2=LoggerFactory.getLogger("PCEPParser");
+	private static Logger log3=LoggerFactory.getLogger("OSPFParser");
 	private static String networkEmulatorFile="NetworkEmulatorConfiguration.xml";
 	private static InformationRequest testerParams;
 	private static EmulatedPCCPCEPSession VNTMSession;
@@ -63,25 +66,25 @@ public class singleClient {
 			return;
 		}
 		//Initialize loggers
-			FileHandler fh;
-			FileHandler fh2;
-			FileHandler fh3;
-			try {
-				fh=new FileHandler("PCCClient.log");
-				fh2=new FileHandler("PCEPClientParser.log");
-				fh3=new FileHandler("OSPFParser.log");
-				//fh.setFormatter(new SimpleFormatter());
-				//fh2.setFormatter(new SimpleFormatter());
-				log.addHandler(fh);
-				log.setLevel(Level.ALL);			
-				log2.addHandler(fh2);
-				log2.setLevel(Level.ALL);
-				log3.setLevel(Level.ALL);
-				log3.addHandler(fh3);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				System.exit(1);
-			}
+//			FileHandler fh;
+//			FileHandler fh2;
+//			FileHandler fh3;
+//			try {
+//				fh=new FileHandler("PCCClient.log");
+//				fh2=new FileHandler("PCEPClientParser.log");
+//				fh3=new FileHandler("OSPFParser.log");
+//				//fh.setFormatter(new SimpleFormatter());
+//				//fh2.setFormatter(new SimpleFormatter());
+//				log.addHandler(fh);
+//				log.setLevel(Level.ALL);			
+//				log2.addHandler(fh2);
+//				log2.setLevel(Level.ALL);
+//				log3.setLevel(Level.ALL);
+//				log3.addHandler(fh3);
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//				System.exit(1);
+//			}
 			long requestID=1234;
 
 			testerParams = new InformationRequest();
@@ -320,11 +323,11 @@ static int createEROList(LinkedList<EROSubobject> eroSubObjList,LinkedList<Expli
 
 static void handleResponse(PCEPRequest request,PCEPResponse response,NetworkLSPManager networkLSPManager ){
 	if (response == null){
-		log.warning("Response null");			
+		log.warn("Response null");			
 		return;
 	}
 	if (response.getResponseList().isEmpty()){
-		log.severe("ERROR in response");
+		log.error("ERROR in response");
 		//FIXME: QUE HACEMOS? CANCELAMOS SIMULACION?
 		//stats.addNoPathResponse();
 		System.exit(1);
@@ -375,7 +378,7 @@ static void handleResponse(PCEPRequest request,PCEPResponse response,NetworkLSPM
 	
 	static void handleResponse(PCEPRequest request,PCEPResponse response,EmulatedPCCPCEPSession VNTMSession ){
 		if (response.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			//stats.addNoPathResponse();
 			System.exit(1);
 			return;

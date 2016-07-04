@@ -6,7 +6,8 @@ import java.util.Random;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
@@ -88,7 +89,7 @@ public class AutomaticClientTask  extends TimerTask {
 	public AutomaticClientTask(Exponential expSendRequest,ScheduledThreadPoolExecutor requestExecutor,Hashtable<Integer,EmulatedPCCPCEPSession> PCEsessionList,InformationRequest informationRequest,AutomaticTesterStatistics stats,int positionRequestList,int currentNumberPCESession/*,long timeNanoCreated, long timeExpected*/
 			, float [] cadenaBW){
 		this.stats= stats;
-		log=Logger.getLogger("PCCClient");		
+		log=LoggerFactory.getLogger("PCCClient");		
 		BW = new float [5100];
 		this.expSendRequest=expSendRequest;
 		//this.connectionTime = connectionTime;
@@ -97,8 +98,8 @@ public class AutomaticClientTask  extends TimerTask {
 		this.testerParams=informationRequest;
 		this.positionRequestList=positionRequestList;
 		
-//		logLista=Logger.getLogger("requestID");
-//		logPrueba = Logger.getLogger("logPrueba");
+//		logLista=LoggerFactory.getLogger("requestID");
+//		logPrueba = LoggerFactory.getLogger("logPrueba");
 //		this.timeNanoCreated=timeNanoCreated;
 //		this.timeExpected=timeExpected;
 		this.PCEsessionList=PCEsessionList;

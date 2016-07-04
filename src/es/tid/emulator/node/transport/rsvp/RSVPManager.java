@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
 
@@ -60,7 +61,7 @@ public class RSVPManager{
     public RSVPManager(){
     	RSVPSessions = new Vector<RSVPSession>();
         RSVPMessageQueue = new LinkedBlockingQueue<RSVPMessage>();
-    	log=Logger.getLogger("ROADM");
+    	log=LoggerFactory.getLogger("ROADM");
 	}
     
     public void configureRSVPManager (Inet4Address localIPAddress, ResourceManager resourceManager, LSPManager managerLSP){
@@ -125,7 +126,7 @@ public class RSVPManager{
 			try{
 	    		rsvpSocket.write(addr, data);
 	    	}catch(IOException e){
-	    		log.warning("IOException sending RSVP Path Tear Message");
+	    		log.warn("IOException sending RSVP Path Tear Message");
 	    	}
 		}
 	}

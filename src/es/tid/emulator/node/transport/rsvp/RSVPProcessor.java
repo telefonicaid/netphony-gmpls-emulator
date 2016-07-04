@@ -2,7 +2,8 @@ package es.tid.emulator.node.transport.rsvp;
 
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.resources.ResourceManager;
 import es.tid.emulator.node.transport.LSPCreationException;
@@ -46,7 +47,7 @@ public class RSVPProcessor extends Thread{
 		running=true;
 		this.managerLSP = managerLSP;
 		this.RSVPMessageQueue=rsvpMessageQueue;
-		log=Logger.getLogger("ROADM");
+		log=LoggerFactory.getLogger("ROADM");
 		this.rsvpManager=rsvpManager;
 		/*this.OF=OF;*/
 		this.resourceManager=resourceManager;
@@ -174,7 +175,7 @@ public class RSVPProcessor extends Thread{
 			managerLSP.setTimeIni_Node(System.nanoTime());	
 			if(this.messageType == RSVPMessageTypes.MESSAGE_PATH){
 					
-					log.finer("RSVP-TE Path message received");
+					log.debug("RSVP-TE Path message received");
 					RSVPTEPathMessage path = (RSVPTEPathMessage) message;
 					RSVPObject session = path.getSession();
 					if(session.getcType() == 7){	// IPv4 Tunnel

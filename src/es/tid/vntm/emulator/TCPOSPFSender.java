@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ospf.ospfv2.lsa.LSA;
 import es.tid.vntm.VNTMParameters;
@@ -22,7 +23,7 @@ public class TCPOSPFSender extends Thread {
 	private Logger log;
 
 	public TCPOSPFSender(Inet4Address dirPCE, int port){
-		log=Logger.getLogger("OSPFParser");
+		log=LoggerFactory.getLogger("OSPFParser");
 		sendingQueue= new LinkedBlockingQueue<LSA>();
 		try {
 			this.sock = new Socket(dirPCE, port);

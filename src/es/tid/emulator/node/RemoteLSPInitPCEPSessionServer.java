@@ -2,7 +2,8 @@ package es.tid.emulator.node;
 
 import java.net.Inet4Address;
 import java.net.ServerSocket;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.LSPManager;
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
@@ -19,7 +20,7 @@ public class RemoteLSPInitPCEPSessionServer implements Runnable {
 	
 	public RemoteLSPInitPCEPSessionServer(LSPManager lspManager, Inet4Address idRoadm, int nodeTechnology, boolean isStateful)
 	{
-		log=Logger.getLogger("ROADM");
+		log=LoggerFactory.getLogger("ROADM");
 		this.idRoadm=idRoadm;
 		this.lspManager=lspManager;
 		this.nodeTechnology=nodeTechnology;
@@ -35,7 +36,7 @@ public class RemoteLSPInitPCEPSessionServer implements Runnable {
 		          serverSocket = new ServerSocket(4189);
 			}
 			catch (Exception e){
-				log.severe("Could not listen fast PCEP on port 4189");
+				log.error("Could not listen fast PCEP on port 4189");
 				e.printStackTrace();
 				return;
 			}

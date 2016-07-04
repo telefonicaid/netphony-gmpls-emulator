@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.netManager.NetworkLSPManager;
@@ -40,9 +41,9 @@ public class SendRequestRestorationCase  extends TimerTask {
 	public SendRequestRestorationCase(RestorationCaseStatistics restorationCaseStatistics, LinkedList<RestorationCaseTable> newRestorationCaseTable,NetworkLSPManager networkLSPManager, long timeProgramed,long exactTimeToSend, ScheduledThreadPoolExecutor requestExecutor ){
 		this.restorationCaseStatistics=restorationCaseStatistics;
 		this.newRestorationCaseTable=newRestorationCaseTable;
-		logReplies= Logger.getLogger("logReplies");
-		logSendResponse= Logger.getLogger("logSendResponse");
-		logTiemposVsNumberSaltos =  Logger.getLogger("logTiemposVsNumberSaltos");
+		logReplies= LoggerFactory.getLogger("logReplies");
+		logSendResponse= LoggerFactory.getLogger("logSendResponse");
+		logTiemposVsNumberSaltos =  LoggerFactory.getLogger("logTiemposVsNumberSaltos");
 		this.networkLSPManager=networkLSPManager;
 		this.timeProgramed=timeProgramed;
 		this.exactTimeToSend=exactTimeToSend;

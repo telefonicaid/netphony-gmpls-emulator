@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cern.jet.random.Exponential;
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
@@ -46,7 +47,7 @@ public class AutomaticExponentialTesterMLNetworkTask  extends TimerTask {
 	
 	public AutomaticExponentialTesterMLNetworkTask(Exponential expSendRequest,Exponential connectionTime, Timer timer,Timer planificationTimer,PCEPRequest request,ClientRequestManager crm,EmulatedPCCPCEPSession psVNTM,AutomaticTesterStatistics stats,PrintWriter pw, PrintWriter apw ){
 		this.request = request;
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.crm=crm;
 		this.psVNTM=psVNTM;
 		this.expSendRequest=expSendRequest;
@@ -86,7 +87,7 @@ public class AutomaticExponentialTesterMLNetworkTask  extends TimerTask {
 		log.info("Request Time "+reqTime_us+" us");
 		String strPrev=null;
 		if (pr.getResponseList().isEmpty()){
-			log.severe("ERROR in response");
+			log.error("ERROR in response");
 			//FIXME: QUE HACEMOS? CANCELAMOS SIMULACION?
 			//stats.addNoPathResponse();
 			System.exit(1);

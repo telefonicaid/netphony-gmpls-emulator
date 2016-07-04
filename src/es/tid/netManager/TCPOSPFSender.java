@@ -6,7 +6,8 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 
@@ -18,13 +19,13 @@ public class TCPOSPFSender extends Thread {
 	private LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket> sendingQueue;
 	private LinkedList<Socket> sockList;
 	private LinkedList<DataOutputStream> out;
-	Logger log=Logger.getLogger("OSPFParser");
+	Logger log=LoggerFactory.getLogger("OSPFParser");
 
 	public TCPOSPFSender(LinkedList<Inet4Address> dirPCEList, LinkedList<Integer> portList){
 		if ((dirPCEList ==null)||(portList==null))
-			log.severe("Error: Empty list (dirPCEList or portList) in TCPOSPFSender.");
+			log.error("Error: Empty list (dirPCEList or portList) in TCPOSPFSender.");
 		if (dirPCEList.size() != portList.size())
-			log.warning("Error: dirPCEList and portList with different size in TCPOSPFSender.");
+			log.warn("Error: dirPCEList and portList with different size in TCPOSPFSender.");
 		sendingQueue= new LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket>();
 		sockList=new LinkedList<Socket>();
 		out=new LinkedList<DataOutputStream>();
@@ -50,7 +51,7 @@ public class TCPOSPFSender extends Thread {
 			try {
 				OSPF_msg=sendingQueue.take();
 			} catch (InterruptedException e) {		
-				log.severe("Exception tying to take a OSPF message from the sendingQueue in TCPOSPFSender.");
+				log.error("Exception tying to take a OSPF message from the sendingQueue in TCPOSPFSender.");
 				return;
 			}
 			

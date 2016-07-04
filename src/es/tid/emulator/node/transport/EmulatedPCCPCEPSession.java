@@ -11,8 +11,10 @@ import java.util.Timer;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.LSPKey;
 import es.tid.emulator.node.transport.lsp.LSPManager;
@@ -107,8 +109,8 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 	public EmulatedPCCPCEPSession(String ip, int port, boolean no_delay, PCEPSessionsInformation pcepSessionManager) {
 		super(pcepSessionManager);
 		this.setFSMstate(PCEPValues.PCEP_STATE_IDLE);
-		log=Logger.getLogger("PCCClient");
-		log.setLevel(Level.OFF);
+		log=LoggerFactory.getLogger("PCCClient");
+		//log.setLevel(Level.OFF);
 		this.peerPCE_IPaddress=ip;
 		this.peerPCE_port=port;
 		crm= new ClientRequestManager();
@@ -132,8 +134,8 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 	public EmulatedPCCPCEPSession(String ip, int port, boolean no_delay, PCEPSessionsInformation pcepSessionManager, LSPManager lspManager) {
 		super(pcepSessionManager);
 		this.setFSMstate(PCEPValues.PCEP_STATE_IDLE);
-		log=Logger.getLogger("PCCClient");
-		log.setLevel(Level.ALL);
+		log=LoggerFactory.getLogger("PCCClient");
+		//log.setLevel(Level.ALL);
 		this.peerPCE_IPaddress=ip;
 		this.peerPCE_port=port;
 		crm= new ClientRequestManager();
@@ -157,8 +159,8 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 	public EmulatedPCCPCEPSession(String ip, int port, boolean no_delay, LSPConfirmationDispatcher LSPDispatcher, PCEPSessionsInformation pcepSessionManager) {
 		super(pcepSessionManager);
 		this.setFSMstate(PCEPValues.PCEP_STATE_IDLE);
-		log=Logger.getLogger("PCCClient");
-		log.setLevel(Level.ALL);
+		log=LoggerFactory.getLogger("PCCClient");
+		//log.setLevel(Level.ALL);
 		this.peerPCE_IPaddress=ip;
 		this.peerPCE_port=port;
 		crm= new ClientRequestManager();
@@ -202,7 +204,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 			catch (IOException e) 
 			{
 				log.info(UtilsFunctions.exceptionToString(e));
-				log.severe("Couldn't get I/O for connection to " + peerPCE_IPaddress + " in port "+ peerPCE_port);
+				log.error("Couldn't get I/O for connection to " + peerPCE_IPaddress + " in port "+ peerPCE_port);
 				//FIXME: Salir de manera limpia
 				System.exit(1);
 			} 
@@ -242,7 +244,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 				} catch (IOException e1) {
 				}
 				manageEndSession();
-				log.warning("Finishing PCEP Session abruptly!");
+				log.warn("Finishing PCEP Session abruptly!");
 				return;
 			}
 			if (this.msg != null) {//If null, it is not a valid PCEP message								
@@ -254,7 +256,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 				case PCEPMessageTypes.MESSAGE_OPEN:
 					log.info("OPEN message received");
 					//After the session has been started, ignore subsequent OPEN messages
-					log.warning("OPEN message ignored");
+					log.warn("OPEN message ignored");
 					break;
 					
 				case PCEPMessageTypes.MESSAGE_KEEPALIVE:
@@ -271,7 +273,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 					
 					// CONFIRMATION FROM THE VNTM LSP ESTABLISHEMENT
 				case PCEPMessageTypes.MESSAGE_TE_LINK_SUGGESTION_CONFIRMATION:
-					log.fine("Confirmation from the VNMT received!!!");
+					log.debug("Confirmation from the VNMT received!!!");
 					//Establish the TE LINK in the UPPER LAYER
 					PCEPTELinkConfirmation telinkconf;
 					
@@ -309,7 +311,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 						semaphore.release();
 
 					} catch (PCEPProtocolViolationException e1) {
-						log.warning("Problem decoding report message, ignoring message"+e1.getMessage());
+						log.warn("Problem decoding report message, ignoring message"+e1.getMessage());
 						e1.printStackTrace();
 					}
 					
@@ -336,7 +338,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 					}
 					else
 					{
-						log.warning("Received Update message and sessions is not stateful");
+						log.warn("Received Update message and sessions is not stateful");
 						break;
 					}
 					
@@ -355,7 +357,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 							}							
 						}
 						else{
-							log.warning("Ha llegado la response con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
+							log.warn("Ha llegado la response con ID: "+pcres.getResponse(0).getRequestParameters().getRequestID()+" Y el lock era null.");
 						}
 						
 					} catch (PCEPProtocolViolationException e) {
@@ -448,7 +450,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 									log.info("XXXX lsp.getSymbolicPathNameTLV_tlv(): "+lsp.getSymbolicPathNameTLV_tlv());
 									
 								}else {
-									log.warning("NO SYMBOLIC PATH NAME TLV!!!" );
+									log.warn("NO SYMBOLIC PATH NAME TLV!!!" );
 								}
 								
 								pcrep.addStateReport(srep);
@@ -514,7 +516,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 										log.info("XXXX lsp.getSymbolicPathNameTLV_tlv(): "+lsp.getSymbolicPathNameTLV_tlv());
 										
 									}else {
-										log.warning("NO SYMBOLIC PATH NAME TLV!!!" );
+										log.warn("NO SYMBOLIC PATH NAME TLV!!!" );
 									}
 									
 									pcrep.addStateReport(srep);
@@ -528,7 +530,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 									log.info("Sending Report message to pce...");
 									
 								}else {
-									log.warning("LSP with id "+lsp_id+" has NOT been established");
+									log.warn("LSP with id "+lsp_id+" has NOT been established");
 								}
 								
 							}
@@ -546,7 +548,7 @@ public class EmulatedPCCPCEPSession extends GenericPCEPSession{
 
 						
 					} catch (Exception e) {
-						log.severe("PROBLEMON");
+						log.error("PROBLEMON");
 						e.printStackTrace();
 						break;
 					}								

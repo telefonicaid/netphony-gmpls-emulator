@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.netManager.NetworkLSPManagerTypes;
@@ -54,7 +55,7 @@ public class CompletedEmulatedNetworkLSPManager extends NetworkLSPManager{
 	 */
 	private AutomaticTesterStatistics stats;
 	// loggers
-	private Logger log= Logger.getLogger("PCCClient");
+	private Logger log= LoggerFactory.getLogger("PCCClient");
 	/**
 	 * Variable usada para saber si la red es multilayer o no
 	 */
@@ -86,7 +87,7 @@ public class CompletedEmulatedNetworkLSPManager extends NetworkLSPManager{
 			this.getDomainTEDB().initializeFromFile(file);
 		}
 		else {
-			log.severe("Network file NOT included!!!");
+			log.error("Network file NOT included!!!");
 		}
 		this.setSendingQueue(sendingQueue);
 		this.stats = stats;
@@ -610,7 +611,7 @@ public class CompletedEmulatedNetworkLSPManager extends NetworkLSPManager{
 						
 					}
 					else {
-						log.warning("Error en removeLSP. Edge null");
+						log.warn("Error en removeLSP. Edge null");
 					
 					}		
 				}
@@ -852,7 +853,7 @@ public class CompletedEmulatedNetworkLSPManager extends NetworkLSPManager{
 					}
 				}
 			} else {
-				log.warning("Error en removeMLLSP. Edge null");
+				log.warn("Error en removeMLLSP. Edge null");
 			}
 		}
 	}

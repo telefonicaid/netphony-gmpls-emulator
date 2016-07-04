@@ -2,7 +2,8 @@ package es.tid.netManager.emulated;
 
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.netManager.NetworkLSPManager;
 import es.tid.netManager.NetworkLSPManagerTypes;
@@ -13,7 +14,7 @@ import es.tid.rsvp.objects.subobjects.EROSubobject;
 public class DummyEmulatedNetworkLSPManager extends NetworkLSPManager{
 
 	 boolean multilayer=false;
-	 private Logger log= Logger.getLogger("PCCClient");
+	 private Logger log= LoggerFactory.getLogger("PCCClient");
 	public DummyEmulatedNetworkLSPManager(){
 		this.setEmulatorType(NetworkLSPManagerTypes.DUMMY_EMULATED_NETWORK);	
 

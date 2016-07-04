@@ -3,7 +3,8 @@ package es.tid.pce.client.tester;
 
 import java.util.LinkedList;
 import java.util.TimerTask;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.EmulatedPCCPCEPSession;
 import es.tid.pce.client.emulator.AutomaticTesterStatistics;
@@ -24,7 +25,7 @@ public class RealiseControlPlaneCapacityTask  extends TimerTask {
 	
 	public RealiseControlPlaneCapacityTask(LinkedList<LSP> lspList,AutomaticTesterStatistics stats, boolean bidirectional, BandwidthRequestedGeneralizedBandwidth GB
 			, EmulatedPCCPCEPSession PCEPsession){
-		log=Logger.getLogger("PCCClient");
+		log=LoggerFactory.getLogger("PCCClient");
 		this.stats=stats;
 		this.lspList=lspList;
 		this.GB=GB;
