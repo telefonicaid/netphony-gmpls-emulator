@@ -1,4 +1,4 @@
-netphony-gmpls-emulator v1.3.0
+netphony-gmpls-emulator v1.3.2
 ===================
 Repository branch build status:
 
@@ -40,9 +40,9 @@ To run the Transport Node Emulator as a standalone application use the class Nod
   ```bash
     git clone https://github.com/telefonicaid/netphony-gmpls-emulator.git
     cd netphony-gmpls-emulator
-    mvn clean compile assembly:single
+    mvn clean package -P generate-autojar
     cd target
-    sudo java -jar netphony-gmpls-emulator-1.3.0-jar-with-dependencies.jar 
+    sudo java -jar Emulator-jar-with-dependencies.jar 
  ```
  
  Before running, you should configure the parameteres. The parameters are configured in an xml file. By default, if used with NodeLauncher, or it is not specified a file name, XXX.xml should be used. An example of the file is located in examples/xxx.xml (and with the maven assembly build, it is copied in the target directory).
