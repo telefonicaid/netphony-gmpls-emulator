@@ -1,4 +1,4 @@
-netphony-gmpls-emulator v1.3.0
+netphony-gmpls-emulator v1.3.3
 ===================
 Repository branch build status:
 
@@ -12,6 +12,7 @@ Latest Maven Central Release:
 
 This software is a Java Based emulator of a Transport Network. It is based on the emulator of a Transport Node, which can have L1 (OTN) and L0 (fixed grid or flexi-grid DWDM) equipment, that runs a GMPLS based control plane. In particular, it has a OSPF-TE daemon that sends/receives OSPF-TE packets and a RSVP-TE daemon to set-up LSPs. It maintains a PCEP connection with a domain PCE. If used in stateless mode, the PCEP connection is used for path queries. If used in stateful mode, the PCEP connection can be used for remote initiation of LSPs.
 
+For more information and examples, see [Netphony GMPLS Emulator Wiki](https://github.com/telefonicaid/netphony-gmpls-emulator/wiki)
 ## Compilation and use
 
 The software can be built using the maven tool. 
@@ -26,7 +27,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-emulator</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.3</version>
     </dependency>
  ```
   Authors keep also a copy of the artifact in maven central to facilitate the deployment. 
@@ -40,9 +41,9 @@ To run the Transport Node Emulator as a standalone application use the class Nod
   ```bash
     git clone https://github.com/telefonicaid/netphony-gmpls-emulator.git
     cd netphony-gmpls-emulator
-    mvn clean compile assembly:single
+    mvn clean package -P generate-autojar
     cd target
-    sudo java -jar netphony-gmpls-emulator-1.3.0-jar-with-dependencies.jar 
+    sudo java -jar Emulator-jar-with-dependencies.jar 
  ```
  
  Before running, you should configure the parameteres. The parameters are configured in an xml file. By default, if used with NodeLauncher, or it is not specified a file name, XXX.xml should be used. An example of the file is located in examples/xxx.xml (and with the maven assembly build, it is copied in the target directory).
