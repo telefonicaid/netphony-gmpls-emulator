@@ -1,4 +1,4 @@
-netphony-gmpls-emulator v1.3.2
+netphony-gmpls-emulator v1.3.3
 ===================
 Repository branch build status:
 
@@ -26,7 +26,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-emulator</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.3</version>
     </dependency>
  ```
   Authors keep also a copy of the artifact in maven central to facilitate the deployment. 
