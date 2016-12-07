@@ -210,7 +210,7 @@ public class NetworkNode {
 		}else{
 			managerLSP.configureLSPManager(null, nodeInformation.getId(), PCC, resourceManager, nodeInformation.isRsvpMode());
 		}
-		ospfController.configureOSPFController(nodeInformation.getId(), ted);
+		ospfController.configureOSPFController(nodeInformation.getId(), ted, nodeInformation.getLocalNodeAddress());
 		//Fast PCEP Session for remote invokation
 		fastPCEPSessionServer = new FastPCEPSessionServer(this.getManagerLSP(), nodeInformation.getId(), nodeInformation.getNodeTechnology());
 

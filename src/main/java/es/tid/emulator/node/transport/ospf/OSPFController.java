@@ -12,6 +12,7 @@ public class OSPFController {
 	private DomainTEDB domainTEDB;
 	private OSPFSenderThread ospfSenderThread;
     private Inet4Address nodeID;
+    private Inet4Address localNodeAddress;
     private OSPFSendAllTopology ospfSendAllTopology;
     private OSPFSenderManager ospfSenderManager;
 
@@ -26,9 +27,10 @@ public class OSPFController {
 		sendingQueue= new LinkedBlockingQueue<OSPFv2LinkStateUpdatePacket>();
 	}
 	
-	public void configureOSPFController(Inet4Address nodeID, DomainTEDB tedb){
+	public void configureOSPFController(Inet4Address nodeID, DomainTEDB tedb, Inet4Address localNodeAddress){
 		this.nodeID=nodeID;
 		this.domainTEDB=tedb;
+		this.localNodeAddress=localNodeAddress;
 	}
 	
 	public void initialize (){

@@ -23,6 +23,12 @@ public class NodeInformation {
 	 * Node ID: IPv4
 	 */
     private Inet4Address id;
+    
+    /**
+	 * Local Address to bind the socket
+	 */
+    private Inet4Address localNodeAddress;
+    
     /**
      * Technology of the Node
      */
@@ -81,6 +87,11 @@ public class NodeInformation {
 			log.debug("Reading local nodeId from "+this.defaultNode);
 			props_node.load(new FileInputStream(this.defaultNode));
 			String nodeId = props_node.getProperty("nodeId").trim();
+			String localNodeAddressString=nodeId;
+			if ( props_node.getProperty("localNodeAddress")!=null) {
+				localNodeAddressString= props_node.getProperty("localNodeAddress").trim();
+			}
+			
 	        String pceAddress = props.getProperty("PCEAddress").trim();
 	        String pcepPort = props.getProperty("PCEPPort").trim();
 	        String flexi_s = props.getProperty("flexi").trim();
@@ -93,6 +104,7 @@ public class NodeInformation {
 	        pceID = (Inet4Address) (Inet4Address.getByName(pceAddress));      
 	        pcePort = Integer.parseInt(pcepPort);
 	        id = (Inet4Address)InetAddress.getByName(nodeId);
+	        localNodeAddress = (Inet4Address)InetAddress.getByName(localNodeAddressString);
 	        setTraces = Boolean.parseBoolean(SetTraces);
 	        
 	        if (Boolean.parseBoolean(flexi_s)==true){
@@ -183,14 +195,25 @@ public class NodeInformation {
 	public void setStatefull(boolean isStatefull) {
 		this.isStatefull = isStatefull;
 	}
+	
+	
+
+	public Inet4Address getLocalNodeAddress() {
+		return localNodeAddress;
+	}
+
+	public void setLocalNodeAddress(Inet4Address localNodeAddress) {
+		this.localNodeAddress = localNodeAddress;
+	}
 
 	@Override
 	public String toString() {
-		return "NodeInformation [id=" + id + ", nodeTechnology="
-				+ nodeTechnology + ", topologyName=" + topologyName
-				+ ", pceID=" + pceID + ", pcePort=" + pcePort + ", setTraces="
-				+ setTraces + ", rsvpMode=" + rsvpMode + ", isStatefull="
-				+ isStatefull + ", isSRCapable=" + isSRCapable + "]";
+		return "NodeInformation [id=" + id + ", localNodeAddress="
+				+ localNodeAddress + ", nodeTechnology=" + nodeTechnology
+				+ ", topologyName=" + topologyName + ", pceID=" + pceID
+				+ ", pcePort=" + pcePort + ", rsvpMode=" + rsvpMode
+				+ ", isStatefull=" + isStatefull + ", isSRCapable="
+				+ isSRCapable + "]";
 	}
 	
 	
