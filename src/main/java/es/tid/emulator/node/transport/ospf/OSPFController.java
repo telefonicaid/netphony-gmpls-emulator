@@ -34,7 +34,7 @@ public class OSPFController {
 	}
 	
 	public void initialize (){
-		ospfSenderThread = new OSPFSenderThread(sendingQueue, nodeID);
+		ospfSenderThread = new OSPFSenderThread(sendingQueue, localNodeAddress);
 		ospfSenderThread.start();
 		ospfSenderManager = new OSPFSenderManager();
 		ospfSenderManager.setSendingQueue(sendingQueue);
