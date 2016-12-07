@@ -181,4 +181,15 @@ public class NodeInformation {
 	public void setStatefull(boolean isStatefull) {
 		this.isStatefull = isStatefull;
 	}
+
+	@Override
+	public String toString() {
+		return "NodeInformation [id=" + id + ", nodeTechnology="
+				+ nodeTechnology + ", topologyName=" + topologyName
+				+ ", pceID=" + pceID + ", pcePort=" + pcePort + ", setTraces="
+				+ setTraces + ", rsvpMode=" + rsvpMode + ", isStatefull="
+				+ isStatefull + ", isSRCapable=" + isSRCapable + "]";
+	}
+	
+	
 }

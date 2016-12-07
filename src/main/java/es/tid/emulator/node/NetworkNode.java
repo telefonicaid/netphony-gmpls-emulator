@@ -153,6 +153,7 @@ public class NetworkNode {
 		} else {
 			nodeInformation = new NodeInformation(config[0], config[1]);
 		}
+		log3.info(nodeInformation.toString());
 		nodeInformation.readNodeConfiguration();
 
 		if (nodeInformation.isRsvpMode()== true){
