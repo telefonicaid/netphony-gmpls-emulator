@@ -5,11 +5,11 @@ import static es.tid.rocksaw.net.RawSocket.PF_INET;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.tid.rocksaw.net.RawSocket;
-
 import es.tid.ospf.ospfv2.OSPFv2LinkStateUpdatePacket;
 
 public class OSPFSenderThread extends Thread{
@@ -45,11 +45,8 @@ public class OSPFSenderThread extends Thread{
 			socket.setUseSelectTimeout(true);
 			socket.setSendTimeout(TIMEOUT);
 			socket.setReceiveTimeout(TIMEOUT);
-			//FIXME: ESTE BIND ESTA A FUEGO
-			//socket.bind(address);  /*InetAddress.getByName(address"172.16.1.1")*///Mi direccion
-			socket.bind(NodeLocalAddress);  /*InetAddress.getByName(address"172.16.1.1")*///Mi direccion
-			//dirPCE= (Inet4Address)Inet4Address.getByName(PCETEDBAddress/*"172.16.1.3"*/);//PCETEDBAddress
-			log.info("Socket Opened!");
+			socket.bind(NodeLocalAddress);
+			log.info("Raw Socket Opened for OSPF with local address binded to "+NodeLocalAddress);
 		}catch(IOException e){
 			e.printStackTrace();
 			System.exit(-1);
@@ -69,6 +66,7 @@ public class OSPFSenderThread extends Thread{
 				//ospf_packet.encode();
 				OSPF_msg.encode();
 				//for (int i=0;i<PCETEDBAddressList.size();i++){
+				//log.info("Going to write to "+OSPFMulticastAddress+" "+OSPF_msg.getBytes().length +" bytes" );
 				socket.write(OSPFMulticastAddress,OSPF_msg.getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
