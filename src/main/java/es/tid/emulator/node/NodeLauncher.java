@@ -15,6 +15,7 @@ public class NodeLauncher {
      */
     public static void main(String[] args) {
     	NetworkNode r = new NetworkNode();
+		r.setConfig(args);
     	r.startNode();
 	}
 }

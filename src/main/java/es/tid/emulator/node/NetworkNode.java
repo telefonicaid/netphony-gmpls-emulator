@@ -104,8 +104,6 @@ public class NetworkNode {
 	 */
 	private NodeManagementSever nodeManagement;
 
-	public static Logger log;
-
 	/**
 	 * Launches a fast PCEP Session Server to initiate 
 	 * and tear down LSPs remotely.
@@ -124,7 +122,7 @@ public class NetworkNode {
 
 	private boolean isSRCapable = true;
 	private int MSD = 47;
-
+	private Logger log, log2, log3, log4;
 	/**
 	 *
 	 * Default constructor. Initializes all attributes
@@ -132,54 +130,31 @@ public class NetworkNode {
 	 */
 
 	public NetworkNode(){
-
-		// Create information of te Node
-		nodeInformation = new NodeInformation();
-		nodeInformation.readNodeConfiguration();
-
 		// Create the Logs
 		log = LoggerFactory.getLogger("ROADM");
-		//log.setLevel(Level.ALL);
-		Logger log2 = LoggerFactory.getLogger("PCCClient");
-		//log2.setLevel(Level.ALL);
-		Logger log3 = LoggerFactory.getLogger("OSPFParser");
-		//log3.setLevel(Level.ALL);
-		Logger log4 = LoggerFactory.getLogger("PCEPParser");
-		//log4.setLevel(Level.SEVERE);
-
-//		try{
-//			FileHandler fh = new FileHandler("Roadm.log", false);
-//			log.addHandler(fh);
-//			FileHandler fh2 = new FileHandler("PCCClient.log", false);
-//			log2.addHandler(fh2);
-//			FileHandler fh3 = new FileHandler("OSPFParser.log", false);
-//			log3.addHandler(fh3);
-//			FileHandler fh4 = new FileHandler("PCEPParser.log", false);
-//			log4.addHandler(fh4);
-//
-//			log.setLevel(Level.ALL);
-//			log2.setLevel(Level.ALL);
-//			log3.setLevel(Level.ALL);
-
-//			if (nodeInformation.isSetTraces() == false){
-//				log.info("Traces Out!");
-//				log.setLevel(Level.SEVERE);
-//				log2.setLevel(Level.SEVERE);
-//				log3.setLevel(Level.SEVERE);
-//			}else {
-//				log.setLevel(Level.ALL);
-//				log2.setLevel(Level.ALL);
-//				log3.setLevel(Level.ALL);
-//			}
-
-//		}catch(IOException e){
-//			log.warn("Exception with logs!");
-//			e.printStackTrace();
-//			System.exit(1);
-//		}
+		log2 = LoggerFactory.getLogger("PCCClient");
+		log3 = LoggerFactory.getLogger("OSPFParser");
+		log4 = LoggerFactory.getLogger("PCEPParser");
 
 		log.error("ROADM Created");
 		log.info("ROADM created con info");
+	}
+
+	/**
+	 * Class constructor with two parameters.
+	 *     config[0] Main node properties configuration file.
+	 *     config[1] Default node properties configuration file.
+	 */
+	public void setConfig(String[] config) {
+		// @// TODO: 05/12/2016 Implements this config method.
+		// Create information of te Node
+		if((config == null)||(config.length!=2)) {
+			nodeInformation = new NodeInformation();
+		} else {
+			nodeInformation = new NodeInformation(config[0], config[1]);
+		}
+		nodeInformation.readNodeConfiguration();
+
 		if (nodeInformation.isRsvpMode()== true){
 			// Create the RSVP Manager
 			rsvpManager = new RSVPManager();
@@ -203,13 +178,9 @@ public class NetworkNode {
 		// Initialice
 		((MDTEDB)MDted).initializeFromFileInterDomainLinks(nodeInformation.getTopologyName());
 
-
-
 		//TEDB CREADA --> recorrer grafo y podar
 		SimpleDirectedWeightedGraph<Object, IntraDomainEdge> LocalGraph = defineLocalTEDB.podateGraph(((SimpleTEDB)ted).getNetworkGraph(), nodeInformation.getId());
 		((SimpleLocalTEDB)ted).setNetworkGraph(LocalGraph);
-
-
 
 		log.info("Is Multi-Domain, create the MDTEDB!");
 		//MDTEDB CREADA --> recorrer grafo y podar
@@ -347,7 +318,7 @@ public class NetworkNode {
 
 	public void setStatefulSFlag(boolean statefulSFlag) {
 		this.statefulSFlag = statefulSFlag;
-	}	
+	}
 
 
 

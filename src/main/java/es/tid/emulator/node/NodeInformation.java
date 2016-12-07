@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Properties;
+
+import es.tid.vntm.topology.elements.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.tid.emulator.node.transport.lsp.te.TechnologyParameters;
 
 public class NodeInformation {
-	/**
+    private final String mainNode;
+    private final String defaultNode;
+    /**
 	 * This class loads the file with all the information referenced to the node
 	 */
 	
@@ -47,16 +51,33 @@ public class NodeInformation {
     private boolean isSRCapable = false;
     private int MSD = 0;
 
+    /**
+     * Default class constructor.
+     */
+	public NodeInformation(){
+		this("/usr/local/nodeConfig/defaultConfiguration.properties", "/usr/local/MynodeConfig/defaultConfiguration.properties");
+        log=LoggerFactory.getLogger("ROADM");
+        log.info("Using default .properties configuration files and directories.");
+	}
+
+    /**
+     * Class constructor with two parameters.
+     * @param mainNode Main node properties configuration file.
+     * @param defaultNode Default node properties configuration file.
+     */
+	public NodeInformation(String mainNode, String defaultNode) {
+        log=LoggerFactory.getLogger("ROADM");
+        this.mainNode = mainNode;
+        this.defaultNode = defaultNode;
+        
+	}
 	public void readNodeConfiguration(){
-    	
-    	log=LoggerFactory.getLogger("ROADM");
-    	
 		Properties props = new Properties();
 		Properties props_node = new Properties();
 			
 		try{
-			props.load(new FileInputStream("/usr/local/nodeConfig/defaultConfiguration.properties"));
-			props_node.load(new FileInputStream("/usr/local/MynodeConfig/defaultConfiguration.properties"));
+			props.load(new FileInputStream(this.mainNode));
+			props_node.load(new FileInputStream(this.defaultNode));
 			String nodeId = props_node.getProperty("nodeId").trim();
 	        String pceAddress = props.getProperty("PCEAddress").trim();
 	        String pcepPort = props.getProperty("PCEPPort").trim();
