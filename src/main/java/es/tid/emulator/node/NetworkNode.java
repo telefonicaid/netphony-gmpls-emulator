@@ -153,14 +153,14 @@ public class NetworkNode {
 		} else {
 			nodeInformation = new NodeInformation(config[0], config[1]);
 		}
-		log3.info(nodeInformation.toString());
+		
 		nodeInformation.readNodeConfiguration();
-
+		log3.info("Info: "+nodeInformation.toString());
 		if (nodeInformation.isRsvpMode()== true){
 			// Create the RSVP Manager
 			rsvpManager = new RSVPManager();
 		}
-		log3.info("Log de OSPF Creado!");
+		log3.info("Log de OSPF Creado!!");
 		// Creamos el LSP Manager
 		managerLSP = new LSPManager(isStateful);
 

@@ -76,7 +76,9 @@ public class NodeInformation {
 		Properties props_node = new Properties();
 			
 		try{
+			log.debug("Reading from "+this.mainNode);
 			props.load(new FileInputStream(this.mainNode));
+			log.debug("Reading local nodeId from "+this.defaultNode);
 			props_node.load(new FileInputStream(this.defaultNode));
 			String nodeId = props_node.getProperty("nodeId").trim();
 	        String pceAddress = props.getProperty("PCEAddress").trim();
