@@ -261,11 +261,11 @@ public class NodeManagementSession extends Thread {
 							out.print("traces on!\r\n");
 						} 
 						else if (command.equals("set traces off")|| command.equals("6")) {
-//							log.setLevel(Level.SEVERE);		
+//							log.setLevel(Level.error);
 //							Logger log2=LoggerFactory.getLogger("PCEPParser");
-//							log2.setLevel(Level.SEVERE);
+//							log2.setLevel(Level.error);
 //							Logger log3= LoggerFactory.getLogger("OSPFParser");
-//							log3.setLevel(Level.SEVERE);
+//							log3.setLevel(Level.error);
 							out.print("traces off!\r\n");
 						}else if (command.equals("print eros")|| command.equals("8")){
 							out.print("\nInsert the name of the file: ");
