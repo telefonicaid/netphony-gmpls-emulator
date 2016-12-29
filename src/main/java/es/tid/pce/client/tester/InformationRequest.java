@@ -8,8 +8,6 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -683,11 +681,11 @@ public class InformationRequest {
 			}
 			
 			if (setTraces == false){
-//				log.setLevel(Level.SEVERE);		
+//				log.setLevel(Level.error);
 //				Logger log2=LoggerFactory.getLogger("PCEPClientParser");
-//				log2.setLevel(Level.SEVERE);
+//				log2.setLevel(Level.error);
 //				Logger log3= LoggerFactory.getLogger("OSPFParser");
-//				log3.setLevel(Level.SEVERE);
+//				log3.setLevel(Level.error);
 				log.info("traces off!\r\n");
 			}
 			NodeList isExponential_nl = doc.getElementsByTagName("isExponential");

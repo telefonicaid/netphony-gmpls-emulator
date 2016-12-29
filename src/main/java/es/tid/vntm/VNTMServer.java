@@ -56,10 +56,10 @@ public class VNTMServer {
 			fh.setFormatter(new SimpleFormatter());
 			fh2.setFormatter(new SimpleFormatter());
 			Log.addHandler(fh);
-			Log.setLevel(Level.SEVERE);
+			Log.setLevel(Level.error);
 			Logger log2=LoggerFactory.getLogger("PCEPParser");
 			log2.addHandler(fh2);
-			log2.setLevel(Level.SEVERE);
+			log2.setLevel(Level.error);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			System.exit(1);

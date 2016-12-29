@@ -84,10 +84,10 @@ public class RestorationCaseClient {
 //			log3.addHandler(fh3);
 //			log4.addHandler(fh4);
 //			if (testerParams.isSetTraces() == false){		    	
-//				log.setLevel(Level.SEVERE);
-//				log2.setLevel(Level.SEVERE);	
-//				log3.setLevel(Level.SEVERE);
-//				log4.setLevel(Level.SEVERE);
+//				log.setLevel(Level.error);
+//				log2.setLevel(Level.error);
+//				log3.setLevel(Level.error);
+//				log4.setLevel(Level.error);
 //			}				
 //			else{
 //				log.setLevel(Level.ALL);
