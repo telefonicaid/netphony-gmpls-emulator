@@ -1,3 +1,14 @@
+v1.3.3
+- Uploaded to Maven Central
+- Example of use added.
+- Profile to buid autojar for Transport Node Emulator added
+- Updated to work with netphony-network-protocols, netphony-topology and netphony PCE 1.3.3
+- License in now Apache 2.0
+v1.3.2
+- Updated to work with netphony-network-protocols, netphony-topology and netphony PCE 1.3.2
+- Added maven profiles
+- Updated reference to es.tid.rocksaw library
+- Moved all to es.tid package
 v1.2
 - Fixed maven support
 - Works with network protocols 1.2.1 and netphony-topology 1.2.1
