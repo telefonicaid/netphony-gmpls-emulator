@@ -17,17 +17,17 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>$(slf4j-version)</version>
+      <version>${slf4j-version}</version>
     </dependency>
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>$(netphony-version)</version>
+      <version>${netphony-version}</version>
     </dependency>
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>pce</artifactId>
-      <version>$(netphony-version)</version>
+      <version>${netphony-version}</version>
     </dependency>
     <dependency>
      <groupId>commons-net</groupId>
