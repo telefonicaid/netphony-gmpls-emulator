@@ -8,7 +8,7 @@ Repository branch build status:
 
 Latest Maven Central Release: 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/gmpls-emulator/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/gmpls-emulator/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-emulator/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/es.tid.netphony/network-emulator/)
 
 This software is a Java Based emulator of a Transport Network. It is based on the emulator of a Transport Node, which can have L1 (OTN) and L0 (fixed grid or flexi-grid DWDM) equipment, that runs a GMPLS based control plane. In particular, it has a OSPF-TE daemon that sends/receives OSPF-TE packets and a RSVP-TE daemon to set-up LSPs. It maintains a PCEP connection with a domain PCE. If used in stateless mode, the PCEP connection is used for path queries. If used in stateful mode, the PCEP connection can be used for remote initiation of LSPs.
 
